@@ -316,21 +316,21 @@ export default function Projects() {
       <section
         ref={sectionRef}
         id="projects"
-        className="relative py-32 overflow-hidden"
+        className="relative overflow-hidden"
         onMouseMove={handleMouseMove}
       >
-        {/* Background Ultra Premium */}
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-blue-50/30">
+        {/* Background Ultra Premium - Desktop only */}
+        <div className="hidden sm:block absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-blue-50/30">
           {/* Grid Pattern */}
-          <div 
+          <div
             className="absolute inset-0 opacity-5"
             style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
             }}
           />
-          
+
           {/* Mouse Glow Effect */}
-          <div 
+          <div
             className="absolute w-96 h-96 pointer-events-none"
             style={{
               background: `radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08), transparent 70%)`,
@@ -339,96 +339,243 @@ export default function Projects() {
               transition: 'all 0.1s ease-out'
             }}
           />
-          
+
           {/* Floating Orbs */}
           <div className="absolute top-20 right-10 w-96 h-96 bg-gradient-to-r from-blue-400/5 to-purple-400/5 rounded-full blur-3xl animate-pulse" />
           <div className="absolute bottom-20 left-10 w-72 h-72 bg-gradient-to-r from-purple-400/5 to-pink-400/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
         </div>
 
-        <div className="container mx-auto px-6 relative z-10">
-          {/* Header Section Ultra Premium */}
-          <div className="mb-20">
-            <div className="flex items-start justify-between gap-8 mb-8">
-              {/* Badge à gauche */}
-              <div className="inline-flex items-center space-x-3 bg-white/80 backdrop-blur-xl border border-white/50 rounded-full px-6 py-3 shadow-lg flex-shrink-0">
-                <MdRocket className="w-5 h-5 text-blue-600" />
-                <span className="text-sm font-bold text-gray-900">PORTFOLIO</span>
-              </div>
-
-              <div className="flex-1 text-right">
-                <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-gray-900 mb-8 leading-tight">
-                  Projets Qui Transforment
-                  <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                    Les Business en Succès
-                  </span>
-                </h2>
-              </div>
+        {/* ========== MOBILE APP VERSION ========== */}
+        <div className="sm:hidden bg-gradient-to-b from-white to-gray-50 py-8 px-4">
+          {/* App Header */}
+          <div className="text-center mb-5">
+            <div className="inline-flex items-center space-x-2 bg-blue-50 rounded-full px-3 py-1.5 mb-3">
+              <MdRocket className="w-3.5 h-3.5 text-blue-600" />
+              <span className="text-[10px] font-bold text-blue-700 uppercase tracking-wider">Portfolio</span>
             </div>
+            <h2 className="text-2xl font-black text-gray-900 leading-tight">
+              Nos <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Réalisations</span>
+            </h2>
+          </div>
 
-            <p className="text-xl md:text-2xl text-gray-600 max-w-5xl leading-relaxed mb-8 text-right">
-              Vous voulez un site qui rapporte ? Voici ce que je construis pour mes clients :
-              <span className="text-blue-600 font-semibold"> des plateformes qui génèrent des ventes</span>,
-              <span className="text-purple-600 font-semibold"> attirent du trafic qualifié</span> et
-              <span className="text-green-600 font-semibold"> automatisent leur business</span>.
-            </p>
-
-            {/* Stats rapides animées */}
-            <div ref={statsRef} className="flex flex-wrap justify-center gap-8 text-center">
-              <div className="bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-lg border border-white/50">
-                <div className="text-2xl font-black text-blue-600">
-                  <AnimatedCounter end={60} suffix="K€" isActive={statsAnimated} />
-                </div>
-                <div className="text-sm text-gray-600">Revenus générés</div>
+          {/* Mini Stats Row */}
+          <div ref={statsRef} className="grid grid-cols-3 gap-2 mb-5">
+            <div className="bg-white rounded-xl p-2.5 text-center shadow-sm border border-gray-100">
+              <div className="text-base font-black text-blue-600">
+                <AnimatedCounter end={60} suffix="K€" isActive={statsAnimated} />
               </div>
-              <div className="bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-lg border border-white/50">
-                <div className="text-2xl font-black text-purple-600">
-                  <AnimatedCounter end={5} suffix="K+" isActive={statsAnimated} />
-                </div>
-                <div className="text-sm text-gray-600">Utilisateurs actifs</div>
+              <div className="text-[9px] text-gray-500">Revenus</div>
+            </div>
+            <div className="bg-white rounded-xl p-2.5 text-center shadow-sm border border-gray-100">
+              <div className="text-base font-black text-purple-600">
+                <AnimatedCounter end={5} suffix="K+" isActive={statsAnimated} />
               </div>
-              <div className="bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-lg border border-white/50">
-                <div className="text-2xl font-black text-green-600">
-                  <AnimatedCounter end={280} suffix="%" isActive={statsAnimated} />
-                </div>
-                <div className="text-sm text-gray-600">ROI moyen</div>
+              <div className="text-[9px] text-gray-500">Utilisateurs</div>
+            </div>
+            <div className="bg-white rounded-xl p-2.5 text-center shadow-sm border border-gray-100">
+              <div className="text-base font-black text-green-600">
+                <AnimatedCounter end={280} suffix="%" isActive={statsAnimated} />
               </div>
+              <div className="text-[9px] text-gray-500">ROI</div>
             </div>
           </div>
 
-          {/* Filters Ultra Premium */}
-          <div className="flex flex-wrap justify-center gap-4 mb-16">
-            {filters.map((filter) => (
-              <button
-                key={filter.id}
-                onClick={() => setActiveFilter(filter.id)}
-                className={`group relative px-8 py-4 rounded-2xl font-bold transition-all duration-500 transform hover:scale-105 ${
-                  activeFilter === filter.id
-                    ? 'bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white shadow-2xl scale-105'
-                    : 'bg-white/90 backdrop-blur-xl text-gray-700 hover:bg-white hover:text-blue-600 border border-white/50 hover:border-blue-200 shadow-lg hover:shadow-xl'
-                }`}
+          {/* App-style Segmented Filter */}
+          <div className="bg-gray-100 rounded-xl p-1 mb-5">
+            <div className="flex overflow-x-auto scrollbar-hide gap-1">
+              {filters.map((filter) => (
+                <button
+                  key={filter.id}
+                  onClick={() => setActiveFilter(filter.id)}
+                  className={`flex-1 min-w-fit flex items-center justify-center space-x-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 ${
+                    activeFilter === filter.id
+                      ? 'bg-white text-blue-600 shadow-sm'
+                      : 'text-gray-600'
+                  }`}
+                >
+                  <filter.icon className="text-xs" />
+                  <span className="whitespace-nowrap">{filter.label.split(' ')[0]}</span>
+                  <span className={`text-[9px] px-1.5 rounded-full ${
+                    activeFilter === filter.id ? 'bg-blue-100 text-blue-600' : 'bg-gray-200 text-gray-500'
+                  }`}>{filter.count}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile Project Cards - Horizontal Scroll */}
+          <div className="flex overflow-x-auto pb-4 -mx-4 px-4 gap-3 scrollbar-hide snap-x snap-mandatory">
+            {filteredProjects.map((project) => (
+              <div
+                key={project.id}
+                onClick={() => handleProjectClick(project)}
+                className="min-w-[75vw] snap-start flex-shrink-0 bg-white rounded-2xl overflow-hidden shadow-md border border-gray-100 active:scale-[0.98] transition-transform"
               >
-                <span className="relative z-10 flex items-center space-x-3">
-                  <filter.icon className="w-5 h-5" />
-                  <span>{filter.label}</span>
-                  <span className={`text-xs px-3 py-1 rounded-full font-black ${
-                    activeFilter === filter.id 
-                      ? 'bg-white/20 text-white' 
-                      : 'bg-gray-100 text-gray-500 group-hover:bg-blue-100 group-hover:text-blue-600'
-                  }`}>
-                    {filter.count}
-                  </span>
-                </span>
-                
-                {/* Glow effect */}
-                {activeFilter === filter.id && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-2xl blur-lg opacity-30 -z-10" />
-                )}
-              </button>
+                {/* Project Image Header - Compact */}
+                <div className={`relative h-24 bg-gradient-to-br ${project.color}`}>
+                  <div
+                    className="absolute inset-0 bg-cover bg-center opacity-40"
+                    style={{ backgroundImage: `url(${project.image})` }}
+                  />
+                  <div className="absolute inset-0 flex items-center justify-between px-3">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-9 h-9 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center">
+                        <project.icon className="w-4 h-4 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-xs font-bold text-white line-clamp-1">{project.title}</h3>
+                        <span className="text-[9px] text-white/80">{project.type}</span>
+                      </div>
+                    </div>
+                    {project.featured && (
+                      <div className="bg-yellow-400 text-yellow-900 px-1.5 py-0.5 rounded-full text-[8px] font-bold flex items-center space-x-0.5">
+                        <MdStar className="w-2 h-2" />
+                        <span>TOP</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Project Content - Compact */}
+                <div className="p-3">
+                  {/* Mini Metrics - Inline */}
+                  <div className="flex gap-1.5 mb-2">
+                    {Object.entries(project.metrics).slice(0, 3).map(([key, value]) => (
+                      <div key={key} className="flex-1 text-center bg-gray-50 rounded-lg py-1">
+                        <div className={`text-[10px] font-bold bg-gradient-to-r ${project.color} bg-clip-text text-transparent`}>{value}</div>
+                        <div className="text-[7px] text-gray-400 capitalize">{key}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Tags - Compact */}
+                  <div className="flex flex-wrap gap-1 mb-2">
+                    {project.tags.slice(0, 3).map((tag, idx) => (
+                      <span key={idx} className="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-[8px] rounded-full font-medium">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* CTA */}
+                  <button className={`w-full py-2 rounded-lg text-[11px] font-bold text-white bg-gradient-to-r ${project.color} flex items-center justify-center space-x-1.5`}>
+                    <span>Voir le projet</span>
+                    <FiArrowRight className="w-3 h-3" />
+                  </button>
+                </div>
+              </div>
             ))}
           </div>
 
-          {/* Projects Grid Ultra Premium */}
-          <div className="grid lg:grid-cols-3 gap-8">
+          {/* Scroll Indicator */}
+          <div className="flex justify-center mt-3 space-x-1">
+            {filteredProjects.map((_, index) => (
+              <div key={index} className="w-1.5 h-1.5 rounded-full bg-gray-300" />
+            ))}
+          </div>
+          <p className="text-center text-[10px] text-gray-400 mt-2">← Glissez →</p>
+
+          {/* Mobile CTA */}
+          <div className="mt-6">
+            <button
+              onClick={() => handleCTAClick('projects_launch_project')}
+              className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg active:scale-[0.98] transition-transform"
+            >
+              <span className="flex items-center justify-center space-x-2">
+                <MdRocket className="w-4 h-4" />
+                <span className="text-sm">Lancer Mon Projet</span>
+                <FiArrowRight className="w-4 h-4" />
+              </span>
+            </button>
+          </div>
+        </div>
+
+        {/* ========== DESKTOP VERSION ========== */}
+        <div className="hidden sm:block py-32">
+          <div className="container mx-auto px-6 relative z-10">
+            {/* Header Section Ultra Premium */}
+            <div className="mb-20">
+              {/* Badge */}
+              <div className="flex justify-start mb-6">
+                <div className="inline-flex items-center space-x-3 bg-white/80 backdrop-blur-xl border border-white/50 rounded-full px-6 py-3 shadow-lg">
+                  <MdRocket className="w-5 h-5 text-blue-600" />
+                  <span className="text-sm font-bold text-gray-900">PORTFOLIO</span>
+                </div>
+              </div>
+
+              <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-gray-900 mb-8 leading-tight text-right">
+                Projets Qui Transforment
+                <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  Les Business en Succès
+                </span>
+              </h2>
+
+              <p className="text-xl md:text-2xl text-gray-600 max-w-5xl leading-relaxed mb-8 text-right ml-auto">
+                Vous voulez un site qui rapporte ? Voici ce que je construis pour mes clients :
+                <span className="text-blue-600 font-semibold"> des plateformes qui génèrent des ventes</span>,
+                <span className="text-purple-600 font-semibold"> attirent du trafic qualifié</span> et
+                <span className="text-green-600 font-semibold"> automatisent leur business</span>.
+              </p>
+
+              {/* Stats rapides animées */}
+              <div ref={statsRef} className="flex flex-wrap justify-center gap-8 text-center">
+                <div className="bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-lg border border-white/50">
+                  <div className="text-2xl font-black text-blue-600">
+                    <AnimatedCounter end={60} suffix="K€" isActive={statsAnimated} />
+                  </div>
+                  <div className="text-sm text-gray-600">Revenus générés</div>
+                </div>
+                <div className="bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-lg border border-white/50">
+                  <div className="text-2xl font-black text-purple-600">
+                    <AnimatedCounter end={5} suffix="K+" isActive={statsAnimated} />
+                  </div>
+                  <div className="text-sm text-gray-600">Utilisateurs actifs</div>
+                </div>
+                <div className="bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-lg border border-white/50">
+                  <div className="text-2xl font-black text-green-600">
+                    <AnimatedCounter end={280} suffix="%" isActive={statsAnimated} />
+                  </div>
+                  <div className="text-sm text-gray-600">ROI moyen</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Filters Ultra Premium */}
+            <div className="relative mb-16">
+              <div className="flex justify-center gap-4">
+                {filters.map((filter) => (
+                  <button
+                    key={filter.id}
+                    onClick={() => setActiveFilter(filter.id)}
+                    className={`group relative px-8 py-4 rounded-2xl font-bold transition-all duration-500 transform hover:scale-105 ${
+                      activeFilter === filter.id
+                        ? 'bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white shadow-2xl scale-105'
+                        : 'bg-white/90 backdrop-blur-xl text-gray-700 hover:bg-white hover:text-blue-600 border border-white/50 hover:border-blue-200 shadow-lg hover:shadow-xl'
+                    }`}
+                  >
+                    <span className="relative z-10 flex items-center space-x-3">
+                      <filter.icon className="w-5 h-5" />
+                      <span className="text-base">{filter.label}</span>
+                      <span className={`text-xs px-3 py-1 rounded-full font-black ${
+                        activeFilter === filter.id
+                          ? 'bg-white/20 text-white'
+                          : 'bg-gray-100 text-gray-500 group-hover:bg-blue-100 group-hover:text-blue-600'
+                      }`}>
+                        {filter.count}
+                      </span>
+                    </span>
+
+                    {/* Glow effect */}
+                    {activeFilter === filter.id && (
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-2xl blur-lg opacity-30 -z-10" />
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Projects Grid Ultra Premium */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {currentProjects.map((project, index) => (
               <div
                 key={project.id}
@@ -679,6 +826,7 @@ export default function Projects() {
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
               </button>
             </div>
+          </div>
           </div>
         </div>
       </section>

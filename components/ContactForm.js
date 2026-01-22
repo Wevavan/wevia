@@ -109,23 +109,23 @@ export default function ContactForm() {
 
   return (
     <>
-      <section 
+      <section
         ref={sectionRef}
-        className="relative py-32 overflow-hidden"
+        className="relative overflow-hidden"
         onMouseMove={handleMouseMove}
       >
-        {/* Background Ultra Premium */}
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+        {/* Background Ultra Premium - Desktop only */}
+        <div className="hidden sm:block absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
           {/* Animated Grid */}
-          <div 
+          <div
             className="absolute inset-0 opacity-20"
             style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
             }}
           />
-          
+
           {/* Mouse Glow Effect */}
-          <div 
+          <div
             className="absolute w-96 h-96 pointer-events-none"
             style={{
               background: `radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.15), transparent 70%)`,
@@ -134,14 +134,117 @@ export default function ContactForm() {
               transition: 'all 0.1s ease-out'
             }}
           />
-          
+
           {/* Floating Orbs */}
           <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full blur-3xl animate-pulse" />
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-pink-500/10 to-orange-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
         </div>
 
-        <div className="container mx-auto px-6 relative z-10">
+        {/* ========== MOBILE APP VERSION ========== */}
+        <div className="sm:hidden bg-gradient-to-b from-gray-900 via-blue-900 to-purple-900 py-8 px-4 relative z-10">
+          {/* App Header */}
+          <div className="text-center mb-5">
+            <div className="inline-flex items-center space-x-2 bg-white/10 rounded-full px-3 py-1.5 mb-3">
+              <FiMessageSquare className="w-3.5 h-3.5 text-cyan-400" />
+              <span className="text-[10px] font-bold text-cyan-300 uppercase tracking-wider">Contact</span>
+            </div>
+            <h2 className="text-2xl font-black text-white leading-tight">
+              Transformons Votre <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Vision</span>
+            </h2>
+            <p className="text-xs text-gray-400 mt-2">
+              Consultation gratuite, <span className="text-cyan-400 font-medium">résultats garantis</span>
+            </p>
+          </div>
+
+          {/* Mobile Stats Row */}
+          <div className="grid grid-cols-4 gap-2 mb-5">
+            {stats.map((stat, index) => (
+              <div key={index} className="bg-white/5 rounded-xl p-2 text-center border border-white/10">
+                <stat.icon className={`w-4 h-4 ${stat.color} mx-auto mb-1`} />
+                <div className="text-sm font-black text-white">{stat.number}</div>
+                <div className="text-[8px] text-gray-500 leading-tight">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Mobile Contact Card */}
+          <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-4 border border-white/20 mb-5">
+            <div className="flex items-center space-x-3 mb-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 via-cyan-500 to-teal-500 rounded-xl flex items-center justify-center">
+                <FiCalendar className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="text-sm font-bold text-white">Consultation Gratuite</h3>
+                <p className="text-[10px] text-cyan-400 font-medium">45 min · Gratuit · Exclusif</p>
+              </div>
+            </div>
+            <p className="text-xs text-gray-300 mb-3 leading-relaxed">
+              Analyse complète de votre projet avec recommandations personnalisées et roadmap détaillée.
+            </p>
+            <div className="space-y-1.5 mb-4">
+              {contactOptions[0].features.map((feature, idx) => (
+                <div key={idx} className="flex items-center space-x-2">
+                  <FiCheckCircle className="w-3.5 h-3.5 text-green-400 flex-shrink-0" />
+                  <span className="text-[11px] text-gray-300">{feature}</span>
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={() => handleCTAClick('mobile_consultation')}
+              className="w-full bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 text-white font-bold py-3 rounded-xl active:scale-[0.98] transition-transform"
+            >
+              <span className="flex items-center justify-center space-x-2">
+                <span className="text-sm">Réserver Maintenant</span>
+                <FiArrowRight className="w-4 h-4" />
+              </span>
+            </button>
+          </div>
+
+          {/* Mobile Guarantees - Horizontal Scroll */}
+          <div className="mb-5">
+            <h4 className="text-xs font-bold text-white mb-3 flex items-center space-x-1">
+              <FiShield className="w-3 h-3 text-green-400" />
+              <span>Pourquoi Me Faire Confiance</span>
+            </h4>
+            <div className="flex overflow-x-auto gap-3 pb-2 -mx-4 px-4 scrollbar-hide snap-x snap-mandatory">
+              {guarantees.map((guarantee, index) => (
+                <div
+                  key={index}
+                  className="min-w-[65vw] snap-start flex-shrink-0 bg-white/5 rounded-xl p-3 border border-white/10 active:scale-[0.98] transition-transform"
+                >
+                  <div className="flex items-start space-x-3">
+                    <guarantee.icon className={`w-6 h-6 ${guarantee.color} flex-shrink-0`} />
+                    <div>
+                      <h5 className="text-xs font-bold text-white mb-0.5">{guarantee.title}</h5>
+                      <p className="text-[10px] text-gray-400 leading-relaxed">{guarantee.description}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="text-center text-[10px] text-gray-500 mt-2">← Glissez →</p>
+          </div>
+
+          {/* Mobile CTA */}
+          <div className="bg-white/5 rounded-xl p-4 border border-white/10">
+            <p className="text-xs text-gray-300 text-center mb-3">Prêt à démarrer votre projet ?</p>
+            <button
+              onClick={() => handleCTAClick('mobile_bottom_cta')}
+              className="w-full bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-white font-bold py-3.5 rounded-xl shadow-lg active:scale-[0.98] transition-transform"
+            >
+              <span className="flex items-center justify-center space-x-2">
+                <MdRocket className="w-4 h-4" />
+                <span className="text-sm">Lancer Mon Projet</span>
+                <FiArrowRight className="w-4 h-4" />
+              </span>
+            </button>
+          </div>
+        </div>
+
+        {/* ========== DESKTOP VERSION ========== */}
+        <div className="hidden sm:block py-32 relative z-10 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+          <div className="container mx-auto px-6">
           {/* Grid Layout: Left (Guarantees) + Right (Contact) */}
           <div className="grid lg:grid-cols-2 gap-16 items-start mb-16">
             {/* Left Side - Guarantees */}
@@ -335,6 +438,7 @@ export default function ContactForm() {
                 </div>
               ))}
             </div>
+          </div>
           </div>
         </div>
       </section>

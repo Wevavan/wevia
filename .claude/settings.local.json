@@ -5,7 +5,9 @@
       "Bash(npm install:*)",
       "Bash(node -e:*)",
       "Bash(if exist .next rmdir /s /q .next)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(npx next lint:*)",
+      "Bash(npx tsc:*)"
     ],
     "deny": [],
     "ask": []

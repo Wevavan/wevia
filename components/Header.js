@@ -188,38 +188,31 @@ export default function PremiumHeaderHero() {
       >
         {/* Top Bar Premium */}
         <div className={`border-b transition-all duration-500 ${
-          isScrolled ? 'border-gray-100' : 'border-white/20'
+          isScrolled ? 'border-gray-100 bg-gradient-to-r from-blue-50 to-purple-50' : 'border-white/20 bg-white/10 backdrop-blur-sm'
         }`}>
-          <div className="container mx-auto px-6">
-            <div className="flex items-center justify-between h-10">
-              {/* Left - Contact Info */}
-              <div className="flex items-center space-x-8">
-                <div className={`flex items-center space-x-2 text-sm ${
-                  isScrolled ? 'text-gray-600' : 'text-white/80'
-                }`}>
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                  <span className="hidden sm:inline font-medium">Disponible maintenant</span>
-                </div>
-                <a
-                  href="tel:+33662704580"
-                  className={`hidden md:flex items-center space-x-2 text-sm font-medium transition-colors ${
-                    isScrolled
-                      ? 'text-gray-600 hover:text-blue-600'
-                      : 'text-white/80 hover:text-white'
-                  }`}
-                >
-                  <FiPhone className="w-4 h-4" />
-                  <span>+33 6 67 48 39 23</span>
-                </a>
+          <div className="container mx-auto px-4 sm:px-6">
+            <div className="flex items-center justify-between h-10 sm:h-10">
+              {/* Left - Status Disponible */}
+              <div className={`flex items-center space-x-2 text-xs sm:text-sm ${
+                isScrolled ? 'text-gray-700' : 'text-white'
+              }`}>
+                <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/50" />
+                <span className="font-semibold">Disponible</span>
+                <span className="hidden sm:inline font-medium">maintenant</span>
               </div>
 
-              {/* Right - Social & Status */}
-              <div className="flex items-center space-x-4">
-                <div className={`hidden lg:flex items-center space-x-2 text-sm ${
-                    isScrolled ? 'text-gray-500' : 'text-white/60'
-                }`}>                    
-                </div>
-                </div>
+              {/* Right - Phone Number */}
+              <a
+                href="tel:+33667483923"
+                className={`flex items-center space-x-2 text-xs sm:text-sm font-semibold transition-colors ${
+                  isScrolled
+                    ? 'text-blue-600 hover:text-blue-700'
+                    : 'text-white hover:text-cyan-300'
+                }`}
+              >
+                <FiPhone className="w-4 h-4" />
+                <span>+33 6 67 48 39 23</span>
+              </a>
             </div>
           </div>
         </div>
@@ -310,102 +303,135 @@ export default function PremiumHeaderHero() {
             </button>
           </div>
         </nav>
+      </header>
 
-        {/* Mobile Menu Clean */}
-        <div 
-          className={`lg:hidden transition-all duration-500 overflow-hidden ${
-            isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+      {/* Mobile Menu Premium Full Screen - OUTSIDE header for proper z-index */}
+      <div
+        className={`lg:hidden fixed inset-0 z-[9999] transition-all duration-500 ${
+          isMenuOpen ? 'visible' : 'invisible pointer-events-none'
+        }`}
+      >
+        {/* Backdrop - Solid opaque background */}
+        <div
+          className={`absolute inset-0 transition-opacity duration-500 ${
+            isMenuOpen ? 'opacity-100' : 'opacity-0'
           }`}
-        >
-          <div className="bg-white/98 backdrop-blur-xl border-t border-gray-100 shadow-xl">
-            <div className="container mx-auto px-6 py-6">
-              <div className="space-y-1">
-                {navigationItems.map((item, index) => {
-                  const active = isItemActive(item.href);
-                  return (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      onClick={(e) => handleNavigationClick(e, item.href)}
-                      className={`block py-4 px-4 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-300 font-medium ${
-                        isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
-                      }`}
-                      style={{
-                        transitionDelay: isMenuOpen ? `${index * 50}ms` : '0ms'
-                      }}
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className="text-lg">{item.name}</span>
-                        {active && (
-                          <div className="w-2 h-2 bg-blue-600 rounded-full" />
-                        )}
-                      </div>
-                    </a>
-                  );
-                })}
+          style={{
+            background: '#0f172a'
+          }}
+          onClick={() => setIsMenuOpen(false)}
+        />
 
-                {/* Mobile CTA */}
-                <div className="pt-6 border-t border-gray-200 mt-4">
-                  <button
-                    onClick={() => {
-                      handleCTAClick('mobile_consultation');
+        {/* Gradient overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'linear-gradient(135deg, rgba(15,23,42,1) 0%, rgba(30,58,95,1) 50%, rgba(49,46,129,1) 100%)'
+          }}
+        />
+
+        {/* Content */}
+        <div className={`relative h-full flex flex-col transition-all duration-500 ${
+          isMenuOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+        }`}>
+          {/* Close Button */}
+          <div className="flex justify-end p-6">
+            <button
+              onClick={() => setIsMenuOpen(false)}
+              className="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+              aria-label="Fermer le menu"
+            >
+              <FiX className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Navigation Links */}
+          <nav className="flex-1 flex flex-col justify-center px-8 -mt-12">
+            <div className="space-y-2">
+              {navigationItems.map((item, index) => {
+                const active = isItemActive(item.href);
+                return (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    onClick={(e) => {
+                      handleNavigationClick(e, item.href);
                       setIsMenuOpen(false);
                     }}
-                    className={`w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-4 px-6 rounded-xl hover:shadow-lg transition-all duration-300 ${
-                      isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                    className={`block py-4 transition-all duration-500 ${
+                      isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'
                     }`}
                     style={{
-                      transitionDelay: isMenuOpen ? `${navigationItems.length * 50}ms` : '0ms'
+                      transitionDelay: isMenuOpen ? `${100 + index * 50}ms` : '0ms'
                     }}
                   >
-                    <div className="flex items-center justify-center space-x-2">
-                      <span>Consultation Gratuite</span>
-                      <FiArrowRight className="w-4 h-4" />
+                    <div className="flex items-center space-x-4">
+                      <span className={`text-3xl font-bold transition-colors ${
+                        active ? 'text-cyan-400' : 'text-white hover:text-cyan-300'
+                      }`}>
+                        {item.name}
+                      </span>
+                      {active && (
+                        <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
+                      )}
                     </div>
-                  </button>
-                </div>
+                  </a>
+                );
+              })}
+            </div>
 
-                {/* Mobile Contact */}
-                <div className="pt-6 space-y-4">
-                  <a
-                    href="tel:+33662704580"
-                    className={`flex items-center space-x-3 text-gray-600 hover:text-blue-600 transition-colors p-3 rounded-lg hover:bg-blue-50 ${
-                      isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
-                    }`}
-                    style={{
-                      transitionDelay: isMenuOpen ? `${(navigationItems.length + 2) * 50}ms` : '0ms'
-                    }}
-                  >
-                    <FiPhone className="w-5 h-5" />
-                    <span className="font-medium">+33 6 67 48 39 23</span>
-                  </a>
-                  <a
-                    href="mailto:contact@WevIA-pro.fr"
-                    className={`flex items-center space-x-3 text-gray-600 hover:text-blue-600 transition-colors p-3 rounded-lg hover:bg-blue-50 ${
-                      isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
-                    }`}
-                    style={{
-                      transitionDelay: isMenuOpen ? `${(navigationItems.length + 3) * 50}ms` : '0ms'
-                    }}
-                  >
-                    <FiMail className="w-5 h-5" />
-                    <span className="font-medium">contact@WevIA-pro.fr</span>
-                  </a>
+            {/* Mobile CTA */}
+            <div className={`mt-10 transition-all duration-500 ${
+              isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+            }`} style={{ transitionDelay: isMenuOpen ? `${100 + navigationItems.length * 50}ms` : '0ms' }}>
+              <button
+                onClick={() => {
+                  handleCTAClick('mobile_consultation');
+                  setIsMenuOpen(false);
+                }}
+                className="w-full bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-white font-bold py-5 px-8 rounded-2xl shadow-2xl shadow-cyan-500/25 hover:shadow-cyan-500/40 transition-all duration-300"
+              >
+                <div className="flex items-center justify-center space-x-3">
+                  <span className="text-lg">Consultation Gratuite</span>
+                  <FiArrowRight className="w-5 h-5" />
                 </div>
-              </div>
+              </button>
+            </div>
+          </nav>
+
+          {/* Bottom Contact Info */}
+          <div className={`p-8 border-t border-white/10 transition-all duration-500 ${
+            isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+          }`} style={{ transitionDelay: isMenuOpen ? `${200 + navigationItems.length * 50}ms` : '0ms' }}>
+            <div className="flex flex-col space-y-4">
+              <a
+                href="tel:+33667483923"
+                className="flex items-center space-x-3 text-white/80 hover:text-cyan-400 transition-colors"
+              >
+                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+                  <FiPhone className="w-5 h-5" />
+                </div>
+                <span className="font-medium">+33 6 67 48 39 23</span>
+              </a>
+              <a
+                href="mailto:wev.ia.org@gmail.com"
+                className="flex items-center space-x-3 text-white/80 hover:text-cyan-400 transition-colors"
+              >
+                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+                  <FiMail className="w-5 h-5" />
+                </div>
+                <span className="font-medium">wev.ia.org@gmail.com</span>
+              </a>
+            </div>
+
+            {/* Status indicator */}
+            <div className="flex items-center space-x-2 mt-6 text-white/60">
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+              <span className="text-sm">Disponible pour nouveaux projets</span>
             </div>
           </div>
         </div>
-      </header>
-
-      {/* Overlay */}
-      {isMenuOpen && (
-        <div 
-          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden"
-          onClick={() => setIsMenuOpen(false)}
-          aria-hidden="true"
-        />
-      )}
+      </div>
 
       {/* Modal de Consultation */}
       <ConsultationModal 

@@ -121,32 +121,161 @@ export default function About() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-32 overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white" id="about">
-      <div className="container mx-auto px-6 relative z-10">
-        {/* Header Section */}
-        <div className="mb-20">
-          <div className="flex items-start justify-between gap-8 mb-8">
-            {/* Badge à gauche */}
-            <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-purple-500/20 to-blue-500/20 backdrop-blur-sm border border-purple-500/30 rounded-full px-6 py-3 flex-shrink-0">
-              <FiUser className="w-5 h-5 text-purple-600" />
-              <span className="text-sm font-medium text-purple-700 font-bold">À PROPOS</span>
-            </div>
+    <section ref={sectionRef} className="relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white" id="about">
 
-            <div className="flex-1 text-right">
-              <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-gray-900 mb-8 leading-tight">
-                L'Expert Qui Fait
-                <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  La Différence
-                </span>
-              </h2>
-            </div>
+      {/* ========== MOBILE APP VERSION ========== */}
+      <div className="sm:hidden py-8 px-4">
+        {/* App Header */}
+        <div className="text-center mb-5">
+          <div className="inline-flex items-center space-x-2 bg-purple-50 rounded-full px-3 py-1.5 mb-3">
+            <FiUser className="w-3.5 h-3.5 text-purple-600" />
+            <span className="text-[10px] font-bold text-purple-700 uppercase tracking-wider">À Propos</span>
           </div>
+          <h2 className="text-2xl font-black text-gray-900 leading-tight">
+            L'Expert <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Qui Fait La Différence</span>
+          </h2>
+        </div>
 
-          <p className="text-xl md:text-2xl text-gray-600 max-w-5xl mx-auto leading-relaxed text-right">
-            Des années d'expertise, une seule obsession :
-            <span className="font-semibold text-blue-600"> transformer vos ambitions en succès digitaux mesurables</span>.
+        {/* Mobile Stats Grid */}
+        <div data-type="stats" className="grid grid-cols-2 gap-2 mb-5">
+          {stats.map((stat, index) => (
+            <div
+              key={index}
+              className={`bg-white rounded-xl p-3 text-center shadow-sm border border-gray-100 transition-all duration-500 ${
+                visibleStats.includes(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+            >
+              <div className={`w-8 h-8 bg-gradient-to-br ${stat.color} rounded-lg flex items-center justify-center mx-auto mb-2`}>
+                <stat.icon className="w-4 h-4 text-white" />
+              </div>
+              <div className={`text-lg font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
+                {stat.value}
+              </div>
+              <div className="text-[10px] text-gray-600 font-medium">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Mobile Story Card */}
+        <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 mb-5">
+          <h3 className="text-sm font-bold text-gray-900 mb-2">Mon Approche</h3>
+          <p className="text-xs text-gray-600 leading-relaxed">
+            <span className="font-semibold text-gray-900">Passionné par l'innovation</span>, je combine expertise technique
+            et vision business pour créer des solutions qui <span className="font-semibold text-blue-600">génèrent de vrais résultats</span>.
           </p>
         </div>
+
+        {/* Mobile Expertise Areas - Horizontal Scroll */}
+        <div className="mb-5">
+          <h4 className="text-xs font-bold text-gray-900 mb-3 flex items-center space-x-1">
+            <FiZap className="w-3 h-3 text-purple-600" />
+            <span>Domaines d'Expertise</span>
+          </h4>
+          <div className="flex overflow-x-auto gap-3 pb-2 -mx-4 px-4 scrollbar-hide snap-x snap-mandatory">
+            {expertiseAreas.map((area, index) => (
+              <div
+                key={index}
+                className="min-w-[70vw] snap-start flex-shrink-0 bg-white rounded-xl p-4 shadow-sm border border-gray-100 active:scale-[0.98] transition-transform"
+              >
+                <div className="flex items-start space-x-3">
+                  <div className={`w-10 h-10 bg-gradient-to-br ${area.color} rounded-xl flex items-center justify-center flex-shrink-0`}>
+                    <area.icon className="w-5 h-5 text-white" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h5 className="text-sm font-bold text-gray-900 mb-0.5">{area.title}</h5>
+                    <p className="text-[10px] text-gray-500 mb-2 line-clamp-2">{area.description}</p>
+                    <div className="flex flex-wrap gap-1">
+                      {area.technologies.slice(0, 3).map((tech, idx) => (
+                        <span key={idx} className="text-[8px] px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full font-medium">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="text-center text-[10px] text-gray-400 mt-2">← Glissez →</p>
+        </div>
+
+        {/* Mobile Skills */}
+        <div data-type="skills" className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 mb-5">
+          <h4 className="text-sm font-bold text-gray-900 mb-3">Stack Technique</h4>
+          <div className="space-y-3">
+            {mainSkills.map((skill, index) => (
+              <div
+                key={index}
+                className={`transition-all duration-500 ${
+                  animatedSkills.includes(index) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-xs font-semibold text-gray-900">{skill.name}</span>
+                  <span className="text-xs font-black bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    {skill.level}%
+                  </span>
+                </div>
+                <div className="relative w-full bg-gray-200 rounded-full h-1.5 overflow-hidden">
+                  <div
+                    className="bg-gradient-to-r from-blue-500 to-purple-600 h-1.5 rounded-full transition-all duration-1000 ease-out"
+                    style={{
+                      width: animatedSkills.includes(index) ? `${skill.level}%` : '0%',
+                      transitionDelay: `${index * 150}ms`
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Mobile Hidden Skills Tags */}
+        <div className="bg-gradient-to-r from-slate-50 to-blue-50/50 rounded-xl p-3 border border-gray-100">
+          <div className="text-[10px] font-bold text-gray-900 mb-2">+20 autres technologies</div>
+          <div className="flex flex-wrap gap-1.5">
+            {hiddenSkills.slice(0, 8).map((tech, index) => (
+              <span
+                key={index}
+                className="text-[9px] px-2 py-1 bg-white text-gray-600 rounded-full font-medium border border-gray-200"
+              >
+                {tech}
+              </span>
+            ))}
+            <span className="text-[9px] px-2 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-bold">
+              +{hiddenSkills.length - 8}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* ========== DESKTOP VERSION ========== */}
+      <div className="hidden sm:block py-32">
+        <div className="container mx-auto px-6 relative z-10">
+          {/* Header Section */}
+          <div className="mb-20">
+            <div className="flex items-start justify-between gap-8 mb-8">
+              {/* Badge à gauche */}
+              <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-purple-500/20 to-blue-500/20 backdrop-blur-sm border border-purple-500/30 rounded-full px-6 py-3 flex-shrink-0">
+                <FiUser className="w-5 h-5 text-purple-600" />
+                <span className="text-sm font-medium text-purple-700 font-bold">À PROPOS</span>
+              </div>
+
+              <div className="flex-1 text-right">
+                <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-gray-900 mb-8 leading-tight">
+                  L'Expert Qui Fait
+                  <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    La Différence
+                  </span>
+                </h2>
+              </div>
+            </div>
+
+            <p className="text-xl md:text-2xl text-gray-600 max-w-5xl mx-auto leading-relaxed text-right">
+              Des années d'expertise, une seule obsession :
+              <span className="font-semibold text-blue-600"> transformer vos ambitions en succès digitaux mesurables</span>.
+            </p>
+          </div>
 
         {/* Stats Premium */}
         <div data-type="stats" className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
@@ -324,6 +453,7 @@ export default function About() {
               </div>
             </div> */}
           </div>
+        </div>
         </div>
       </div>
 

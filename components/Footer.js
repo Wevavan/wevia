@@ -152,14 +152,14 @@ export default function Footer() {
   ];
 
   return (
-    <footer 
+    <footer
       ref={footerRef}
       className="relative overflow-hidden"
       onMouseMove={handleMouseMove}
       id="contact"
     >
-      {/* Background Professional */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-800 via-gray-900 to-slate-900">
+      {/* Background Professional - Desktop */}
+      <div className="hidden sm:block absolute inset-0 bg-gradient-to-br from-slate-800 via-gray-900 to-slate-900">
         {/* Animated Grid */}
         <div
           className="absolute inset-0 opacity-10"
@@ -184,185 +184,247 @@ export default function Footer() {
         <div className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
       </div>
 
-      <div className="container mx-auto px-6 relative z-10 py-20">
-        {/* Header Section */}
-        <div 
-          data-index="0"
-          className={`text-center mb-16 transition-all duration-700 ${
-            visibleElements.includes(0) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}
-        >
-          <div className="flex items-center justify-center mb-6">
-            <img src="/logo_wev_ia.png" alt="WEV-IA Logo" className="h-80" />
-          </div>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Développeur spécialisé dans les <span className="text-blue-400 font-semibold">solutions web sur-mesure</span> et
-            <span className="text-purple-400 font-semibold"> l'intelligence artificielle</span>.
-            Je transforme vos idées en succès digitaux.
+      {/* ========== MOBILE APP VERSION ========== */}
+      <div className="sm:hidden bg-gradient-to-b from-slate-900 to-gray-900 py-8 px-4 relative z-10">
+        {/* App Logo Header */}
+        <div className="text-center mb-6">
+          <img src="/logo_wev_ia.png" alt="WEV-IA Logo" className="h-24 mx-auto mb-3" />
+          <p className="text-xs text-gray-400 leading-relaxed">
+            Solutions <span className="text-blue-400">web</span> & <span className="text-purple-400">IA</span> sur-mesure
           </p>
         </div>
 
-        {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-4 gap-12 mb-16">
-          {/* Services Premium */}
-          <div 
-            data-index="1"
-            className={`lg:col-span-2 transition-all duration-700 ${
-              visibleElements.includes(1) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-          >
-            <h4 className="text-2xl font-bold text-white mb-8 flex items-center space-x-2">
-              <FiZap className="w-6 h-6 text-blue-400" />
-              <span>Services</span>
-            </h4>
-            <div className="grid sm:grid-cols-2 gap-4">
-              {services.map((service, index) => (
-                <a
-                  key={index}
-                  href={service.href}
-                  className="group p-4 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300"
-                >
-                  <div className="flex items-start space-x-3">
-                    <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                      <service.icon className="w-5 h-5 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <h5 className="font-bold text-white group-hover:text-blue-400 transition-colors mb-1">
-                        {service.name}
-                      </h5>
-                      <p className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">
-                        {service.description}
-                      </p>
-                    </div>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Quick Links */}
-          <div 
-            data-index="2"
-            className={`transition-all duration-700 ${
-              visibleElements.includes(2) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-          >
-            <h4 className="text-2xl font-bold text-white mb-8">Navigation</h4>
-            <div className="space-y-3">
-              {quickLinks.map((link, index) => (
-                <a
-                  key={index}
-                  href={link.href}
-                  className="group flex items-center space-x-2 text-gray-400 hover:text-white transition-all duration-300"
-                >
-                  <FiArrowRight className="w-4 h-4 text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <span className="group-hover:translate-x-2 transition-transform duration-300">
-                    {link.name}
-                  </span>
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Contact Premium */}
-          <div 
-            data-index="3"
-            className={`transition-all duration-700 ${
-              visibleElements.includes(3) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-          >
-            <h4 className="text-2xl font-bold text-white mb-8">CONTACT</h4>
-            <div className="space-y-4">
-              {contactInfo.map((contact, index) => (
-                <a
-                  key={index}
-                  href={contact.href}
-                  className="group flex items-start space-x-3 p-3 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300"
-                >
-                  <div className={`w-8 h-8 rounded-lg bg-gradient-to-r from-gray-700 to-gray-800 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                    <contact.icon className={`w-4 h-4 ${contact.color}`} />
-                  </div>
-                  <div>
-                    <div className="text-sm text-gray-400">{contact.label}</div>
-                    <div className="text-white font-medium group-hover:text-blue-400 transition-colors">
-                      {contact.value}
-                    </div>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Guarantees Bar */}
-        <div 
-          data-index="4"
-          className={`transition-all duration-700 mb-16 ${
-            visibleElements.includes(4) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}
-        >
-          <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-              {guarantees.map((guarantee, index) => (
-                <div
-                  key={index}
-                  className="group text-center p-4 bg-white/5 rounded-2xl border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300"
-                >
-                  <guarantee.icon className={`w-8 h-8 ${guarantee.color} mx-auto mb-2 group-hover:scale-110 transition-transform duration-300`} />
-                  <div className="text-white font-bold text-sm group-hover:text-blue-400 transition-colors">
-                    {guarantee.text}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Social & Newsletter */}
-        <div 
-          data-index="5"
-          className={`transition-all duration-700 mb-12 ${
-            visibleElements.includes(5) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}
-        >
-          <div className="flex flex-col lg:flex-row items-center justify-between space-y-8 lg:space-y-0">
-            {/* Social Links */}
-
-            {/* Newsletter */}
-            {/* <div className="flex items-center space-x-4">
-              <span className="text-white font-bold">Newsletter Tech :</span>
-              <div className="flex space-x-2">
-                <input
-                  type="email"
-                  placeholder="votre@email.fr"
-                  className="px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
-                />
-                <button className="px-6 py-2 bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white font-bold rounded-xl transition-all duration-300 transform hover:scale-105">
-                  S'abonner
-                </button>
+        {/* Quick Contact Cards */}
+        <div className="space-y-2 mb-6">
+          {contactInfo.map((contact, index) => (
+            <a
+              key={index}
+              href={contact.href}
+              className="flex items-center space-x-3 p-3 bg-white/5 rounded-xl border border-white/10 active:scale-[0.98] transition-transform"
+            >
+              <div className="w-9 h-9 rounded-lg bg-gradient-to-r from-gray-700 to-gray-800 flex items-center justify-center">
+                <contact.icon className={`w-4 h-4 ${contact.color}`} />
               </div>
-            </div> */}
+              <div className="flex-1">
+                <div className="text-[10px] text-gray-500">{contact.label}</div>
+                <div className="text-sm text-white font-medium">{contact.value}</div>
+              </div>
+              <FiArrowRight className="w-4 h-4 text-gray-500" />
+            </a>
+          ))}
+        </div>
+
+        {/* Guarantees Grid - Compact */}
+        <div className="grid grid-cols-4 gap-2 mb-6">
+          {guarantees.map((guarantee, index) => (
+            <div key={index} className="text-center p-2 bg-white/5 rounded-xl border border-white/10">
+              <guarantee.icon className={`w-4 h-4 ${guarantee.color} mx-auto mb-1`} />
+              <div className="text-[9px] text-white font-medium leading-tight">{guarantee.text}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Quick Services - Horizontal Scroll */}
+        <div className="mb-6">
+          <h4 className="text-xs font-bold text-white mb-3 flex items-center space-x-1">
+            <FiZap className="w-3 h-3 text-blue-400" />
+            <span>Services</span>
+          </h4>
+          <div className="flex overflow-x-auto gap-2 pb-2 scrollbar-hide">
+            {services.map((service, index) => (
+              <a
+                key={index}
+                href={service.href}
+                className="flex-shrink-0 flex items-center space-x-2 px-3 py-2 bg-white/5 rounded-lg border border-white/10"
+              >
+                <service.icon className="w-3.5 h-3.5 text-blue-400" />
+                <span className="text-[11px] text-white whitespace-nowrap">{service.name}</span>
+              </a>
+            ))}
           </div>
+        </div>
+
+        {/* Quick Links - 2 columns */}
+        <div className="grid grid-cols-2 gap-x-4 gap-y-2 mb-6">
+          {quickLinks.map((link, index) => (
+            <a
+              key={index}
+              href={link.href}
+              className="text-xs text-gray-400 py-1.5 active:text-white transition-colors"
+            >
+              {link.name}
+            </a>
+          ))}
         </div>
 
         {/* Bottom Bar */}
-        <div 
-          data-index="6"
-          className={`border-t border-white/10 pt-8 transition-all duration-700 ${
-            visibleElements.includes(6) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}
-        >
-          <div className="flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-y-0">
-            <div className="text-gray-400 text-center lg:text-left">
-              <p>&copy; 2025 <span className="text-blue-400 font-semibold">wevavan</span>. Tous droits réservés.</p>
+        <div className="border-t border-white/10 pt-4">
+          <p className="text-[10px] text-gray-500 text-center mb-3">
+            &copy; 2025 <span className="text-blue-400">wevavan</span>. Tous droits réservés.
+          </p>
+          <div className="flex justify-center space-x-4 text-[10px] text-gray-500">
+            <a href="/mentions-legales" className="active:text-white">Mentions légales</a>
+            <a href="/politique-confidentialite" className="active:text-white">Confidentialité</a>
+            <a href="/cgv" className="active:text-white">CGV</a>
+          </div>
+        </div>
+      </div>
+
+      {/* ========== DESKTOP VERSION ========== */}
+      <div className="hidden sm:block relative z-10 py-20">
+        <div className="container mx-auto px-6">
+          {/* Header Section */}
+          <div
+            data-index="0"
+            className={`text-center mb-16 transition-all duration-700 ${
+              visibleElements.includes(0) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
+            <div className="flex items-center justify-center mb-6">
+              <img src="/logo_wev_ia.png" alt="WEV-IA Logo" className="h-60 lg:h-80" />
             </div>
-            
-            <div className="flex items-center space-x-6 text-sm text-gray-400">
-              <a href="/mentions-legales" className="hover:text-white transition-colors">Mentions légales</a>
-              <span>•</span>
-              <a href="/politique-confidentialite" className="hover:text-white transition-colors">Politique de confidentialité</a>
-              <span>•</span>
-              <a href="/cgv" className="hover:text-white transition-colors">CGV</a>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+              Développeur spécialisé dans les <span className="text-blue-400 font-semibold">solutions web sur-mesure</span> et
+              <span className="text-purple-400 font-semibold"> l'intelligence artificielle</span>.
+              Je transforme vos idées en succès digitaux.
+            </p>
+          </div>
+
+          {/* Main Content Grid */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+            {/* Services Premium */}
+            <div
+              data-index="1"
+              className={`col-span-2 transition-all duration-700 ${
+                visibleElements.includes(1) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+            >
+              <h4 className="text-2xl font-bold text-white mb-8 flex items-center space-x-2">
+                <FiZap className="w-6 h-6 text-blue-400" />
+                <span>Services</span>
+              </h4>
+              <div className="grid grid-cols-2 gap-4">
+                {services.map((service, index) => (
+                  <a
+                    key={index}
+                    href={service.href}
+                    className="group p-4 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300"
+                  >
+                    <div className="flex items-start space-x-3">
+                      <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <service.icon className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h5 className="font-bold text-white group-hover:text-blue-400 transition-colors mb-1">
+                          {service.name}
+                        </h5>
+                        <p className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">
+                          {service.description}
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Quick Links */}
+            <div
+              data-index="2"
+              className={`transition-all duration-700 ${
+                visibleElements.includes(2) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+            >
+              <h4 className="text-2xl font-bold text-white mb-8">Navigation</h4>
+              <div className="space-y-3">
+                {quickLinks.map((link, index) => (
+                  <a
+                    key={index}
+                    href={link.href}
+                    className="group flex items-center space-x-2 text-gray-400 hover:text-white transition-all duration-300"
+                  >
+                    <FiArrowRight className="w-4 h-4 text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <span className="group-hover:translate-x-2 transition-transform duration-300">
+                      {link.name}
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Contact Premium */}
+            <div
+              data-index="3"
+              className={`transition-all duration-700 ${
+                visibleElements.includes(3) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+            >
+              <h4 className="text-2xl font-bold text-white mb-8">CONTACT</h4>
+              <div className="space-y-4">
+                {contactInfo.map((contact, index) => (
+                  <a
+                    key={index}
+                    href={contact.href}
+                    className="group flex items-start space-x-3 p-3 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-r from-gray-700 to-gray-800 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <contact.icon className={`w-4 h-4 ${contact.color}`} />
+                    </div>
+                    <div>
+                      <div className="text-sm text-gray-400">{contact.label}</div>
+                      <div className="text-white font-medium group-hover:text-blue-400 transition-colors">
+                        {contact.value}
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Guarantees Bar */}
+          <div
+            data-index="4"
+            className={`transition-all duration-700 mb-16 ${
+              visibleElements.includes(4) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
+            <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10">
+              <div className="grid grid-cols-4 gap-6">
+                {guarantees.map((guarantee, index) => (
+                  <div
+                    key={index}
+                    className="group text-center p-4 bg-white/5 rounded-2xl border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300"
+                  >
+                    <guarantee.icon className={`w-8 h-8 ${guarantee.color} mx-auto mb-2 group-hover:scale-110 transition-transform duration-300`} />
+                    <div className="text-white font-bold text-sm group-hover:text-blue-400 transition-colors">
+                      {guarantee.text}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Bar */}
+          <div
+            data-index="6"
+            className={`border-t border-white/10 pt-8 transition-all duration-700 ${
+              visibleElements.includes(6) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
+            <div className="flex flex-row justify-between items-center">
+              <div className="text-gray-400 text-sm">
+                <p>&copy; 2025 <span className="text-blue-400 font-semibold">wevavan</span>. Tous droits réservés.</p>
+              </div>
+
+              <div className="flex items-center gap-6 text-sm text-gray-400">
+                <a href="/mentions-legales" className="hover:text-white transition-colors">Mentions légales</a>
+                <span>•</span>
+                <a href="/politique-confidentialite" className="hover:text-white transition-colors">Confidentialité</a>
+                <span>•</span>
+                <a href="/cgv" className="hover:text-white transition-colors">CGV</a>
+              </div>
             </div>
           </div>
         </div>
