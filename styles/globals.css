@@ -38,6 +38,18 @@ body {
   animation: float 6s ease-in-out infinite;
 }
 
+.animate-float-slow {
+  animation: float 12s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: float 8s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: float 4s ease-in-out infinite;
+}
+
 /* Gradient text */
 .gradient-text {
   background: linear-gradient(135deg, #06b6d4, #8b5cf6);

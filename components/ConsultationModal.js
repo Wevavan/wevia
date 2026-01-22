@@ -1,9 +1,9 @@
 // components/ConsultationModal.js
 import { useState, useEffect } from 'react';
-import { 
-  XMarkIcon, 
-  CalendarIcon, 
-  PhoneIcon, 
+import {
+  XMarkIcon,
+  CalendarIcon,
+  PhoneIcon,
   VideoCameraIcon,
   MapPinIcon,
   SparklesIcon,
@@ -13,19 +13,34 @@ import {
   AcademicCapIcon,
   ClockIcon
 } from '@heroicons/react/24/outline';
+import {
+  FiGlobe,
+  FiShoppingCart,
+  FiCode,
+  FiSmartphone,
+  FiZap,
+  FiTrendingUp,
+  FiRefreshCw,
+  FiTool,
+  FiStar
+} from 'react-icons/fi';
+import { RiRobot2Fill } from 'react-icons/ri';
+import { MdMessage } from 'react-icons/md';
+import { FaWhatsapp } from 'react-icons/fa';
 
 // Configuration des données statiques
 const PROJECT_TYPES = [
-  { value: 'site-web-vitrine', label: 'Site Web Vitrine', icon: '🌐' },
-  { value: 'site-web-ecommerce', label: 'Site E-commerce', icon: '🛒' },
-  { value: 'application-web', label: 'Application Web', icon: '💻' },
-  { value: 'integration-ia', label: 'Intégration IA', icon: '🤖' },
-  { value: 'chatbot-ia', label: 'Chatbot IA', icon: '💬' },
-  { value: 'automatisation', label: 'Automatisation', icon: '⚡' },
-  { value: 'optimisation-seo', label: 'Optimisation SEO', icon: '📈' },
-  { value: 'refonte-site', label: 'Refonte de Site', icon: '🔄' },
-  { value: 'maintenance', label: 'Maintenance', icon: '🔧' },
-  { value: 'autre', label: 'Autre Projet', icon: '✨' }
+  { value: 'site-web-vitrine', label: 'Site Web Vitrine', Icon: FiGlobe },
+  { value: 'site-web-ecommerce', label: 'Site E-commerce', Icon: FiShoppingCart },
+  { value: 'application-web', label: 'Application Web', Icon: FiCode },
+  { value: 'application-mobile', label: 'Application Mobile', Icon: FiSmartphone },
+  { value: 'integration-ia', label: 'Intégration IA', Icon: RiRobot2Fill },
+  { value: 'chatbot-ia', label: 'Chatbot IA', Icon: MdMessage },
+  { value: 'automatisation', label: 'Automatisation', Icon: FiZap },
+  { value: 'optimisation-seo', label: 'Optimisation SEO', Icon: FiTrendingUp },
+  { value: 'refonte-site', label: 'Refonte de Site', Icon: FiRefreshCw },
+  { value: 'maintenance', label: 'Maintenance', Icon: FiTool },
+  { value: 'autre', label: 'Autre Projet', Icon: FiStar }
 ];
 
 // Estimations de prix par type de projet
@@ -92,16 +107,6 @@ const PROJECT_ESTIMATIONS = {
   }
 };
 
-const BUDGET_RANGES = [
-  { value: 'moins-2k', label: 'Moins de 2 000€' },
-  { value: '2k-5k', label: '2 000€ - 5 000€' },
-  { value: '5k-10k', label: '5 000€ - 10 000€' },
-  { value: '10k-20k', label: '10 000€ - 20 000€' },
-  { value: '20k-50k', label: '20 000€ - 50 000€' },
-  { value: 'plus-50k', label: 'Plus de 50 000€' },
-  { value: 'a-discuter', label: 'À discuter' }
-];
-
 const TIMELINES = [
   { value: 'urgent-1mois', label: 'Urgent (< 1 mois)' },
   { value: '1-3mois', label: '1 à 3 mois' },
@@ -111,21 +116,27 @@ const TIMELINES = [
 ];
 
 const CONSULTATION_TYPES = [
-  { 
-    value: 'telephone', 
-    label: 'Appel Téléphonique', 
+  {
+    value: 'telephone',
+    label: 'Appel Téléphonique',
     icon: PhoneIcon,
     description: 'Entretien par téléphone (30-45 min)'
   },
-  { 
-    value: 'visio-zoom', 
-    label: 'Visioconférence Zoom', 
+  {
+    value: 'visio-zoom',
+    label: 'Visioconférence Zoom',
     icon: VideoCameraIcon,
     description: 'Appel vidéo avec partage d\'écran (45-60 min)'
   },
-  { 
-    value: 'entretien-physique', 
-    label: 'Rendez-vous Physique', 
+  {
+    value: 'whatsapp',
+    label: 'Discussion WhatsApp',
+    icon: FaWhatsapp,
+    description: 'Échange par WhatsApp (30-45 min)'
+  },
+  {
+    value: 'entretien-physique',
+    label: 'Rendez-vous Physique',
     icon: MapPinIcon,
     description: 'Rencontre en personne à Paris (60-90 min)'
   }
@@ -136,7 +147,7 @@ const INITIAL_FORM_DATA = {
   firstName: '',
   lastName: '',
   email: '',
-  phone: '',
+  phone: '+33',
   company: '',
   projectType: '',
   projectName: '',
@@ -165,6 +176,7 @@ export default function ConsultationModal({
     source,
     sourceSection
   });
+  const [formErrors, setFormErrors] = useState({});
   const [availableDates, setAvailableDates] = useState([]);
   const [loadingSlots, setLoadingSlots] = useState(false);
 
@@ -187,6 +199,7 @@ export default function ConsultationModal({
   const resetModal = () => {
     setStep(1);
     setIsSuccess(false);
+    setFormErrors({});
     setFormData({
       ...INITIAL_FORM_DATA,
       source,
@@ -206,11 +219,55 @@ export default function ConsultationModal({
   // Obtenir les heures disponibles pour une date donnée
   const getAvailableTimesForDate = (dateString) => {
     const dateData = availableDates.find(d => d.date === dateString);
-    return dateData ? dateData.times : [];
+    if (!dateData) {
+      return [];
+    }
+    // Use a Set to remove duplicates and then convert it back to an array
+    return [...new Set(dateData.times)];
   };
 
   // Gestionnaires d'événements
   const handleInputChange = (field, value) => {
+    if (field === 'email') {
+      const allowedDomains = ['gmail.com', 'yahoo.fr', 'yahoo.com', 'hotmail.com', 'hotmail.fr', 'outlook.com', 'outlook.fr', 'icloud.com', 'orange.fr', 'sfr.fr', 'free.fr', 'laposte.net'];
+      const domain = value.split('@')[1];
+      if (!domain || !allowedDomains.includes(domain)) {
+        setFormErrors(prev => ({ ...prev, email: "Adresse mail invalide" }));
+      } else {
+        setFormErrors(prev => ({ ...prev, email: '' }));
+      }
+    }
+
+    if (field === 'phone') {
+      // Ne pas permettre la suppression du +33
+      if (!value.startsWith('+33')) {
+        value = '+33';
+      }
+
+      // Supprimer tout ce qui n'est pas un chiffre, sauf le +
+      const cleaned = value.substring(3).replace(/[^\d]/g, '');
+      
+      let formatted = '+33';
+      if (cleaned.length > 0) {
+        formatted += ' ' + cleaned.substring(0, 1);
+      }
+      if (cleaned.length > 1) {
+        formatted += ' ' + cleaned.substring(1, 3);
+      }
+      if (cleaned.length > 3) {
+        formatted += ' ' + cleaned.substring(3, 5);
+      }
+      if (cleaned.length > 5) {
+        formatted += ' ' + cleaned.substring(5, 7);
+      }
+      if (cleaned.length > 7) {
+        formatted += ' ' + cleaned.substring(7, 9);
+      }
+      
+      // Limiter à la longueur d'un numéro français
+      value = formatted.trim().slice(0, 17);
+    }
+
     setFormData(prev => ({
       ...prev,
       [field]: value
@@ -273,13 +330,13 @@ export default function ConsultationModal({
   const canProceedToStep2 = () => {
     return formData.firstName && 
            formData.lastName && 
-           formData.email && 
+           formData.email &&
+           !formErrors.email &&
            formData.phone;
   };
 
   const canProceedToStep3 = () => {
-    return formData.projectType && 
-           formData.budget && 
+    return formData.projectType &&
            formData.timeline;
   };
 
@@ -328,6 +385,7 @@ export default function ConsultationModal({
           ) : step === 1 ? (
             <PersonalInfoStep 
               formData={formData}
+              formErrors={formErrors}
               onChange={handleInputChange}
               onNext={() => setStep(2)}
               canProceed={canProceedToStep2()}
@@ -428,7 +486,7 @@ function SuccessStep({ formData, formatDate }) {
   );
 }
 
-function PersonalInfoStep({ formData, onChange, onNext, canProceed }) {
+function PersonalInfoStep({ formData, formErrors, onChange, onNext, canProceed }) {
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
@@ -463,6 +521,7 @@ function PersonalInfoStep({ formData, onChange, onNext, canProceed }) {
           onChange={(value) => onChange('email', value)}
           placeholder="votre@email.com"
           required
+          error={formErrors.email}
         />
         
         <InputField
@@ -547,95 +606,12 @@ function ProjectStep({ formData, onChange, onBack, onNext, canProceed }) {
         onChange={(value) => onChange('projectType', value)}
         renderOption={(option) => (
           <div className="flex items-center space-x-3">
-            <span className="text-2xl">{option.icon}</span>
+            <option.Icon className="w-6 h-6 text-blue-600" />
             <span className="font-semibold text-gray-900">{option.label}</span>
           </div>
         )}
         colorScheme="blue"
       />
-
-      {/* Estimation de prix */}
-      {estimation && (
-        <div className="bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-200 rounded-2xl p-6 mb-6">
-          <div className="flex items-start space-x-3">
-            <div className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center flex-shrink-0">
-              <span className="text-white text-lg">💰</span>
-            </div>
-            <div className="flex-1">
-              <h4 className="font-bold text-gray-900 mb-2 flex items-center">
-                Estimation pour : {selectedProject?.label}
-              </h4>
-              
-              <div className="bg-white/80 rounded-xl p-4 mb-4">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
-                  <span className="text-sm text-gray-600 mb-1 sm:mb-0">Fourchette de prix :</span>
-                  <span className="text-xl font-bold text-blue-600">
-                    {formatPrice(estimation.min)} - {formatPrice(estimation.max)}
-                  </span>
-                </div>
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                  <span className="text-sm text-gray-600 mb-1 sm:mb-0">Prix moyen :</span>
-                  <span className="text-lg font-semibold text-green-600">
-                    ~{formatPrice(estimation.average)}
-                  </span>
-                </div>
-              </div>
-              
-              <p className="text-sm text-gray-700 mb-4">
-                {estimation.description}
-              </p>
-              
-              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
-                <div className="flex items-start space-x-2">
-                  <span className="text-amber-500 text-sm">💡</span>
-                  <div className="text-sm text-amber-800">
-                    <strong>Important :</strong> Cette estimation est indicative. Le prix final dépendra de vos besoins spécifiques, des fonctionnalités souhaitées et de la complexité du projet. Nous rediscuterons ensemble pour définir précisément les ressources nécessaires et ajuster le budget en conséquence.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Budget */}
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-4">
-          Budget envisagé * 
-          {estimation && (
-            <span className="text-blue-600 text-xs ml-2">
-              (Recommandé : {BUDGET_RANGES.find(b => b.value === getBudgetRecommendation())?.label})
-            </span>
-          )}
-        </label>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {BUDGET_RANGES.map((budget) => {
-            const isRecommended = estimation && budget.value === getBudgetRecommendation();
-            return (
-              <button
-                key={budget.value}
-                onClick={() => onChange('budget', budget.value)}
-                className={`p-3 border-2 rounded-xl text-left transition-all relative ${
-                  formData.budget === budget.value
-                    ? 'border-green-500 bg-green-50'
-                    : isRecommended
-                    ? 'border-blue-300 bg-blue-50 hover:border-green-300'
-                    : 'border-gray-200 hover:bg-gray-50 hover:border-green-300'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold text-gray-900">{budget.label}</span>
-                  {isRecommended && (
-                    <span className="text-xs bg-blue-500 text-white px-2 py-1 rounded-full">
-                      Recommandé
-                    </span>
-                  )}
-                </div>
-              </button>
-            );
-          })}
-        </div>
-      </div>
 
       {/* Timeline */}
       <SelectionGrid
@@ -832,7 +808,6 @@ function SchedulingStep({
       {formData.consultationDate && formData.consultationTime && (
         <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-2xl p-6">
           <h4 className="font-bold text-gray-900 mb-3 flex items-center">
-            <SparklesIcon className="w-5 h-5 text-blue-600 mr-2" />
             Récapitulatif de votre consultation
           </h4>
           <div className="space-y-2 text-sm">
@@ -840,12 +815,6 @@ function SchedulingStep({
             <p><strong>Date:</strong> {formatDate(formData.consultationDate)}</p>
             <p><strong>Heure:</strong> {formData.consultationTime}</p>
             <p><strong>Projet:</strong> {PROJECT_TYPES.find(p => p.value === formData.projectType)?.label}</p>
-            <p><strong>Budget:</strong> {BUDGET_RANGES.find(b => b.value === formData.budget)?.label}</p>
-            {formData.projectType && PROJECT_ESTIMATIONS[formData.projectType] && (
-              <p className="text-blue-600">
-                <strong>Estimation:</strong> {formatPrice(PROJECT_ESTIMATIONS[formData.projectType].min)} - {formatPrice(PROJECT_ESTIMATIONS[formData.projectType].max)}
-              </p>
-            )}
           </div>
         </div>
       )}
@@ -878,7 +847,7 @@ function SchedulingStep({
 }
 
 // Composants utilitaires réutilisables
-function InputField({ label, type, value, onChange, placeholder, required = false }) {
+function InputField({ label, type, value, onChange, placeholder, required = false, error = null }) {
   return (
     <div>
       <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -889,9 +858,10 @@ function InputField({ label, type, value, onChange, placeholder, required = fals
         required={required}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+        className={`w-full px-4 py-3 border rounded-xl transition-all ${error ? 'border-red-500 ring-2 ring-red-200' : 'border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent'}`}
         placeholder={placeholder}
       />
+      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
     </div>
   );
 }

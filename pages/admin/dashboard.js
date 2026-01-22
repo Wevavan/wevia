@@ -301,6 +301,33 @@ const loadTimeSlots = async () => {
     return <Icon className="w-4 h-4" />;
   };
 
+  // Fonction pour changer le statut d'une consultation
+  const updateConsultationStatus = async (consultationId, newStatus) => {
+    try {
+      const token = localStorage.getItem('adminToken');
+      const response = await fetch(`/api/admin/consultations?id=${consultationId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ status: newStatus })
+      });
+
+      if (response.ok) {
+        // Recharger les consultations pour mettre à jour l'affichage
+        loadConsultations();
+        alert('Statut mis à jour avec succès');
+      } else {
+        const error = await response.json();
+        alert(error.message || 'Erreur lors de la mise à jour du statut');
+      }
+    } catch (error) {
+      console.error('Erreur:', error);
+      alert('Erreur lors de la mise à jour du statut');
+    }
+  };
+
   const toggleSlotAvailability = async (slotId, currentAvailability) => {
     try {
       const response = await fetch('/api/admin/timeslots', {
@@ -620,7 +647,26 @@ const loadTimeSlots = async () => {
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {getStatusBadge(consultation.status)}
+                          <select
+                            value={consultation.status}
+                            onChange={(e) => updateConsultationStatus(consultation._id, e.target.value)}
+                            className={`text-sm font-medium rounded-full px-3 py-1 border-0 cursor-pointer focus:ring-2 focus:ring-blue-500 ${
+                              consultation.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                              consultation.status === 'reviewed' ? 'bg-blue-100 text-blue-800' :
+                              consultation.status === 'contacted' ? 'bg-blue-100 text-blue-800' :
+                              consultation.status === 'scheduled' ? 'bg-green-100 text-green-800' :
+                              consultation.status === 'completed' ? 'bg-green-100 text-green-800' :
+                              consultation.status === 'cancelled' ? 'bg-red-100 text-red-800' :
+                              'bg-gray-100 text-gray-800'
+                            }`}
+                          >
+                            <option value="pending">En attente</option>
+                            <option value="reviewed">Examiné</option>
+                            <option value="contacted">Contacté</option>
+                            <option value="scheduled">Planifié</option>
+                            <option value="completed">Terminé</option>
+                            <option value="cancelled">Annulé</option>
+                          </select>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {formatDateTime(consultation.createdAt)}

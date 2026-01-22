@@ -1,15 +1,8 @@
 import { useState, useEffect } from 'react';
-import { 
-  PlayIcon,
-  StarIcon,
-  CheckCircleIcon,
-  ArrowRightIcon,
-  RocketLaunchIcon,
-  BoltIcon,
-  XMarkIcon
-} from '@heroicons/react/24/outline';
+import { MdRocket, MdStar } from 'react-icons/md';
+import { FiZap, FiArrowRight, FiX } from 'react-icons/fi';
 
-import ConsultationModal from './ConsultationModal'; // Import de la modal de consultation
+import ConsultationModal from './ConsultationModal';
 
 export default function PremiumHero() {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
@@ -67,9 +60,9 @@ export default function PremiumHero() {
   }, [isVideoModalOpen, isConsultationModalOpen]);
 
   const stats = [
-    { number: '50+', label: 'Projets Réalisés', icon: RocketLaunchIcon },
-    { number: '98%', label: 'Clients Satisfaits', icon: StarIcon },
-    { number: '24h', label: 'Support Réactif', icon: BoltIcon }
+    { number: '15+', label: 'Projets Livrés', icon: MdRocket },
+    { number: '100%', label: 'Clients Satisfaits', icon: MdStar },
+    { number: '<48h', label: 'Délai Réponse', icon: FiZap }
   ];
 
   const metrics = [
@@ -115,13 +108,6 @@ export default function PremiumHero() {
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               {/* Left Column - Content */}
               <div className={`text-white space-y-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                {/* Status Badge */}
-                <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-green-500/20 to-emerald-500/20 backdrop-blur-sm border border-green-500/30 rounded-full px-6 py-3">
-                  <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
-                  <span className="text-sm font-medium text-green-300">Disponible pour nouveaux projets</span>
-                  <CheckCircleIcon className="w-5 h-5 text-green-400" />
-                </div>
-
                 {/* Main Heading */}
                 <div className="space-y-6">
                   <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-tight">
@@ -144,9 +130,11 @@ export default function PremiumHero() {
 
                 {/* Subtitle */}
                 <p className="text-lg sm:text-xl lg:text-2xl text-gray-300 leading-relaxed max-w-2xl">
-                  Développeur expert en <span className="text-cyan-400 font-semibold">technologies web avancées</span> et 
-                  <span className="text-purple-400 font-semibold"> intelligence artificielle</span>. 
-                  Je transforme vos idées en solutions digitales performantes qui génèrent des résultats.
+                  Vous avez une idée, un projet, une entreprise qui mérite d'être visible ? Je crée des sites qui vous ramènent des vrais clients, pas juste des visiteurs.
+                  <br /><br />
+                  Mon job : améliorer votre référencement Google, automatiser vos tâches répétitives avec l'IA, et vous faire gagner du temps et de l'argent.
+                  <br /><br />
+                  <span className="text-cyan-400 font-semibold">Pas de blabla technique — juste des résultats concrets pour votre business.</span>
                 </p>
 
                 {/* Statistics */}
@@ -171,7 +159,7 @@ export default function PremiumHero() {
                   >
                     <span className="relative z-10 flex items-center justify-center space-x-3">
                       <span className="text-lg">Démarrer Mon Projet</span>
-                      <ArrowRightIcon className="w-6 h-6 transition-transform group-hover:translate-x-2" />
+                      <FiArrowRight className="w-6 h-6 transition-transform group-hover:translate-x-2" />
                     </span>
                     <div className="absolute inset-0 bg-gradient-to-r from-white/20 via-transparent to-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
                   </button>
@@ -193,15 +181,15 @@ export default function PremiumHero() {
                         />
                       ))}
                     </div>
-                    <span className="text-sm font-medium">+20 clients satisfaits</span>
+                    <span className="text-sm font-medium">+15 clients accompagnés</span>
                   </div>
                   <div className="flex items-center space-x-2 text-gray-400">
                     <div className="flex space-x-1" role="img" aria-label="5 étoiles sur 5">
                       {Array.from({ length: 5 }, (_, i) => (
-                        <StarIcon key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                        <MdStar key={i} className="w-4 h-4 text-yellow-400 fill-current" />
                       ))}
                     </div>
-                    <span className="text-sm font-medium">4.9/5 sur Google</span>
+                    <span className="text-sm font-medium">5/5 satisfaction client</span>
                   </div>
                 </div>
               </div>
@@ -330,7 +318,7 @@ export default function PremiumHero() {
               className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors z-10 p-2 rounded-full hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/50"
               aria-label="Fermer la modal"
             >
-              <XMarkIcon className="w-8 h-8" />
+              <FiX className="w-8 h-8" />
             </button>
             <div className="aspect-video bg-gray-900 rounded-2xl flex items-center justify-center overflow-hidden">
               <div className="text-white text-center p-8">

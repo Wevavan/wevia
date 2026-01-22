@@ -1,24 +1,19 @@
 import { useState, useEffect, useRef } from 'react';
-import { 
-  EyeIcon, 
-  CodeBracketIcon, 
-  SparklesIcon, 
-  ArrowRightIcon, 
-  RocketLaunchIcon,
-  ChartBarIcon,
-  DevicePhoneMobileIcon,
-  GlobeAltIcon,
-  ChatBubbleLeftRightIcon,
-  PaintBrushIcon,
-  StarIcon,
-  CheckCircleIcon,
-  HomeModernIcon,
-  DocumentTextIcon,
-  CalendarDaysIcon,
-  CreditCardIcon,
-  UserGroupIcon,
-  CurrencyEuroIcon
-} from '@heroicons/react/24/outline';
+import {
+  FiEye,
+  FiArrowRight,
+  FiGlobe,
+  FiCheckCircle,
+  FiZap
+} from 'react-icons/fi';
+import {
+  MdRocket,
+  MdStar,
+  MdHome,
+  MdDescription,
+  MdCalendarToday
+} from 'react-icons/md';
+import { RiRobot2Fill } from 'react-icons/ri';
 
 import ConsultationModal from './ConsultationModal'; // Import de la modal de consultation
 
@@ -29,7 +24,11 @@ export default function Projects() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isConsultationModalOpen, setIsConsultationModalOpen] = useState(false);
   const [modalSource, setModalSource] = useState('projects');
+  const [currentPage, setCurrentPage] = useState(1);
+  const projectsPerPage = 3;
   const sectionRef = useRef(null);
+  const statsRef = useRef(null);
+  const [statsAnimated, setStatsAnimated] = useState(false);
 
   // Mouse tracking pour les effets premium
   const handleMouseMove = (e) => {
@@ -86,18 +85,24 @@ export default function Projects() {
   const projects = [
     {
       id: 1,
-      title: "ApartBook Premium",
-      subtitle: "Réservation d'appartements nouvelle génération",
-      description: "Plateforme de réservation d'appartements avec IA de recommandation, visite virtuelle 360°, système de paiement sécurisé et gestion automatisée des check-in/check-out. +240% de réservations confirmées.",
+      title: "La Chrysbelle - Location Premium",
+      subtitle: "Réservation d'appartement nouvelle génération",
+      description: "Plateforme de réservation pour un appartement haut de gamme avec piscine chauffée, jacuzzi et sauna. Système de réservation en 3 étapes, gestion des créneaux horaires, paiement sécurisé et interface utilisateur optimale. Havre de bien-être accessible 24h/24.",
       image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop&crop=center",
-      tags: ["Next.js", "Stripe", "Three.js", "MongoDB", "OpenAI"],
-      type: "Web + IA",
+      tags: ["Next.js", "React", "Stripe", "Réservation", "Auth"],
+      type: "Web",
       category: "immobilier",
       color: "from-blue-500 to-cyan-500",
-      icon: HomeModernIcon,
-      metrics: { bookings: "+240%", revenue: "€2.8M", satisfaction: "98%" },
+      icon: MdHome,
+      metrics: { services: "3", tarif: "25€+", satisfaction: "98%" },
       featured: true,
-      technologies: ["Visite 360°", "IA Recommandation", "Paiement Stripe", "Check-in Auto"]
+      technologies: ["Réservation 3 Étapes", "Paiement Stripe", "Gestion Créneaux", "Auth Sécurisé"],
+      url: "https://www.lachrysbelle.com/",
+      testimonial: {
+        text: "Un système de réservation intuitif et fluide. Nos clients apprécient la simplicité du processus et le design élégant.",
+        author: "Marie D.",
+        role: "Propriétaire"
+      }
     },
     {
       id: 2,
@@ -109,33 +114,87 @@ export default function Projects() {
       type: "IA + SaaS",
       category: "rh",
       color: "from-purple-500 to-pink-500",
-      icon: DocumentTextIcon,
+      icon: MdDescription,
       metrics: { users: "15K+", success: "+180%", cvs: "50K+" },
       featured: true,
-      technologies: ["IA GPT-4", "ATS Optimize", "Analytics Pro", "Multi-export"]
+      technologies: ["IA GPT-4", "ATS Optimize", "Analytics Pro", "Multi-export"],
+      url: "https://cv-assistant-three.vercel.app/",
+      testimonial: {
+        text: "L'IA a révolutionné notre processus de candidature. J'ai reçu 3 fois plus d'entretiens grâce aux CV optimisés ATS !",
+        author: "Thomas L.",
+        role: "Développeur Full-Stack"
+      }
     },
     {
       id: 3,
-      title: "Réservation d'èspace de détente",
-      subtitle: "Écosystème lite flexible de réservation d'espace de détente",
-      description: "App avec réservation intelligente, gestion planning, profils clients avancés et marketing automation.",
-      image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&h=600&fit=crop&crop=center",
-      tags: ["React Native", "Stripe", "Firebase", "SendGrid", "ML"],
-      type: "Mobile + IA",
-      category: "beauty",
-      color: "from-green-500 to-emerald-500",
-      icon: CalendarDaysIcon,
-      metrics: { salons: "200+", revenue: "+320%", bookings: "100K+" },
+      title: "Pose Toit",
+      subtitle: "Plateforme moderne pour services de toiture",
+      description: "Site web professionnel pour entreprise de couverture et rénovation de toiture. Interface moderne et responsive avec présentation des services, portfolio de réalisations et système de contact pour devis. Design optimisé pour convertir les visiteurs en clients.",
+      image: "https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?w=800&h=600&fit=crop&crop=center",
+      tags: ["Next.js", "React", "Tailwind CSS", "Vercel"],
+      type: "Web",
+      category: "construction",
+      color: "from-slate-600 to-gray-700",
+      icon: MdHome,
+      metrics: { projects: "150+", experience: "10 ans", rating: "4.8★" },
       featured: false,
-      technologies: ["Planning IA", "Paiement Mobile", "CRM Client", "Marketing Auto"]
+      technologies: ["Design Moderne", "Portfolio", "Contact Pro", "SEO Local"],
+      url: "https://posetoit.vercel.app/",
+      testimonial: {
+        text: "Site professionnel qui inspire confiance. Les demandes de devis ont augmenté de 65% depuis le lancement !",
+        author: "Pierre M.",
+        role: "Gérant Pose Toit"
+      }
+    },
+    {
+      id: 4,
+      title: "Jardins d'Eden",
+      subtitle: "Site vitrine premium paysagiste haut-de-gamme",
+      description: "Site web de prestige pour entreprise de paysagisme d'exception établie depuis 1998. Portfolio interactif filtrable, processus créatif en 5 étapes, formulaire de consultation VIP et témoignages clients. Design luxueux minimaliste ciblant une clientèle fortunée (villas, châteaux, hôtels 5★).",
+      image: "https://images.unsplash.com/photo-1558904541-efa843a96f01?w=800&h=600&fit=crop&crop=center",
+      tags: ["Next.js", "React", "SSR/SSG", "Analytics", "CSS Variables"],
+      type: "Web",
+      category: "luxe",
+      color: "from-emerald-600 to-green-600",
+      icon: MdStar,
+      metrics: { projects: "500+", years: "25 ans", satisfaction: "98%" },
+      featured: false,
+      technologies: ["Portfolio Pro", "Lead Generation", "SSR Optimisé", "Design Luxe"],
+      url: "https://paysagiste-com.vercel.app/",
+      testimonial: {
+        text: "Le site reflète parfaitement l'excellence de nos prestations. Nos clients haut de gamme sont impressionnés par le portfolio.",
+        author: "Jean-Philippe R.",
+        role: "Fondateur Jardins d'Eden"
+      }
+    },
+    {
+      id: 5,
+      title: "La Chrysbelle",
+      subtitle: "Plateforme de réservation appartement de charme",
+      description: "Site de location d'appartement haut de gamme de 85m² avec jacuzzi, sauna et équipements premium. Galerie photo filtrée par pièces, système de réservation intégré, authentification utilisateur et moteur de recherche de disponibilités. Design luxueux et élégant à 120€/nuit.",
+      image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop&crop=center",
+      tags: ["Next.js", "React", "Auth", "Réservation", "Multi-langue"],
+      type: "Web",
+      category: "immobilier",
+      color: "from-amber-500 to-orange-500",
+      icon: MdHome,
+      metrics: { surface: "85m²", tarif: "120€/nuit", rating: "5.0★" },
+      featured: false,
+      technologies: ["Galerie Filtrable", "Auth User", "Réservation Pro", "FR/EN Support"],
+      url: "https://lachrysbelle.vercel.app/",
+      testimonial: {
+        text: "Interface élégante et intuitive. La galerie photo et le système de réservation séduisent nos locataires internationaux.",
+        author: "Sophie B.",
+        role: "Hôte Airbnb"
+      }
     },
   ];
 
   const filters = [
-    { id: 'all', label: 'Portfolio Complet', count: projects.length, icon: SparklesIcon },
-    { id: 'featured', label: 'Projets Phares', count: projects.filter(p => p.featured).length, icon: StarIcon },
-    { id: 'ai', label: 'Intelligence IA', count: projects.filter(p => p.type.includes('IA')).length, icon: SparklesIcon },
-    { id: 'web', label: 'Web Premium', count: projects.filter(p => p.type.includes('Web')).length, icon: GlobeAltIcon }
+    { id: 'all', label: 'Tops projets', count: projects.length, icon: FiZap },
+    { id: 'featured', label: 'Projets Phares', count: projects.filter(p => p.featured).length, icon: MdStar },
+    { id: 'ai', label: 'Intelligence IA', count: projects.filter(p => p.type.includes('IA')).length, icon: RiRobot2Fill },
+    { id: 'web', label: 'Web Premium', count: projects.filter(p => p.type.includes('Web')).length, icon: FiGlobe }
   ];
 
   const filteredProjects = projects.filter(project => {
@@ -145,6 +204,18 @@ export default function Projects() {
     if (activeFilter === 'web') return project.type.includes('Web');
     return true;
   });
+
+  // Pagination
+  const totalPages = Math.ceil(filteredProjects.length / projectsPerPage);
+  const indexOfLastProject = currentPage * projectsPerPage;
+  const indexOfFirstProject = indexOfLastProject - projectsPerPage;
+  const currentProjects = filteredProjects.slice(indexOfFirstProject, indexOfLastProject);
+
+  // Reset to page 1 when filter changes
+  useEffect(() => {
+    setCurrentPage(1);
+    setVisibleCards([]);
+  }, [activeFilter]);
 
   // Intersection Observer pour les animations
   useEffect(() => {
@@ -166,18 +237,80 @@ export default function Projects() {
     cards?.forEach(card => observer.observe(card));
 
     return () => observer.disconnect();
-  }, [filteredProjects]);
+  }, [currentProjects]);
 
-  const handleProjectClick = (projectId) => {
-    console.log('Project clicked:', projectId);
+  // Animated Stats Counter
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !statsAnimated) {
+            setStatsAnimated(true);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [statsAnimated]);
+
+  // Animated Counter Component
+  const AnimatedCounter = ({ end, duration = 2000, suffix = '' }) => {
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+      if (!statsAnimated) return;
+
+      let startTime = null;
+      const endValue = parseFloat(end.toString().replace(/[^0-9.]/g, ''));
+
+      const animate = (currentTime) => {
+        if (!startTime) startTime = currentTime;
+        const progress = Math.min((currentTime - startTime) / duration, 1);
+
+        setCount(Math.floor(progress * endValue));
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        }
+      };
+
+      requestAnimationFrame(animate);
+    }, [statsAnimated, end, duration]);
+
+    return <span>{count}{suffix}</span>;
+  };
+
+  const handleProjectClick = (project) => {
+    console.log('Project clicked:', project.id);
+
     // Analytics tracking
+    fetch('/api/analytics', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'project_click',
+        projectId: project.id,
+        projectTitle: project.title
+      })
+    }).catch(err => console.error('Analytics error:', err));
+
+    // Open project URL in new window if available
+    if (project.url) {
+      window.open(project.url, '_blank', 'noopener,noreferrer');
+    }
   };
 
   return (
     <>
-      <section 
-        ref={sectionRef} 
-        id="projects" 
+      <section
+        ref={sectionRef}
+        id="projects"
         className="relative py-32 overflow-hidden"
         onMouseMove={handleMouseMove}
       >
@@ -209,38 +342,49 @@ export default function Projects() {
 
         <div className="container mx-auto px-6 relative z-10">
           {/* Header Section Ultra Premium */}
-          <div className="text-center mb-20">
-            <div className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-xl border border-white/50 rounded-full px-6 py-3 mb-8 shadow-lg">
-              <SparklesIcon className="w-5 h-5 text-blue-600" />
-              <span className="text-sm font-bold text-gray-900">PORTFOLIO</span>
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+          <div className="mb-20">
+            <div className="flex items-start justify-between gap-8 mb-8">
+              {/* Badge à gauche */}
+              <div className="inline-flex items-center space-x-3 bg-white/80 backdrop-blur-xl border border-white/50 rounded-full px-6 py-3 shadow-lg flex-shrink-0">
+                <MdRocket className="w-5 h-5 text-blue-600" />
+                <span className="text-sm font-bold text-gray-900">PORTFOLIO</span>
+              </div>
+
+              <div className="flex-1 text-right">
+                <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-gray-900 mb-8 leading-tight">
+                  Projets Qui Transforment
+                  <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                    Les Business en Succès
+                  </span>
+                </h2>
+              </div>
             </div>
 
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-gray-900 mb-8 leading-tight">
-              Projets Qui Transforment
-              <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                Les Business en Succès
-              </span>
-            </h2>
-            
-            <p className="text-xl md:text-2xl text-gray-600 max-w-5xl mx-auto leading-relaxed mb-8">
-              Chaque ligne de code génère du ROI. Découvrez comment nous transformons 
-              <span className="text-blue-600 font-semibold"> les idées ambitieuses</span> en 
-              <span className="text-purple-600 font-semibold"> solutions rentables</span> qui révolutionnent les secteurs.
+            <p className="text-xl md:text-2xl text-gray-600 max-w-5xl leading-relaxed mb-8 text-right">
+              Vous voulez un site qui rapporte ? Voici ce que je construis pour mes clients :
+              <span className="text-blue-600 font-semibold"> des plateformes qui génèrent des ventes</span>,
+              <span className="text-purple-600 font-semibold"> attirent du trafic qualifié</span> et
+              <span className="text-green-600 font-semibold"> automatisent leur business</span>.
             </p>
 
-            {/* Stats rapides */}
-            <div className="flex flex-wrap justify-center gap-8 text-center">
+            {/* Stats rapides animées */}
+            <div ref={statsRef} className="flex flex-wrap justify-center gap-8 text-center">
               <div className="bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-lg border border-white/50">
-                <div className="text-2xl font-black text-blue-600">€60.1K</div>
+                <div className="text-2xl font-black text-blue-600">
+                  {statsAnimated ? <AnimatedCounter end="60.1" suffix="K€" /> : '€60.1K'}
+                </div>
                 <div className="text-sm text-gray-600">Revenus générés</div>
               </div>
               <div className="bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-lg border border-white/50">
-                <div className="text-2xl font-black text-purple-600">5K+</div>
+                <div className="text-2xl font-black text-purple-600">
+                  {statsAnimated ? <AnimatedCounter end="5" suffix="K+" /> : '5K+'}
+                </div>
                 <div className="text-sm text-gray-600">Utilisateurs actifs</div>
               </div>
               <div className="bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-lg border border-white/50">
-                <div className="text-2xl font-black text-green-600">+280%</div>
+                <div className="text-2xl font-black text-green-600">
+                  {statsAnimated ? <AnimatedCounter end="280" suffix="%" /> : '+280%'}
+                </div>
                 <div className="text-sm text-gray-600">ROI moyen</div>
               </div>
             </div>
@@ -280,32 +424,32 @@ export default function Projects() {
 
           {/* Projects Grid Ultra Premium */}
           <div className="grid lg:grid-cols-3 gap-8">
-            {filteredProjects.map((project, index) => (
+            {currentProjects.map((project, index) => (
               <div
                 key={project.id}
                 data-index={index}
                 className={`group relative transition-all duration-700 cursor-pointer ${
-                  visibleCards.includes(index) 
-                    ? 'opacity-100 translate-y-0' 
+                  visibleCards.includes(index)
+                    ? 'opacity-100 translate-y-0'
                     : 'opacity-0 translate-y-12'
                 }`}
-                onClick={() => handleProjectClick(project.id)}
+                onClick={() => handleProjectClick(project)}
                 onMouseEnter={() => setHoveredProject(project.id)}
                 onMouseLeave={() => setHoveredProject(null)}
               >
-                {/* Featured Badge Ultra Premium */}
+                {/* Featured Badge Reduced */}
                 {project.featured && (
-                  <div className="absolute -top-4 -right-4 z-30 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 text-white px-6 py-3 rounded-2xl text-sm font-black shadow-2xl transform rotate-12 group-hover:rotate-0 transition-transform duration-500">
-                    <div className="flex items-center space-x-2">
-                      <StarIcon className="w-4 h-4 fill-current" />
-                      <span>BESTSELLER</span>
+                  <div className="absolute -top-3 -right-3 z-30 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 text-white px-4 py-2 rounded-xl text-xs font-black shadow-xl transform rotate-6 group-hover:rotate-0 transition-transform duration-500">
+                    <div className="flex items-center space-x-1">
+                      <MdStar className="w-3 h-3 fill-current" />
+                      <span>TOP</span>
                     </div>
                   </div>
                 )}
 
                 {/* Card Container Ultra Premium */}
                 <div className="relative h-full bg-white/95 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl hover:shadow-4xl transition-all duration-700 border border-white/50 group-hover:border-white/80 transform group-hover:scale-105 group-hover:-translate-y-4">
-                  
+
                   {/* Image Section avec vraies images */}
                   <div className="relative h-64 overflow-hidden">
                     {/* Image Background */}
@@ -330,7 +474,7 @@ export default function Projects() {
                     {/* Hover Action Overlay */}
                     <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
                       <div className="text-center text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <EyeIcon className="w-16 h-16 mx-auto mb-3 group-hover:scale-110 transition-transform" />
+                        <FiEye className="w-16 h-16 mx-auto mb-3 group-hover:scale-110 transition-transform" />
                         <span className="text-lg font-black">Découvrir le Projet</span>
                         <div className="text-sm opacity-80 mt-1">Cliquez pour voir les détails</div>
                       </div>
@@ -359,7 +503,7 @@ export default function Projects() {
 
                     {/* Metrics Ultra Premium */}
                     <div className="grid grid-cols-3 gap-3 mb-6">
-                      {Object.entries(project.metrics).map(([key, value], idx) => (
+                      {Object.entries(project.metrics).map(([key, value]) => (
                         <div key={key} className="text-center p-3 bg-gradient-to-br from-gray-50 to-white rounded-xl shadow-inner border border-gray-100/50 group-hover:shadow-md transition-shadow">
                           <div className={`text-lg font-black bg-gradient-to-r ${project.color} bg-clip-text text-transparent`}>
                             {value}
@@ -375,7 +519,7 @@ export default function Projects() {
                       <div className="grid grid-cols-2 gap-2">
                         {project.technologies.map((tech, idx) => (
                           <div key={idx} className="flex items-center space-x-2 text-xs">
-                            <CheckCircleIcon className="w-3 h-3 text-green-500" />
+                            <FiCheckCircle className="w-3 h-3 text-green-500" />
                             <span className="text-gray-600 font-medium">{tech}</span>
                           </div>
                         ))}
@@ -385,7 +529,7 @@ export default function Projects() {
                     {/* Tags */}
                     <div className="flex flex-wrap gap-2 mb-6">
                       {project.tags.slice(0, 3).map((tag, idx) => (
-                        <span 
+                        <span
                           key={idx}
                           className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs rounded-full font-bold transition-all duration-300 hover:scale-105"
                         >
@@ -399,6 +543,26 @@ export default function Projects() {
                       )}
                     </div>
 
+                    {/* Testimonial Section */}
+                    {project.testimonial && (
+                      <div className="mb-6 p-4 bg-blue-50/50 rounded-xl border-l-4 border-blue-600">
+                        <div className="flex items-start space-x-3">
+                          <svg className="w-8 h-8 text-blue-600 flex-shrink-0 opacity-50" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                          </svg>
+                          <div className="flex-1">
+                            <p className="text-sm italic text-gray-700 mb-2">
+                              "{project.testimonial.text}"
+                            </p>
+                            <div className="text-xs font-bold text-gray-600">
+                              {project.testimonial.author}
+                              <span className="font-normal"> • {project.testimonial.role}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
                     {/* CTA Button Ultra Premium */}
                     <button className={`w-full flex items-center justify-center space-x-3 py-4 px-6 rounded-2xl font-black transition-all duration-500 group/btn relative overflow-hidden ${
                       hoveredProject === project.id
@@ -406,7 +570,7 @@ export default function Projects() {
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200 shadow-lg hover:shadow-xl'
                     }`}>
                       <span className="relative z-10">Explorer ce Projet</span>
-                      <ArrowRightIcon className="w-5 h-5 relative z-10 transition-transform group-hover/btn:translate-x-2" />
+                      <FiArrowRight className="w-5 h-5 relative z-10 transition-transform group-hover/btn:translate-x-2" />
                       
                       {/* Animated background */}
                       {hoveredProject === project.id && (
@@ -422,31 +586,88 @@ export default function Projects() {
             ))}
           </div>
 
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-4 mt-16">
+              {/* Previous Button */}
+              <button
+                onClick={() => {
+                  setCurrentPage(prev => Math.max(prev - 1, 1));
+                  setVisibleCards([]);
+                }}
+                disabled={currentPage === 1}
+                className={`px-6 py-3 rounded-xl font-bold transition-all duration-300 ${
+                  currentPage === 1
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    : 'bg-white/90 backdrop-blur-xl text-gray-700 hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 hover:text-white shadow-lg hover:shadow-2xl transform hover:scale-105 border border-white/50'
+                }`}
+              >
+                ← Précédent
+              </button>
+
+              {/* Page Numbers */}
+              <div className="flex gap-2">
+                {[...Array(totalPages)].map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      setCurrentPage(idx + 1);
+                      setVisibleCards([]);
+                    }}
+                    className={`w-12 h-12 rounded-xl font-bold transition-all duration-300 ${
+                      currentPage === idx + 1
+                        ? 'bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white shadow-2xl scale-110'
+                        : 'bg-white/90 backdrop-blur-xl text-gray-700 hover:bg-gray-100 shadow-lg hover:shadow-xl border border-white/50 hover:scale-105'
+                    }`}
+                  >
+                    {idx + 1}
+                  </button>
+                ))}
+              </div>
+
+              {/* Next Button */}
+              <button
+                onClick={() => {
+                  setCurrentPage(prev => Math.min(prev + 1, totalPages));
+                  setVisibleCards([]);
+                }}
+                disabled={currentPage === totalPages}
+                className={`px-6 py-3 rounded-xl font-bold transition-all duration-300 ${
+                  currentPage === totalPages
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    : 'bg-white/90 backdrop-blur-xl text-gray-700 hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 hover:text-white shadow-lg hover:shadow-2xl transform hover:scale-105 border border-white/50'
+                }`}
+              >
+                Suivant →
+              </button>
+            </div>
+          )}
+
           {/* Bottom CTA Ultra Premium */}
           <div className="text-center mt-24">
-            <div className="inline-flex flex-col lg:flex-row items-center space-y-6 lg:space-y-0 lg:space-x-8 bg-white/95 backdrop-blur-xl border border-white/50 rounded-3xl p-10 shadow-2xl hover:shadow-4xl transition-all duration-500 transform hover:scale-105">
+            <div className="flex flex-col lg:flex-row items-center justify-center space-y-6 lg:space-y-0 lg:space-x-8 bg-white/95 backdrop-blur-xl border border-white/50 rounded-3xl p-10 shadow-2xl hover:shadow-4xl transition-all duration-500">
               <div className="text-center lg:text-left">
-                <h3 className="text-3xl font-black text-gray-900 mb-3">Votre Projet, Notre Expertise</h3>
-                <p className="text-gray-600 text-lg">Transformons votre vision en success story mesurable</p>
+                <h3 className="text-3xl font-black text-gray-900 mb-3">Vous avez un projet ? Parlons-en.</h3>
+                <p className="text-gray-600 text-lg">Je vous aide à passer de l'idée au site qui tourne et qui rapporte</p>
                 <div className="flex items-center justify-center lg:justify-start space-x-4 mt-4 text-sm text-gray-500">
                   <div className="flex items-center space-x-1">
-                    <CheckCircleIcon className="w-4 h-4 text-green-500" />
+                    <FiCheckCircle className="w-4 h-4 text-green-500" />
                     <span>Consultation gratuite</span>
                   </div>
                   <div className="flex items-center space-x-1">
-                    <CheckCircleIcon className="w-4 h-4 text-green-500" />
+                    <FiCheckCircle className="w-4 h-4 text-green-500" />
                     <span>Devis sous 24h</span>
                   </div>
                 </div>
               </div>
-              <button 
+              <button
                 onClick={() => handleCTAClick('projects_launch_project')}
                 className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-black py-5 px-10 rounded-2xl transition-all duration-500 transform hover:scale-110 shadow-2xl hover:shadow-4xl whitespace-nowrap relative overflow-hidden group"
               >
                 <span className="relative z-10 flex items-center space-x-3">
-                  <RocketLaunchIcon className="w-6 h-6" />
+                  <MdRocket className="w-6 h-6" />
                   <span>Lancer Mon Projet</span>
-                  <ArrowRightIcon className="w-6 h-6 transition-transform group-hover:translate-x-2" />
+                  <FiArrowRight className="w-6 h-6 transition-transform group-hover:translate-x-2" />
                 </span>
                 
                 {/* Animated shine */}

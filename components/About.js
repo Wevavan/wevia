@@ -1,18 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { 
-  AcademicCapIcon, 
-  BriefcaseIcon, 
-  TrophyIcon,
-  RocketLaunchIcon,
-  StarIcon,
-  CheckCircleIcon,
-  BoltIcon,
-  ShieldCheckIcon,
-  CpuChipIcon,
-  SparklesIcon,
-  GlobeAltIcon,
-  CodeBracketIcon
-} from '@heroicons/react/24/outline';
+import { MdRocket, MdStar, MdBusiness } from 'react-icons/md';
+import { HiOutlineCpuChip } from 'react-icons/hi2';
+import { FiZap, FiCode, FiSmartphone, FiTrendingUp, FiUser } from 'react-icons/fi';
+import { RiRobot2Fill } from 'react-icons/ri';
 
 export default function About() {
   const [visibleStats, setVisibleStats] = useState([]);
@@ -21,42 +11,42 @@ export default function About() {
   const sectionRef = useRef(null);
 
   const stats = [
-    { 
-      label: "Projets Livrés", 
-      value: "90%", 
-      icon: RocketLaunchIcon,
+    {
+      label: "Projets Livrés",
+      value: "90%",
+      icon: MdRocket,
       color: "from-blue-500 to-cyan-500",
       description: "Solutions complètes"
     },
-    { 
-      label: "Clients Satisfaits", 
-      value: "98%", 
-      icon: StarIcon,
+    {
+      label: "Clients Satisfaits",
+      value: "98%",
+      icon: MdStar,
       color: "from-purple-500 to-pink-500",
       description: "Taux de satisfaction"
     },
-    { 
-      label: "Technologies", 
-      value: "25+", 
-      icon: CpuChipIcon,
+    {
+      label: "Technologies",
+      value: "25+",
+      icon: HiOutlineCpuChip,
       color: "from-green-500 to-emerald-500",
       description: "Stack technique"
     },
-    { 
-      label: "Années Pro", 
-      value: "3+", 
-      icon: BriefcaseIcon,
+    {
+      label: "Années Pro",
+      value: "3+",
+      icon: MdBusiness,
       color: "from-orange-500 to-red-500",
       description: "Expérience terrain"
     }
   ];
 
   const mainSkills = [
-    { name: "React/Next.js", level: 98, category: "Frontend", icon: "⚛️" },
-    { name: "Intelligence Artificielle", level: 95, category: "IA/ML", icon: "🧠" },
-    { name: "Node.js/Backend", level: 92, category: "Backend", icon: "🚀" },
-    { name: "UI/UX Premium", level: 85, category: "Design", icon: "🎨" },
-    { name: "Database Expert", level: 90, category: "Data", icon: "💾" }
+    { name: "React/Next.js", level: 98, category: "Frontend" },
+    { name: "Intelligence Artificielle", level: 95, category: "IA/ML" },
+    { name: "Node.js/Backend", level: 92, category: "Backend" },
+    { name: "UI/UX Design", level: 85, category: "Design" },
+    { name: "Base de données", level: 90, category: "Data" }
   ];
 
   const hiddenSkills = [
@@ -68,17 +58,31 @@ export default function About() {
 
   const expertiseAreas = [
     {
-      title: "Développement Web Premium",
+      title: "Développement Web",
       description: "Sites et applications web haute performance",
       technologies: ["React", "Next.js", "TypeScript", "Node.js"],
-      icon: CodeBracketIcon,
+      icon: FiCode,
       color: "from-blue-500 to-cyan-500"
+    },
+    {
+      title: "Applications Mobile",
+      description: "Apps natives iOS & Android performantes",
+      technologies: ["React Native", "Flutter", "PWA", "API Integration"],
+      icon: FiSmartphone,
+      color: "from-green-500 to-emerald-500"
+    },
+    {
+      title: "Référencement SEO / Acquisition",
+      description: "Optimisation SEO et stratégies d'acquisition",
+      technologies: ["SEO On-page", "SEO Local", "Google Ads", "Analytics"],
+      icon: FiTrendingUp,
+      color: "from-orange-500 to-red-500"
     },
     {
       title: "Intelligence Artificielle",
       description: "Solutions IA sur-mesure et automatisation",
       technologies: ["OpenAI", "TensorFlow", "Python", "Machine Learning"],
-      icon: SparklesIcon,
+      icon: RiRobot2Fill,
       color: "from-purple-500 to-pink-500"
     },
   ];
@@ -117,25 +121,29 @@ export default function About() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-32 overflow-hidden" id="about">
-      {/* Background Premium */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white via-blue-50/30 to-purple-50/20">
-        {/* Floating Elements */}
-        <div className="absolute top-20 right-10 w-64 h-64 bg-gradient-to-r from-blue-400/10 to-purple-400/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-20 left-10 w-80 h-80 bg-gradient-to-r from-purple-400/10 to-pink-400/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-      </div>
-
+    <section ref={sectionRef} className="relative py-32 overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white" id="about">
       <div className="container mx-auto px-6 relative z-10">
         {/* Header Section */}
-        <div className="text-center mb-20">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-gray-900 mb-8 leading-tight">
-            L'Expert Qui Fait
-            <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              La Différence
-            </span>
-          </h2>
-          <p className="text-xl md:text-2xl text-gray-600 max-w-5xl mx-auto leading-relaxed">
-            3 ans d'expertise, une seule obsession : 
+        <div className="mb-20">
+          <div className="flex items-start justify-between gap-8 mb-8">
+            {/* Badge à gauche */}
+            <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-purple-500/20 to-blue-500/20 backdrop-blur-sm border border-purple-500/30 rounded-full px-6 py-3 flex-shrink-0">
+              <FiUser className="w-5 h-5 text-purple-600" />
+              <span className="text-sm font-medium text-purple-700 font-bold">À PROPOS</span>
+            </div>
+
+            <div className="flex-1 text-right">
+              <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-gray-900 mb-8 leading-tight">
+                L'Expert Qui Fait
+                <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  La Différence
+                </span>
+              </h2>
+            </div>
+          </div>
+
+          <p className="text-xl md:text-2xl text-gray-600 max-w-5xl mx-auto leading-relaxed text-right">
+            Des années d'expertise, une seule obsession :
             <span className="font-semibold text-blue-600"> transformer vos ambitions en succès digitaux mesurables</span>.
           </p>
         </div>
@@ -179,7 +187,7 @@ export default function About() {
                 </p>
                 <p>
                   Spécialisé dans l'<span className="font-semibold text-purple-600">intelligence artificielle</span> et le 
-                  <span className="font-semibold text-cyan-600"> développement web premium</span>, j'accompagne les entreprises 
+                  <span className="font-semibold text-cyan-600"> développement web</span>, j'accompagne les entreprises 
                   ambitieuses dans leur transformation digitale.
                 </p>
                 <p>
@@ -226,7 +234,7 @@ export default function About() {
           {/* Right - Skills */}
           <div data-type="skills" className="space-y-8">
             <div>
-              <h3 className="text-3xl font-bold text-gray-900 mb-2">Stack Technique Premium</h3>
+              <h3 className="text-3xl font-bold text-gray-900 mb-2">Stack Technique</h3>
               <p className="text-gray-600 mb-8">Technologies maîtrisées pour des résultats exceptionnels</p>
             </div>
 
@@ -243,7 +251,6 @@ export default function About() {
                 >
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center space-x-3">
-                      <span className="text-2xl">{skill.icon}</span>
                       <div>
                         <span className="text-lg font-bold text-gray-900">{skill.name}</span>
                         <span className="block text-sm text-gray-500">{skill.category}</span>
@@ -258,7 +265,7 @@ export default function About() {
                   <div className="relative w-full bg-gray-200 rounded-full h-3 overflow-hidden">
                     <div
                       className="bg-gradient-to-r from-blue-500 to-purple-600 h-3 rounded-full transition-all duration-1500 ease-out relative"
-                      style={{ 
+                      style={{
                         width: animatedSkills.includes(index) ? `${skill.level}%` : '0%',
                         transitionDelay: `${index * 200}ms`
                       }}
@@ -271,16 +278,16 @@ export default function About() {
             </div>
 
             {/* Hidden Skills Reveal */}
-            <div className="mt-8 p-6 bg-gradient-to-r from-gray-50 to-blue-50/50 rounded-2xl border border-gray-200/50">
+            <div className="mt-8 p-6 bg-gradient-to-r from-slate-50 to-blue-50/50 rounded-2xl border-2 border-gray-100">
               <div className="flex items-center space-x-2 mb-4">
-                <BoltIcon className="w-5 h-5 text-yellow-500" />
+                {/* <FiZap className="w-5 h-5 text-amber-500" /> */}
                 <span className="font-bold text-gray-900">+ 20 autres technologies maîtrisées</span>
               </div>
               <div className="flex flex-wrap gap-2">
                 {hiddenSkills.slice(0, 12).map((tech, index) => (
-                  <span 
+                  <span
                     key={index}
-                    className="text-xs px-3 py-1 bg-white/80 text-gray-600 rounded-full font-medium hover:bg-blue-100 hover:text-blue-700 transition-colors cursor-pointer"
+                    className="text-xs px-3 py-1 bg-white text-gray-600 rounded-full font-medium hover:bg-blue-100 hover:text-blue-700 transition-colors cursor-pointer border border-gray-200"
                     style={{
                       animationDelay: `${skillsVisible ? index * 50 : 0}ms`,
                       animation: skillsVisible ? 'fadeInScale 0.5s ease-out forwards' : 'none'
@@ -289,7 +296,7 @@ export default function About() {
                     {tech}
                   </span>
                 ))}
-                <span className="text-xs px-3 py-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full font-bold">
+                <span className="text-xs px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-bold">
                   +{hiddenSkills.length - 12} autres...
                 </span>
               </div>

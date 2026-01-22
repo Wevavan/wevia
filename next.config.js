@@ -3,13 +3,27 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['localhost'],
+    domains: ['localhost', 'wevia.com'],
   },
-  async rewrites() {
+  // Headers de sécurité pour la production
+  async headers() {
     return [
       {
-        source: '/api/placeholder/:path*',
-        destination: 'https://via.placeholder.com/:path*',
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'origin-when-cross-origin',
+          },
+        ],
       },
     ];
   },

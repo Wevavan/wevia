@@ -1,0 +1,21 @@
+# robots.txt for WevIA
+# https://wevia.com
+
+# Autoriser tous les robots d'indexation
+User-agent: *
+Allow: /
+
+# Bloquer l'accès aux fichiers système et API
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+# Sitemap
+Sitemap: https://wevia.com/sitemap.xml
+
+# Bots spécifiques - Optimisation SEO
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /

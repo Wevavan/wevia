@@ -1,21 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import { 
-  CpuChipIcon,
-  RocketLaunchIcon,
-  EnvelopeIcon,
-  PhoneIcon,
-  MapPinIcon,
-  CodeBracketIcon,
-  SparklesIcon,
-  CogIcon,
-  WrenchScrewdriverIcon,
-  ArrowRightIcon,
-  StarIcon,
-  CheckCircleIcon,
-  BoltIcon,
-  ShieldCheckIcon,
-  ClockIcon
-} from '@heroicons/react/24/outline';
+import { HiOutlineCpuChip } from 'react-icons/hi2';
+import { FiMail, FiPhone, FiMapPin, FiCode, FiArrowRight, FiZap, FiStar, FiClock, FiShield, FiTrendingUp, FiSmartphone } from 'react-icons/fi';
+import { RiRobot2Fill } from 'react-icons/ri';
 
 export default function Footer() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -56,29 +42,35 @@ export default function Footer() {
   }, []);
 
   const services = [
-    { 
-      name: "Développement Web Premium", 
-      href: "#", 
-      icon: CodeBracketIcon,
-      description: "Sites haute performance"
+    {
+      name: "Développement Web",
+      icon: FiCode,
+      href: "#services",
+      description: "Sites & applications"
     },
-    { 
-      name: "Intelligence Artificielle", 
-      href: "#", 
-      icon: SparklesIcon,
-      description: "Solutions IA sur-mesure"
+    {
+      name: "Applications Mobile",
+      icon: FiSmartphone,
+      href: "#services",
+      description: "iOS & Android"
     },
-    { 
-      name: "Optimisation & SEO", 
-      href: "#", 
-      icon: RocketLaunchIcon,
-      description: "Performance maximale"
+    {
+      name: "SEO & Référencement",
+      icon: FiTrendingUp,
+      href: "#services",
+      description: "Visibilité Google"
     },
-    { 
-      name: "Maintenance VIP", 
-      href: "#", 
-      icon: WrenchScrewdriverIcon,
-      description: "Support 24/7"
+    {
+      name: "Intelligence Artificielle",
+      icon: RiRobot2Fill,
+      href: "#services",
+      description: "Solutions IA"
+    },
+    {
+      name: "Consultation",
+      icon: FiZap,
+      href: "#services",
+      description: "Audit & stratégie"
     }
   ];
 
@@ -86,28 +78,29 @@ export default function Footer() {
     { name: "Services", href: "#services" },
     { name: "Projets", href: "#projects" },
     { name: "À Propos", href: "#about" },
+    { name: "Tarifs", href: "#pricing" },
+    { name: "Blog", href: "/blog" },
     { name: "Contact", href: "#contact" },
-    { name: "FAQ", href: "#faq" },
     { name: "Conditions", href: "#terms" }
   ];
 
   const contactInfo = [
     {
-      icon: EnvelopeIcon,
-      label: "Email Premium",
+      icon: FiMail,
+      label: "Email",
       value: "i.wevavan.gbenou@gmail.com",
       href: "mailto:i.wevavan.gbenou@gmail.com",
       color: "text-cyan-400"
     },
     {
-      icon: PhoneIcon,
+      icon: FiPhone,
       label: "Téléphone",
       value: "+33 6 62 70 45 80",
-      href: "tel:+33612345678",
+      href: "tel:+33662704580",
       color: "text-purple-400"
     },
     {
-      icon: MapPinIcon,
+      icon: FiMapPin,
       label: "Localisation",
       value: "Paris, France",
       href: "#",
@@ -116,10 +109,10 @@ export default function Footer() {
   ];
 
   const guarantees = [
-    { icon: BoltIcon, text: "Réponse < 2h", color: "text-yellow-400" },
-    { icon: ShieldCheckIcon, text: "Garantie Satisfait", color: "text-green-400" },
-    { icon: ClockIcon, text: "Support 24/7", color: "text-blue-400" },
-    { icon: StarIcon, text: "Qualité Premium", color: "text-orange-400" }
+    { icon: FiZap, text: "Réponse rapide", color: "text-yellow-400" },
+    { icon: FiShield, text: "100% Satisfait", color: "text-green-400" },
+    { icon: FiClock, text: "Disponible 7j/7", color: "text-blue-400" },
+    { icon: FiStar, text: "Qualité garantie", color: "text-orange-400" }
   ];
 
   const socialLinks = [
@@ -165,29 +158,29 @@ export default function Footer() {
       onMouseMove={handleMouseMove}
       id="contact"
     >
-      {/* Background Ultra Premium */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+      {/* Background Professional */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-800 via-gray-900 to-slate-900">
         {/* Animated Grid */}
-        <div 
+        <div
           className="absolute inset-0 opacity-10"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
           }}
         />
-        
+
         {/* Mouse Glow Effect */}
-        <div 
+        <div
           className="absolute w-96 h-96 pointer-events-none"
           style={{
-            background: `radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.1), transparent 70%)`,
+            background: `radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08), transparent 70%)`,
             left: mousePosition.x - 192,
             top: mousePosition.y - 192,
             transition: 'all 0.1s ease-out'
           }}
         />
-        
+
         {/* Floating Orbs */}
-        <div className="absolute top-20 left-10 w-64 h-64 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute top-20 left-10 w-64 h-64 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
       </div>
 
@@ -199,18 +192,13 @@ export default function Footer() {
             visibleElements.includes(0) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
-          <div className="flex items-center justify-center space-x-4 mb-6">
-            <div className="w-12 h-12 bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-xl">
-              <CpuChipIcon className="w-6 h-6 text-white" />
-            </div>
-            <h3 className="text-4xl font-black bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-              DevIA Pro
-            </h3>
+          <div className="flex items-center justify-center mb-6">
+            <img src="/logo_wev_ia.png" alt="WEV-IA Logo" className="h-80" />
           </div>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Votre partenaire digital pour des <span className="text-cyan-400 font-semibold">solutions web premium</span> et 
-            <span className="text-purple-400 font-semibold"> intelligence artificielle avancée</span>. 
-            Transformons ensemble vos idées en succès digitaux.
+            Développeur spécialisé dans les <span className="text-blue-400 font-semibold">solutions web sur-mesure</span> et
+            <span className="text-purple-400 font-semibold"> l'intelligence artificielle</span>.
+            Je transforme vos idées en succès digitaux.
           </p>
         </div>
 
@@ -224,8 +212,8 @@ export default function Footer() {
             }`}
           >
             <h4 className="text-2xl font-bold text-white mb-8 flex items-center space-x-2">
-              <SparklesIcon className="w-6 h-6 text-cyan-400" />
-              <span>Services Premium</span>
+              <FiZap className="w-6 h-6 text-blue-400" />
+              <span>Services</span>
             </h4>
             <div className="grid sm:grid-cols-2 gap-4">
               {services.map((service, index) => (
@@ -235,11 +223,11 @@ export default function Footer() {
                   className="group p-4 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300"
                 >
                   <div className="flex items-start space-x-3">
-                    <div className="w-10 h-10 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                       <service.icon className="w-5 h-5 text-white" />
                     </div>
                     <div className="flex-1">
-                      <h5 className="font-bold text-white group-hover:text-cyan-400 transition-colors mb-1">
+                      <h5 className="font-bold text-white group-hover:text-blue-400 transition-colors mb-1">
                         {service.name}
                       </h5>
                       <p className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">
@@ -267,7 +255,7 @@ export default function Footer() {
                   href={link.href}
                   className="group flex items-center space-x-2 text-gray-400 hover:text-white transition-all duration-300"
                 >
-                  <ArrowRightIcon className="w-4 h-4 text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <FiArrowRight className="w-4 h-4 text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                   <span className="group-hover:translate-x-2 transition-transform duration-300">
                     {link.name}
                   </span>
@@ -296,7 +284,7 @@ export default function Footer() {
                   </div>
                   <div>
                     <div className="text-sm text-gray-400">{contact.label}</div>
-                    <div className="text-white font-medium group-hover:text-cyan-400 transition-colors">
+                    <div className="text-white font-medium group-hover:text-blue-400 transition-colors">
                       {contact.value}
                     </div>
                   </div>
@@ -321,7 +309,7 @@ export default function Footer() {
                   className="group text-center p-4 bg-white/5 rounded-2xl border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300"
                 >
                   <guarantee.icon className={`w-8 h-8 ${guarantee.color} mx-auto mb-2 group-hover:scale-110 transition-transform duration-300`} />
-                  <div className="text-white font-bold text-sm group-hover:text-cyan-400 transition-colors">
+                  <div className="text-white font-bold text-sm group-hover:text-blue-400 transition-colors">
                     {guarantee.text}
                   </div>
                 </div>
@@ -339,23 +327,6 @@ export default function Footer() {
         >
           <div className="flex flex-col lg:flex-row items-center justify-between space-y-8 lg:space-y-0">
             {/* Social Links */}
-            <div className="flex items-center space-x-6">
-              <span className="text-white font-bold">Suivez-moi :</span>
-              <div className="flex space-x-4">
-                {socialLinks.map((social, index) => (
-                  <a
-                    key={index}
-                    href={social.href}
-                    className={`group w-12 h-12 bg-gradient-to-r ${social.color} ${social.hoverColor} rounded-2xl flex items-center justify-center transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl`}
-                    aria-label={social.name}
-                  >
-                    <div className="text-white group-hover:scale-110 transition-transform duration-300">
-                      {social.icon}
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </div>
 
             {/* Newsletter */}
             {/* <div className="flex items-center space-x-4">
@@ -383,15 +354,15 @@ export default function Footer() {
         >
           <div className="flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-y-0">
             <div className="text-gray-400 text-center lg:text-left">
-              <p>&copy; 2025 <span className="text-cyan-400 font-semibold">wevavan</span>. Tous droits réservés.</p>
+              <p>&copy; 2025 <span className="text-blue-400 font-semibold">wevavan</span>. Tous droits réservés.</p>
             </div>
             
             <div className="flex items-center space-x-6 text-sm text-gray-400">
-              <a href="#" className="hover:text-white transition-colors">Mentions légales</a>
+              <a href="/mentions-legales" className="hover:text-white transition-colors">Mentions légales</a>
               <span>•</span>
-              <a href="#" className="hover:text-white transition-colors">Politique de confidentialité</a>
+              <a href="/politique-confidentialite" className="hover:text-white transition-colors">Politique de confidentialité</a>
               <span>•</span>
-              <a href="#" className="hover:text-white transition-colors">CGV</a>
+              <a href="/cgv" className="hover:text-white transition-colors">CGV</a>
             </div>
           </div>
         </div>

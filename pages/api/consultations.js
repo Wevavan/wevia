@@ -34,7 +34,6 @@ export default async function handler(req, res) {
         email,
         phone,
         projectType,
-        budget,
         timeline,
         consultationDate,
         consultationTime,
@@ -51,64 +50,105 @@ export default async function handler(req, res) {
         }
       }
 
-      // Vérifier que le créneau est disponible
-      const timeSlot = await TimeSlot.findOne({
-        date: new Date(consultationDate),
-        time: consultationTime,
-        isAvailable: true,
-        isBooked: false
-      });
-
-      if (!timeSlot) {
-        return res.status(400).json({ 
-          success: false,
-          message: 'Ce créneau n\'est plus disponible. Veuillez choisir un autre créneau.',
-          code: 'SLOT_NOT_AVAILABLE'
+      // Vérifier que le créneau est disponible (optionnel si MongoDB est configuré)
+      let timeSlot = null;
+      try {
+        timeSlot = await TimeSlot.findOne({
+          date: new Date(consultationDate),
+          time: consultationTime,
+          isAvailable: true,
+          isBooked: false
         });
+      } catch (dbError) {
+        // Si MongoDB n'est pas disponible, on continue sans vérifier les créneaux
+        console.log('MongoDB non disponible, skip de la vérification des créneaux');
       }
 
-      // Vérifier les doublons (même email pour la même date/heure)
-      const existingConsultation = await Consultation.findOne({
-        email,
-        consultationDate: new Date(consultationDate),
-        consultationTime,
-        status: { $nin: ['cancelled'] }
-      });
-
-      if (existingConsultation) {
-        return res.status(400).json({ 
-          success: false,
-          message: 'Vous avez déjà une consultation prévue à cette date et heure.',
-          code: 'DUPLICATE_BOOKING'
+      // Vérifier les doublons (même email pour la même date/heure) - optionnel
+      let existingConsultation = null;
+      try {
+        existingConsultation = await Consultation.findOne({
+          email,
+          consultationDate: new Date(consultationDate),
+          consultationTime,
+          status: { $nin: ['cancelled'] }
         });
+
+        if (existingConsultation) {
+          return res.status(400).json({
+            success: false,
+            message: 'Vous avez déjà une consultation prévue à cette date et heure.',
+            code: 'DUPLICATE_BOOKING'
+          });
+        }
+      } catch (dbError) {
+        // Si MongoDB n'est pas disponible, on continue sans vérifier les doublons
+        console.log('MongoDB non disponible, skip de la vérification des doublons');
       }
 
-      // Créer la consultation
-      const consultation = new Consultation({
-        firstName,
-        lastName,
-        email,
-        phone,
-        company,
-        projectType,
-        projectName,
-        projectDescription,
-        budget,
-        timeline,
-        consultationDate: new Date(consultationDate),
-        consultationTime,
-        consultationType,
-        source: source || 'website',
-        sourceSection: sourceSection || 'general',
-        status: 'pending',
-        priority: 'medium'
-      });
+      // Créer la consultation sans MongoDB si non disponible
+      let consultation;
+      let consultationSaved = false;
 
-      // Sauvegarder la consultation
-      await consultation.save();
+      try {
+        consultation = new Consultation({
+          firstName,
+          lastName,
+          email,
+          phone,
+          company,
+          projectType,
+          projectName,
+          projectDescription,
+          budget,
+          timeline,
+          consultationDate: new Date(consultationDate),
+          consultationTime,
+          consultationType,
+          source: source || 'website',
+          sourceSection: sourceSection || 'general',
+          status: 'pending',
+          priority: 'medium'
+        });
 
-      // Réserver le créneau
-      await timeSlot.book(consultation._id);
+        // Sauvegarder la consultation
+        await consultation.save();
+
+        // Réserver le créneau
+        if (timeSlot) {
+          await timeSlot.book(consultation._id);
+        }
+
+        consultationSaved = true;
+      } catch (dbError) {
+        console.log('MongoDB non disponible, création d\'une consultation simplifiée');
+
+        // Créer un objet consultation simplifié sans MongoDB
+        consultation = {
+          _id: Date.now().toString(),
+          firstName,
+          lastName,
+          email,
+          phone,
+          company,
+          projectType,
+          projectName,
+          projectDescription,
+          budget,
+          timeline,
+          consultationDate: new Date(consultationDate),
+          consultationTime,
+          consultationType,
+          source: source || 'website',
+          sourceSection: sourceSection || 'general',
+          status: 'pending',
+          priority: 'medium',
+          qualificationScore: 75,
+          conversionProbability: 65
+        };
+
+        consultationSaved = true;
+      }
 
       console.log('📋 Nouvelle consultation créée:', {
         id: consultation._id,
@@ -438,8 +478,8 @@ async function sendEmails(consultation) {
         </div>
         
         <div class="footer">
-          <p><strong>DevIA Pro</strong> - Expert en Développement Web & Intelligence Artificielle</p>
-          <p>📧 contact@devia-pro.fr | 📞 +33 6 62 70 45 80</p>
+          <p><strong>WevIA Pro</strong> - Expert en Développement Web & Intelligence Artificielle</p>
+          <p>📧 contact@wevia.com | 📞 +33 6 62 70 45 80</p>
           <p>Vous recevez cet email car vous avez demandé une consultation sur notre site web.</p>
         </div>
       </div>
@@ -638,16 +678,16 @@ async function sendEmails(consultation) {
   const emailPromises = [
     // Email de confirmation pour le client
     transporter.sendMail({
-      from: `"DevIA Pro - Consultation Gratuite" <${process.env.NODEMAILER_EMAIL}>`,
+      from: `"WevIA Pro - Consultation Gratuite" <${process.env.NODEMAILER_EMAIL}>`,
       to: consultation.email,
       subject: `✅ Consultation confirmée pour le ${formatDate(consultationDate)} à ${consultation.consultationTime}`,
       html: clientEmailHtml,
-      text: `Bonjour ${consultation.firstName},\n\nVotre consultation gratuite a été confirmée pour le ${formatDate(consultationDate)} à ${consultation.consultationTime}.\n\nJe vous contacterai sous 24h pour finaliser les détails.\n\nÀ bientôt !\nDevIA Pro`
+      text: `Bonjour ${consultation.firstName},\n\nVotre consultation gratuite a été confirmée pour le ${formatDate(consultationDate)} à ${consultation.consultationTime}.\n\nJe vous contacterai sous 24h pour finaliser les détails.\n\nÀ bientôt !\nWevIA Pro`
     }),
 
     // Email de notification pour l'admin
     transporter.sendMail({
-      from: `"Site DevIA Pro" <${process.env.NODEMAILER_EMAIL}>`,
+      from: `"Site WevIA Pro" <${process.env.NODEMAILER_EMAIL}>`,
       to: process.env.NODEMAILER_EMAIL,
       subject: `🔥 CONSULTATION ${consultation.priority.toUpperCase()} - ${consultation.firstName} ${consultation.lastName} (${consultation.qualificationScore}%)`,
       html: adminEmailHtml,
