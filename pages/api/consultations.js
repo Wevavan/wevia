@@ -479,7 +479,7 @@ async function sendEmails(consultation) {
         
         <div class="footer">
           <p><strong>WevIA Pro</strong> - Expert en Développement Web & Intelligence Artificielle</p>
-          <p>📧 contact@wevia.com | 📞 +33 6 62 70 45 80</p>
+          <p>📧 contact@wevia.com | 📞 +33 6 67 48 39 23</p>
           <p>Vous recevez cet email car vous avez demandé une consultation sur notre site web.</p>
         </div>
       </div>

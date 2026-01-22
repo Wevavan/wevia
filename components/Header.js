@@ -209,7 +209,7 @@ export default function PremiumHeaderHero() {
                   }`}
                 >
                   <FiPhone className="w-4 h-4" />
-                  <span>+33 6 62 70 45 80</span>
+                  <span>+33 6 67 48 39 23</span>
                 </a>
               </div>
 
@@ -377,7 +377,7 @@ export default function PremiumHeaderHero() {
                     }}
                   >
                     <FiPhone className="w-5 h-5" />
-                    <span className="font-medium">+33 6 62 70 45 80</span>
+                    <span className="font-medium">+33 6 67 48 39 23</span>
                   </a>
                   <a
                     href="mailto:contact@WevIA-pro.fr"

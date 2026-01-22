@@ -88,15 +88,15 @@ export default function Footer() {
     {
       icon: FiMail,
       label: "Email",
-      value: "i.wevavan.gbenou@gmail.com",
-      href: "mailto:i.wevavan.gbenou@gmail.com",
+      value: "wev.ia.org@gmail.com",
+      href: "mailto:wev.ia.org@gmail.com",
       color: "text-cyan-400"
     },
     {
       icon: FiPhone,
       label: "Téléphone",
-      value: "+33 6 62 70 45 80",
-      href: "tel:+33662704580",
+      value: "+33 6 67 48 39 23",
+      href: "tel:+33 6 67 48 39 23",
       color: "text-purple-400"
     },
     {

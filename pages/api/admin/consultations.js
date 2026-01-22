@@ -535,7 +535,7 @@ function generateEmailHtml({ title, greeting, mainMessage, details, consultation
 
         <div class="footer">
           <p><strong>WevIA Pro</strong> - Expert en Développement Web & Intelligence Artificielle</p>
-          <p>📧 contact@wevia.com | 📞 +33 6 62 70 45 80</p>
+          <p>📧 contact@wevia.com | 📞 +33 6 67 48 39 23</p>
           <p>Cet email a été envoyé suite à une mise à jour de votre consultation.</p>
         </div>
       </div>
