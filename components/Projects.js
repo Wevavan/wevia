@@ -17,6 +17,37 @@ import { RiRobot2Fill } from 'react-icons/ri';
 
 import ConsultationModal from './ConsultationModal'; // Import de la modal de consultation
 
+// Animated Counter Component - défini en dehors pour éviter les re-renders
+const AnimatedCounter = ({ end, duration = 2000, suffix = '', isActive }) => {
+  const [count, setCount] = useState(0);
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    if (!isActive || hasAnimated.current) return;
+    hasAnimated.current = true;
+
+    let startTime = null;
+    const endValue = parseFloat(end.toString().replace(/[^0-9.]/g, ''));
+
+    const animate = (currentTime) => {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+
+      setCount(Math.floor(progress * endValue));
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        setCount(endValue);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [isActive, end, duration]);
+
+  return <span>{count}{suffix}</span>;
+};
+
 export default function Projects() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [visibleCards, setVisibleCards] = useState([]);
@@ -259,33 +290,7 @@ export default function Projects() {
     return () => observer.disconnect();
   }, [statsAnimated]);
 
-  // Animated Counter Component
-  const AnimatedCounter = ({ end, duration = 2000, suffix = '' }) => {
-    const [count, setCount] = useState(0);
-
-    useEffect(() => {
-      if (!statsAnimated) return;
-
-      let startTime = null;
-      const endValue = parseFloat(end.toString().replace(/[^0-9.]/g, ''));
-
-      const animate = (currentTime) => {
-        if (!startTime) startTime = currentTime;
-        const progress = Math.min((currentTime - startTime) / duration, 1);
-
-        setCount(Math.floor(progress * endValue));
-
-        if (progress < 1) {
-          requestAnimationFrame(animate);
-        }
-      };
-
-      requestAnimationFrame(animate);
-    }, [statsAnimated, end, duration]);
-
-    return <span>{count}{suffix}</span>;
-  };
-
+  
   const handleProjectClick = (project) => {
     console.log('Project clicked:', project.id);
 
@@ -371,19 +376,19 @@ export default function Projects() {
             <div ref={statsRef} className="flex flex-wrap justify-center gap-8 text-center">
               <div className="bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-lg border border-white/50">
                 <div className="text-2xl font-black text-blue-600">
-                  {statsAnimated ? <AnimatedCounter end="60.1" suffix="K€" /> : '€60.1K'}
+                  <AnimatedCounter end={60} suffix="K€" isActive={statsAnimated} />
                 </div>
                 <div className="text-sm text-gray-600">Revenus générés</div>
               </div>
               <div className="bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-lg border border-white/50">
                 <div className="text-2xl font-black text-purple-600">
-                  {statsAnimated ? <AnimatedCounter end="5" suffix="K+" /> : '5K+'}
+                  <AnimatedCounter end={5} suffix="K+" isActive={statsAnimated} />
                 </div>
                 <div className="text-sm text-gray-600">Utilisateurs actifs</div>
               </div>
               <div className="bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-lg border border-white/50">
                 <div className="text-2xl font-black text-green-600">
-                  {statsAnimated ? <AnimatedCounter end="280" suffix="%" /> : '+280%'}
+                  <AnimatedCounter end={280} suffix="%" isActive={statsAnimated} />
                 </div>
                 <div className="text-sm text-gray-600">ROI moyen</div>
               </div>
