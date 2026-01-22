@@ -365,17 +365,17 @@ export default function ConsultationModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl">
-        
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center sm:p-4">
+      <div className="bg-white rounded-t-3xl sm:rounded-3xl w-full sm:max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden shadow-2xl">
+
         {/* Header */}
-        <ModalHeader 
-          step={step} 
-          onClose={onClose} 
+        <ModalHeader
+          step={step}
+          onClose={onClose}
         />
 
         {/* Content */}
-        <div className="p-8 overflow-y-auto max-h-[calc(90vh-180px)]">
+        <div className="p-4 sm:p-8 overflow-y-auto max-h-[calc(95vh-140px)] sm:max-h-[calc(90vh-180px)]">
           
           {isSuccess ? (
             <SuccessStep 
@@ -422,39 +422,39 @@ export default function ConsultationModal({
 function ModalHeader({ step, onClose }) {
   const stepLabels = {
     1: 'Vos informations',
-    2: 'Votre projet', 
+    2: 'Votre projet',
     3: 'Planification'
   };
 
   return (
-    <div className="relative bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 px-8 py-6">
+    <div className="relative bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 px-4 sm:px-8 py-4 sm:py-6">
       <div className="absolute inset-0 bg-gradient-to-r from-blue-600/90 via-purple-600/90 to-cyan-600/90"></div>
-      
+
       <div className="relative flex items-center justify-between text-white">
-        <div className="flex items-center space-x-4">
-          <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
-            <AcademicCapIcon className="w-6 h-6" />
+        <div className="flex items-center space-x-3 sm:space-x-4">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 backdrop-blur-sm rounded-xl sm:rounded-2xl flex items-center justify-center">
+            <AcademicCapIcon className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold">Consultation Gratuite</h2>
-            <p className="text-blue-100">
-              Étape {step} sur 3 - {stepLabels[step]}
+            <h2 className="text-lg sm:text-2xl font-bold">Consultation Gratuite</h2>
+            <p className="text-blue-100 text-xs sm:text-base">
+              Étape {step}/3 - {stepLabels[step]}
             </p>
           </div>
         </div>
-        
+
         <button
           onClick={onClose}
           className="p-2 hover:bg-white/20 rounded-xl transition-colors"
         >
-          <XMarkIcon className="w-6 h-6" />
+          <XMarkIcon className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
       </div>
 
       {/* Progress Bar */}
-      <div className="relative mt-6">
-        <div className="h-2 bg-white/20 rounded-full overflow-hidden">
-          <div 
+      <div className="relative mt-4 sm:mt-6">
+        <div className="h-1.5 sm:h-2 bg-white/20 rounded-full overflow-hidden">
+          <div
             className="h-full bg-white transition-all duration-500 ease-out"
             style={{ width: `${(step / 3) * 100}%` }}
           />
@@ -466,20 +466,20 @@ function ModalHeader({ step, onClose }) {
 
 function SuccessStep({ formData, formatDate }) {
   return (
-    <div className="text-center py-12">
-      <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-        <CheckCircleIcon className="w-12 h-12 text-green-600" />
+    <div className="text-center py-8 sm:py-12">
+      <div className="w-16 h-16 sm:w-20 sm:h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+        <CheckCircleIcon className="w-10 h-10 sm:w-12 sm:h-12 text-green-600" />
       </div>
-      <h3 className="text-2xl font-bold text-gray-900 mb-4">Demande Envoyée ! 🎉</h3>
-      <p className="text-gray-600 text-lg mb-2">
-        Merci {formData.firstName} ! Votre demande de consultation a été reçue.
+      <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">Demande Envoyée !</h3>
+      <p className="text-gray-600 text-sm sm:text-lg mb-2">
+        Merci {formData.firstName} ! Votre demande a été reçue.
       </p>
-      <p className="text-gray-500">
-        Vous recevrez un email de confirmation et je vous contacterai sous 24h.
+      <p className="text-gray-500 text-xs sm:text-base">
+        Je vous contacterai sous 24h.
       </p>
-      <div className="mt-6 p-4 bg-blue-50 rounded-2xl">
-        <p className="text-blue-800 font-semibold">
-          📅 Rendez-vous prévu : {formatDate(formData.consultationDate)} à {formData.consultationTime}
+      <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-blue-50 rounded-xl sm:rounded-2xl">
+        <p className="text-blue-800 font-semibold text-sm sm:text-base">
+          📅 {formatDate(formData.consultationDate)} à {formData.consultationTime}
         </p>
       </div>
     </div>
@@ -488,52 +488,56 @@ function SuccessStep({ formData, formatDate }) {
 
 function PersonalInfoStep({ formData, formErrors, onChange, onNext, canProceed }) {
   return (
-    <div className="space-y-6">
-      <div className="text-center mb-8">
-        <UserIcon className="w-16 h-16 text-blue-600 mx-auto mb-4" />
-        <h3 className="text-2xl font-bold text-gray-900 mb-2">Vos Informations</h3>
-        <p className="text-gray-600">Pour que je puisse vous contacter efficacement</p>
+    <div className="space-y-4 sm:space-y-6">
+      <div className="text-center mb-4 sm:mb-8">
+        <UserIcon className="w-10 h-10 sm:w-16 sm:h-16 text-blue-600 mx-auto mb-2 sm:mb-4" />
+        <h3 className="text-lg sm:text-2xl font-bold text-gray-900 mb-1 sm:mb-2">Vos Informations</h3>
+        <p className="text-gray-600 text-sm sm:text-base">Pour vous contacter efficacement</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 sm:gap-6">
         <InputField
           label="Prénom *"
           type="text"
           value={formData.firstName}
           onChange={(value) => onChange('firstName', value)}
-          placeholder="Votre prénom"
+          placeholder="Prénom"
           required
         />
-        
+
         <InputField
           label="Nom *"
           type="text"
           value={formData.lastName}
           onChange={(value) => onChange('lastName', value)}
-          placeholder="Votre nom"
+          placeholder="Nom"
           required
         />
-        
-        <InputField
-          label="Email *"
-          type="email"
-          value={formData.email}
-          onChange={(value) => onChange('email', value)}
-          placeholder="votre@email.com"
-          required
-          error={formErrors.email}
-        />
-        
-        <InputField
-          label="Téléphone *"
-          type="tel"
-          value={formData.phone}
-          onChange={(value) => onChange('phone', value)}
-          placeholder="+33 6 12 34 56 78"
-          required
-        />
-        
-        <div className="md:col-span-2">
+
+        <div className="col-span-2 sm:col-span-1">
+          <InputField
+            label="Email *"
+            type="email"
+            value={formData.email}
+            onChange={(value) => onChange('email', value)}
+            placeholder="votre@email.com"
+            required
+            error={formErrors.email}
+          />
+        </div>
+
+        <div className="col-span-2 sm:col-span-1">
+          <InputField
+            label="Téléphone *"
+            type="tel"
+            value={formData.phone}
+            onChange={(value) => onChange('phone', value)}
+            placeholder="+33 6 12 34 56 78"
+            required
+          />
+        </div>
+
+        <div className="col-span-2">
           <InputField
             label="Entreprise (optionnel)"
             type="text"
@@ -544,7 +548,7 @@ function PersonalInfoStep({ formData, formErrors, onChange, onNext, canProceed }
         </div>
       </div>
 
-      <div className="flex justify-end pt-6">
+      <div className="flex justify-end pt-4 sm:pt-6">
         <Button
           onClick={onNext}
           disabled={!canProceed}
@@ -571,7 +575,7 @@ function ProjectStep({ formData, onChange, onBack, onNext, canProceed }) {
 
   const getBudgetRecommendation = () => {
     if (!estimation) return null;
-    
+
     if (estimation.max <= 2000) return '2k-5k';
     if (estimation.max <= 5000) return '2k-5k';
     if (estimation.max <= 10000) return '5k-10k';
@@ -591,11 +595,11 @@ function ProjectStep({ formData, onChange, onBack, onNext, canProceed }) {
   }, [formData.projectType]);
 
   return (
-    <div className="space-y-6">
-      <div className="text-center mb-8">
-        <BriefcaseIcon className="w-16 h-16 text-purple-600 mx-auto mb-4" />
-        <h3 className="text-2xl font-bold text-gray-900 mb-2">Votre Projet</h3>
-        <p className="text-gray-600">Dites-moi en plus sur ce que vous souhaitez réaliser</p>
+    <div className="space-y-4 sm:space-y-6">
+      <div className="text-center mb-4 sm:mb-8">
+        <BriefcaseIcon className="w-10 h-10 sm:w-16 sm:h-16 text-purple-600 mx-auto mb-2 sm:mb-4" />
+        <h3 className="text-lg sm:text-2xl font-bold text-gray-900 mb-1 sm:mb-2">Votre Projet</h3>
+        <p className="text-gray-600 text-sm sm:text-base">Décrivez votre projet</p>
       </div>
 
       {/* Type de projet */}
@@ -605,9 +609,9 @@ function ProjectStep({ formData, onChange, onBack, onNext, canProceed }) {
         value={formData.projectType}
         onChange={(value) => onChange('projectType', value)}
         renderOption={(option) => (
-          <div className="flex items-center space-x-3">
-            <option.Icon className="w-6 h-6 text-blue-600" />
-            <span className="font-semibold text-gray-900">{option.label}</span>
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <option.Icon className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 flex-shrink-0" />
+            <span className="font-semibold text-gray-900 text-xs sm:text-base truncate">{option.label}</span>
           </div>
         )}
         colorScheme="blue"
@@ -620,13 +624,13 @@ function ProjectStep({ formData, onChange, onBack, onNext, canProceed }) {
         value={formData.timeline}
         onChange={(value) => onChange('timeline', value)}
         renderOption={(option) => (
-          <span className="font-semibold text-gray-900">{option.label}</span>
+          <span className="font-semibold text-gray-900 text-xs sm:text-base">{option.label}</span>
         )}
         colorScheme="orange"
       />
 
-      {/* Détails du projet */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Détails du projet - Hidden on mobile for simplicity */}
+      <div className="hidden sm:grid grid-cols-1 md:grid-cols-2 gap-6">
         <InputField
           label="Nom du projet (optionnel)"
           type="text"
@@ -634,7 +638,7 @@ function ProjectStep({ formData, onChange, onBack, onNext, canProceed }) {
           onChange={(value) => onChange('projectName', value)}
           placeholder="Ex: Mon site e-commerce"
         />
-        
+
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Description (optionnel)
@@ -644,12 +648,12 @@ function ProjectStep({ formData, onChange, onBack, onNext, canProceed }) {
             onChange={(e) => onChange('projectDescription', e.target.value)}
             rows="3"
             className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all resize-none"
-            placeholder="Décrivez brièvement votre projet, vos besoins spécifiques, fonctionnalités souhaitées..."
+            placeholder="Décrivez brièvement votre projet..."
           />
         </div>
       </div>
 
-      <div className="flex justify-between pt-6">
+      <div className="flex justify-between pt-4 sm:pt-6">
         <Button onClick={onBack} variant="secondary">
           ← Retour
         </Button>
@@ -661,12 +665,12 @@ function ProjectStep({ formData, onChange, onBack, onNext, canProceed }) {
   );
 }
 
-function SchedulingStep({ 
-  formData, 
-  onChange, 
-  onBack, 
-  onSubmit, 
-  canSubmit, 
+function SchedulingStep({
+  formData,
+  onChange,
+  onBack,
+  onSubmit,
+  canSubmit,
   isSubmitting,
   availableDates,
   loadingSlots,
@@ -682,36 +686,36 @@ function SchedulingStep({
   };
 
   return (
-    <div className="space-y-6">
-      <div className="text-center mb-8">
-        <CalendarIcon className="w-16 h-16 text-cyan-600 mx-auto mb-4" />
-        <h3 className="text-2xl font-bold text-gray-900 mb-2">Planification</h3>
-        <p className="text-gray-600">Choisissons le meilleur moment pour notre échange</p>
+    <div className="space-y-4 sm:space-y-6">
+      <div className="text-center mb-4 sm:mb-8">
+        <CalendarIcon className="w-10 h-10 sm:w-16 sm:h-16 text-cyan-600 mx-auto mb-2 sm:mb-4" />
+        <h3 className="text-lg sm:text-2xl font-bold text-gray-900 mb-1 sm:mb-2">Planification</h3>
+        <p className="text-gray-600 text-sm sm:text-base">Choisissez votre créneau</p>
       </div>
 
-      {/* Type de consultation */}
+      {/* Type de consultation - Compact on mobile */}
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-4">
+        <label className="block text-sm font-semibold text-gray-700 mb-2 sm:mb-4">
           Type de consultation *
         </label>
-        <div className="grid grid-cols-1 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-1 gap-2 sm:gap-4">
           {CONSULTATION_TYPES.map((type) => (
             <button
               key={type.value}
               onClick={() => onChange('consultationType', type.value)}
-              className={`p-4 border-2 rounded-xl text-left transition-all hover:border-cyan-300 ${
+              className={`p-2.5 sm:p-4 border-2 rounded-xl text-left transition-all hover:border-cyan-300 ${
                 formData.consultationType === type.value
                   ? 'border-cyan-500 bg-cyan-50'
                   : 'border-gray-200 hover:bg-gray-50'
               }`}
             >
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl flex items-center justify-center">
-                  <type.icon className="w-6 h-6 text-white" />
+              <div className="flex flex-col sm:flex-row items-center sm:items-center sm:space-x-4">
+                <div className="w-9 h-9 sm:w-12 sm:h-12 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg sm:rounded-xl flex items-center justify-center mb-1.5 sm:mb-0">
+                  <type.icon className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
                 </div>
-                <div>
-                  <h4 className="font-bold text-gray-900">{type.label}</h4>
-                  <p className="text-sm text-gray-600">{type.description}</p>
+                <div className="text-center sm:text-left">
+                  <h4 className="font-bold text-gray-900 text-xs sm:text-base">{type.label}</h4>
+                  <p className="text-[10px] sm:text-sm text-gray-600 hidden sm:block">{type.description}</p>
                 </div>
               </div>
             </button>
@@ -721,43 +725,42 @@ function SchedulingStep({
 
       {/* Date */}
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-4">
+        <label className="block text-sm font-semibold text-gray-700 mb-2 sm:mb-4">
           Date souhaitée *
         </label>
         {loadingSlots ? (
-          <div className="flex justify-center items-center py-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-            <span className="ml-2 text-gray-600">Chargement des créneaux...</span>
+          <div className="flex justify-center items-center py-6 sm:py-8">
+            <div className="animate-spin rounded-full h-6 w-6 sm:h-8 sm:w-8 border-b-2 border-blue-600"></div>
+            <span className="ml-2 text-gray-600 text-sm">Chargement...</span>
           </div>
         ) : availableDates.length === 0 ? (
-          <div className="text-center py-8 text-gray-500">
-            <CalendarIcon className="w-12 h-12 mx-auto mb-2 text-gray-400" />
-            <p>Aucun créneau disponible pour le moment.</p>
-            <p className="text-sm">Veuillez réessayer plus tard ou nous contacter directement.</p>
+          <div className="text-center py-6 sm:py-8 text-gray-500">
+            <CalendarIcon className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 text-gray-400" />
+            <p className="text-sm">Aucun créneau disponible.</p>
+            <p className="text-xs">Contactez-nous directement.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-2 sm:gap-3">
             {availableDates.map((dateData) => (
               <button
                 key={dateData.date}
                 onClick={() => {
                   onChange('consultationDate', dateData.date);
-                  // Reset de l'heure si la date change
                   if (formData.consultationDate !== dateData.date) {
                     onChange('consultationTime', '');
                   }
                 }}
-                className={`p-3 border-2 rounded-xl text-center transition-all hover:border-blue-300 ${
+                className={`p-2 sm:p-3 border-2 rounded-xl text-center transition-all hover:border-blue-300 ${
                   formData.consultationDate === dateData.date
                     ? 'border-blue-500 bg-blue-50'
                     : 'border-gray-200 hover:bg-gray-50'
                 }`}
               >
-                <div className="text-sm font-semibold text-gray-900">
+                <div className="text-xs sm:text-sm font-semibold text-gray-900">
                   {formatDate(dateData.date)}
                 </div>
-                <div className="text-xs text-gray-500 mt-1">
-                  {dateData.times.length} créneaux disponibles
+                <div className="text-[10px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1">
+                  {dateData.times.length} créneaux
                 </div>
               </button>
             ))}
@@ -768,28 +771,28 @@ function SchedulingStep({
       {/* Heure */}
       {formData.consultationDate && (
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-4">
+          <label className="block text-sm font-semibold text-gray-700 mb-2 sm:mb-4">
             Heure préférée *
           </label>
           {(() => {
             const availableTimes = getAvailableTimesForDate(formData.consultationDate);
-            
+
             if (availableTimes.length === 0) {
               return (
-                <div className="text-center py-4 text-gray-500">
-                  <ClockIcon className="w-8 h-8 mx-auto mb-2 text-gray-400" />
-                  <p>Aucun créneau disponible pour cette date.</p>
+                <div className="text-center py-3 sm:py-4 text-gray-500">
+                  <ClockIcon className="w-6 h-6 sm:w-8 sm:h-8 mx-auto mb-2 text-gray-400" />
+                  <p className="text-sm">Aucun créneau disponible.</p>
                 </div>
               );
             }
 
             return (
-              <div className="grid grid-cols-3 md:grid-cols-5 gap-3">
+              <div className="grid grid-cols-4 sm:grid-cols-5 gap-2 sm:gap-3">
                 {availableTimes.map((time) => (
                   <button
                     key={time}
                     onClick={() => onChange('consultationTime', time)}
-                    className={`p-3 border-2 rounded-xl text-center font-semibold transition-all hover:border-green-300 ${
+                    className={`p-2 sm:p-3 border-2 rounded-lg sm:rounded-xl text-center font-semibold transition-all hover:border-green-300 text-xs sm:text-base ${
                       formData.consultationTime === time
                         ? 'border-green-500 bg-green-50 text-green-700'
                         : 'border-gray-200 text-gray-700 hover:bg-gray-50'
@@ -804,13 +807,13 @@ function SchedulingStep({
         </div>
       )}
 
-      {/* Récapitulatif */}
+      {/* Récapitulatif - Compact on mobile */}
       {formData.consultationDate && formData.consultationTime && (
-        <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-2xl p-6">
-          <h4 className="font-bold text-gray-900 mb-3 flex items-center">
-            Récapitulatif de votre consultation
+        <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-xl sm:rounded-2xl p-3 sm:p-6">
+          <h4 className="font-bold text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base flex items-center">
+            ✓ Récapitulatif
           </h4>
-          <div className="space-y-2 text-sm">
+          <div className="grid grid-cols-2 gap-1 sm:space-y-2 sm:block text-xs sm:text-sm">
             <p><strong>Type:</strong> {CONSULTATION_TYPES.find(t => t.value === formData.consultationType)?.label}</p>
             <p><strong>Date:</strong> {formatDate(formData.consultationDate)}</p>
             <p><strong>Heure:</strong> {formData.consultationTime}</p>
@@ -819,25 +822,25 @@ function SchedulingStep({
         </div>
       )}
 
-      <div className="flex justify-between pt-6">
+      <div className="flex justify-between pt-4 sm:pt-6">
         <Button onClick={onBack} variant="secondary">
           ← Retour
         </Button>
-        <Button 
-          onClick={onSubmit} 
-          disabled={!canSubmit || isSubmitting} 
+        <Button
+          onClick={onSubmit}
+          disabled={!canSubmit || isSubmitting}
           variant="primary"
           isLoading={isSubmitting}
         >
           {isSubmitting ? (
             <>
-              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-              <span>Envoi...</span>
+              <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              <span className="text-sm sm:text-base">Envoi...</span>
             </>
           ) : (
             <>
-              <CheckCircleIcon className="w-5 h-5" />
-              <span>Confirmer la Consultation</span>
+              <CheckCircleIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="text-sm sm:text-base">Confirmer</span>
             </>
           )}
         </Button>
@@ -850,7 +853,7 @@ function SchedulingStep({
 function InputField({ label, type, value, onChange, placeholder, required = false, error = null }) {
   return (
     <div>
-      <label className="block text-sm font-semibold text-gray-700 mb-2">
+      <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
         {label}
       </label>
       <input
@@ -858,10 +861,10 @@ function InputField({ label, type, value, onChange, placeholder, required = fals
         required={required}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className={`w-full px-4 py-3 border rounded-xl transition-all ${error ? 'border-red-500 ring-2 ring-red-200' : 'border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent'}`}
+        className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 border rounded-lg sm:rounded-xl transition-all text-sm sm:text-base ${error ? 'border-red-500 ring-2 ring-red-200' : 'border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent'}`}
         placeholder={placeholder}
       />
-      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+      {error && <p className="text-red-500 text-xs sm:text-sm mt-1">{error}</p>}
     </div>
   );
 }
@@ -878,15 +881,15 @@ function SelectionGrid({ label, options, value, onChange, renderOption, colorSch
 
   return (
     <div>
-      <label className="block text-sm font-semibold text-gray-700 mb-4">
+      <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2 sm:mb-4">
         {label}
       </label>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-2 sm:gap-3">
         {options.map((option) => (
           <button
             key={option.value}
             onClick={() => onChange(option.value)}
-            className={`p-4 border-2 rounded-xl text-left transition-all ${
+            className={`p-2.5 sm:p-4 border-2 rounded-lg sm:rounded-xl text-left transition-all ${
               getColorClasses(value === option.value)
             }`}
           >
@@ -899,8 +902,8 @@ function SelectionGrid({ label, options, value, onChange, renderOption, colorSch
 }
 
 function Button({ children, onClick, disabled = false, variant = 'primary', isLoading = false, ...props }) {
-  const baseClasses = "font-semibold py-4 px-8 rounded-xl transition-all duration-300 disabled:cursor-not-allowed flex items-center space-x-2";
-  
+  const baseClasses = "font-semibold py-3 px-5 sm:py-4 sm:px-8 rounded-lg sm:rounded-xl transition-all duration-300 disabled:cursor-not-allowed flex items-center space-x-2 text-sm sm:text-base";
+
   const variants = {
     primary: "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-300 disabled:to-gray-400 text-white",
     secondary: "bg-gray-200 hover:bg-gray-300 text-gray-700"

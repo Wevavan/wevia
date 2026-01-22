@@ -335,19 +335,19 @@ export default function PremiumHeaderHero() {
           isMenuOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
         }`}>
           {/* Close Button */}
-          <div className="flex justify-end p-6">
+          <div className="flex justify-end p-4">
             <button
               onClick={() => setIsMenuOpen(false)}
-              className="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
               aria-label="Fermer le menu"
             >
-              <FiX className="w-6 h-6" />
+              <FiX className="w-5 h-5" />
             </button>
           </div>
 
           {/* Navigation Links */}
-          <nav className="flex-1 flex flex-col justify-center px-8 -mt-12">
-            <div className="space-y-2">
+          <nav className="flex-1 flex flex-col justify-center px-6 -mt-4">
+            <div className="space-y-0.5">
               {navigationItems.map((item, index) => {
                 const active = isItemActive(item.href);
                 return (
@@ -358,21 +358,21 @@ export default function PremiumHeaderHero() {
                       handleNavigationClick(e, item.href);
                       setIsMenuOpen(false);
                     }}
-                    className={`block py-4 transition-all duration-500 ${
+                    className={`block py-2.5 transition-all duration-500 ${
                       isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'
                     }`}
                     style={{
-                      transitionDelay: isMenuOpen ? `${100 + index * 50}ms` : '0ms'
+                      transitionDelay: isMenuOpen ? `${100 + index * 40}ms` : '0ms'
                     }}
                   >
-                    <div className="flex items-center space-x-4">
-                      <span className={`text-3xl font-bold transition-colors ${
+                    <div className="flex items-center space-x-3">
+                      <span className={`text-xl font-bold transition-colors ${
                         active ? 'text-cyan-400' : 'text-white hover:text-cyan-300'
                       }`}>
                         {item.name}
                       </span>
                       {active && (
-                        <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
+                        <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse" />
                       )}
                     </div>
                   </a>
@@ -380,54 +380,54 @@ export default function PremiumHeaderHero() {
               })}
             </div>
 
-            {/* Mobile CTA */}
-            <div className={`mt-10 transition-all duration-500 ${
+            {/* Mobile CTA - Plus visible */}
+            <div className={`mt-6 transition-all duration-500 ${
               isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-            }`} style={{ transitionDelay: isMenuOpen ? `${100 + navigationItems.length * 50}ms` : '0ms' }}>
+            }`} style={{ transitionDelay: isMenuOpen ? `${100 + navigationItems.length * 40}ms` : '0ms' }}>
               <button
                 onClick={() => {
                   handleCTAClick('mobile_consultation');
                   setIsMenuOpen(false);
                 }}
-                className="w-full bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-white font-bold py-5 px-8 rounded-2xl shadow-2xl shadow-cyan-500/25 hover:shadow-cyan-500/40 transition-all duration-300"
+                className="w-full bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-white font-bold py-4 px-6 rounded-xl shadow-2xl shadow-cyan-500/25 hover:shadow-cyan-500/40 transition-all duration-300"
               >
-                <div className="flex items-center justify-center space-x-3">
-                  <span className="text-lg">Consultation Gratuite</span>
-                  <FiArrowRight className="w-5 h-5" />
+                <div className="flex items-center justify-center space-x-2">
+                  <span className="text-base">Consultation Gratuite</span>
+                  <FiArrowRight className="w-4 h-4" />
                 </div>
               </button>
             </div>
           </nav>
 
-          {/* Bottom Contact Info */}
-          <div className={`p-8 border-t border-white/10 transition-all duration-500 ${
+          {/* Bottom Contact Info - Compact */}
+          <div className={`px-6 py-4 border-t border-white/10 transition-all duration-500 ${
             isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-          }`} style={{ transitionDelay: isMenuOpen ? `${200 + navigationItems.length * 50}ms` : '0ms' }}>
-            <div className="flex flex-col space-y-4">
+          }`} style={{ transitionDelay: isMenuOpen ? `${200 + navigationItems.length * 40}ms` : '0ms' }}>
+            <div className="flex items-center justify-between">
               <a
                 href="tel:+33667483923"
-                className="flex items-center space-x-3 text-white/80 hover:text-cyan-400 transition-colors"
+                className="flex items-center space-x-2 text-white/80 hover:text-cyan-400 transition-colors"
               >
-                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
-                  <FiPhone className="w-5 h-5" />
+                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                  <FiPhone className="w-4 h-4" />
                 </div>
-                <span className="font-medium">+33 6 67 48 39 23</span>
+                <span className="text-sm font-medium">+33 6 67 48 39 23</span>
               </a>
               <a
                 href="mailto:wev.ia.org@gmail.com"
-                className="flex items-center space-x-3 text-white/80 hover:text-cyan-400 transition-colors"
+                className="flex items-center space-x-2 text-white/80 hover:text-cyan-400 transition-colors"
               >
-                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
-                  <FiMail className="w-5 h-5" />
+                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                  <FiMail className="w-4 h-4" />
                 </div>
-                <span className="font-medium">wev.ia.org@gmail.com</span>
+                <span className="text-sm font-medium">Email</span>
               </a>
             </div>
 
             {/* Status indicator */}
-            <div className="flex items-center space-x-2 mt-6 text-white/60">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-              <span className="text-sm">Disponible pour nouveaux projets</span>
+            <div className="flex items-center justify-center space-x-2 mt-3 text-white/60">
+              <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
+              <span className="text-xs">Disponible pour nouveaux projets</span>
             </div>
           </div>
         </div>
