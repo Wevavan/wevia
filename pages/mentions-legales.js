@@ -36,13 +36,11 @@ export default function MentionsLegales() {
                   Éditeur du site
                 </h2>
                 <div className="text-gray-300 space-y-2 pl-11">
-                  <p><strong className="text-white">Raison sociale :</strong> WevIA</p>
+                  <p><strong className="text-white">Raison sociale :</strong> Wev IA Consulting</p>
                   <p><strong className="text-white">Statut :</strong> Auto-entrepreneur</p>
-                  <p><strong className="text-white">Responsable de la publication :</strong> Wevavan GBENOU</p>
-                  <p><strong className="text-white">Adresse :</strong> Paris, France</p>
-                  <p><strong className="text-white">Email :</strong> contact@wevia.com</p>
-                  <p><strong className="text-white">Téléphone :</strong> +33 6 62 70 45 80</p>
-                  <p><strong className="text-white">SIRET :</strong> [Numéro SIRET à compléter]</p>
+                  <p><strong className="text-white">Email :</strong> wev.ia.org@gmail.com</p>
+                  <p><strong className="text-white">Téléphone :</strong> +33 6 67 48 39 23</p>
+                  <p><strong className="text-white">SIRET :</strong> 94975847800026</p>
                 </div>
               </section>
 
@@ -145,8 +143,8 @@ export default function MentionsLegales() {
                 <div className="text-gray-300 pl-11">
                   <p>
                     Pour toute question concernant ces mentions légales, vous pouvez nous contacter à l'adresse :
-                    <a href="mailto:contact@wevia.com" className="text-blue-400 hover:text-blue-300 ml-1">
-                      contact@wevia.com
+                    <a href="mailto:wev.ia.org@gmail.com" className="text-blue-400 hover:text-blue-300 ml-1">
+                      wev.ia.org@gmail.com
                     </a>
                   </p>
                 </div>

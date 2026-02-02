@@ -54,9 +54,8 @@ export default function PolitiqueConfidentialite() {
                   Responsable du traitement
                 </h2>
                 <div className="text-gray-300 space-y-2 pl-11">
-                  <p><strong className="text-white">Responsable :</strong> WevIA - Wevavan GBENOU</p>
-                  <p><strong className="text-white">Adresse :</strong> Paris, France</p>
-                  <p><strong className="text-white">Email :</strong> contact@wevia.com</p>
+                  <p><strong className="text-white">Responsable :</strong> Wev IA Consulting</p>
+                  <p><strong className="text-white">Email :</strong> wev.ia.org@gmail.com</p>
                 </div>
               </section>
 
@@ -183,8 +182,8 @@ export default function PolitiqueConfidentialite() {
                   </ul>
                   <p className="mt-4">
                     Pour exercer ces droits, contactez-nous à :
-                    <a href="mailto:contact@wevia.com" className="text-blue-400 hover:text-blue-300 ml-1">
-                      contact@wevia.com
+                    <a href="mailto:wev.ia.org@gmail.com" className="text-blue-400 hover:text-blue-300 ml-1">
+                      wev.ia.org@gmail.com
                     </a>
                   </p>
                   <p>
