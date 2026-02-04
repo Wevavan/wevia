@@ -113,12 +113,12 @@ export default function Pricing() {
         </AnimatedSection>
 
         {/* Pricing Cards - Horizontal scroll on mobile */}
-        <div className="md:hidden -mx-4 px-4 mb-16">
-          <div className="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory scrollbar-hide">
+        <div className="md:hidden mb-16">
+          <div className="flex overflow-x-auto gap-4 pb-4 px-4 snap-x snap-mandatory scrollbar-hide">
             {pricingPlans.map((plan, index) => (
               <div
                 key={index}
-                className={`flex-shrink-0 w-[300px] snap-center relative bg-white rounded-2xl p-6 border-2 transition-all duration-300 ${
+                className={`flex-shrink-0 w-[85vw] max-w-[320px] snap-start relative bg-white rounded-2xl p-6 border-2 transition-all duration-300 ${
                   plan.popular
                     ? 'border-gray-900 shadow-xl'
                     : 'border-gray-200'
