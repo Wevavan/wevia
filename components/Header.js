@@ -102,13 +102,13 @@ export default function Header() {
         }`}
       >
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-16 sm:h-20">
             {/* Logo */}
-            <a href="/" className="flex items-center">
+            <a href="/" className="flex items-center flex-shrink-0">
               <img
                 src="/logo_wev_ia.png"
                 alt="WevIA Consulting"
-                className="h-40 w-auto"
+                className="h-12 sm:h-16 lg:h-20 w-auto"
               />
             </a>
 
@@ -139,7 +139,7 @@ export default function Header() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="lg:hidden p-2 text-white"
+              className="lg:hidden p-3 text-white bg-white/10 rounded-xl active:bg-white/20 transition-colors flex-shrink-0"
               aria-label={isMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
             >
               {isMenuOpen ? <FiX className="w-6 h-6" /> : <FiMenu className="w-6 h-6" />}
@@ -149,8 +149,8 @@ export default function Header() {
 
         {/* Mobile Menu - Full Screen App-like */}
         {isMenuOpen && (
-          <div className="lg:hidden fixed inset-0 top-20 bg-gray-50 z-40 overflow-y-auto">
-            <div className="container mx-auto px-4 py-6 pb-32">
+          <div className="lg:hidden fixed inset-0 top-16 sm:top-20 bg-gray-50 z-40 overflow-y-auto">
+            <div className="container mx-auto px-4 py-4 pb-32">
               {/* Navigation Grid - App Style */}
               <nav className="grid grid-cols-2 gap-3 mb-6">
                 {navigationItems.map((item) => {

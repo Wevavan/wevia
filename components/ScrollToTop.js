@@ -1,38 +1,55 @@
 import { useState, useEffect } from 'react';
-import { FiArrowUp } from 'react-icons/fi';
+import { FiArrowUp, FiArrowDown } from 'react-icons/fi';
 
 export default function ScrollToTop() {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isAtTop, setIsAtTop] = useState(true);
+  const [isAtBottom, setIsAtBottom] = useState(false);
 
   useEffect(() => {
-    const toggleVisibility = () => {
-      if (window.scrollY > 300) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
+    const checkPosition = () => {
+      const scrollTop = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+
+      // At top if scroll is less than 300px
+      setIsAtTop(scrollTop < 300);
+
+      // At bottom if within 100px of the end
+      setIsAtBottom(scrollTop + windowHeight >= documentHeight - 100);
     };
 
-    window.addEventListener('scroll', toggleVisibility);
-    return () => window.removeEventListener('scroll', toggleVisibility);
+    window.addEventListener('scroll', checkPosition);
+    checkPosition(); // Check initial position
+    return () => window.removeEventListener('scroll', checkPosition);
   }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+  const handleClick = () => {
+    if (isAtTop) {
+      // Scroll to bottom
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: 'smooth'
+      });
+    } else {
+      // Scroll to top
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
   };
 
   return (
     <button
-      onClick={scrollToTop}
-      className={`fixed bottom-6 right-6 z-50 w-12 h-12 bg-gray-900 hover:bg-gray-800 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
-      }`}
-      aria-label="Retourner en haut"
+      onClick={handleClick}
+      className="fixed bottom-20 lg:bottom-6 right-4 z-40 w-11 h-11 bg-gray-900/70 hover:bg-gray-900/90 active:bg-gray-800 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 backdrop-blur-sm"
+      aria-label={isAtTop ? "Descendre en bas" : "Retourner en haut"}
     >
-      <FiArrowUp className="w-5 h-5" />
+      {isAtTop ? (
+        <FiArrowDown className="w-5 h-5" />
+      ) : (
+        <FiArrowUp className="w-5 h-5" />
+      )}
     </button>
   );
 }

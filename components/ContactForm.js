@@ -34,39 +34,38 @@ export default function ContactForm() {
   ];
 
   return (
-    <section id="contact" className="py-16 sm:py-24 bg-gray-900">
+    <section id="contact" className="py-10 sm:py-24 bg-gray-900">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <AnimatedSection animation="fade-up" className="text-center mb-12">
-            <span className="text-sm font-semibold text-gray-400 uppercase tracking-wider">Contact</span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mt-2 mb-4">
+          <AnimatedSection animation="fade-up" className="text-center mb-6 sm:mb-12">
+            <span className="text-xs sm:text-sm font-semibold text-gray-400 uppercase tracking-wider">Contact</span>
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mt-1 sm:mt-2 mb-2 sm:mb-4">
               Parlons de votre projet
             </h2>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-              Vous avez une idée, un projet ? Contactez-moi pour en discuter.
-              Je vous répondrai dans les 24 heures.
+            <p className="text-sm sm:text-lg text-gray-400 max-w-2xl mx-auto">
+              Vous avez une idée ? Contactez-moi. Réponse sous 24h.
             </p>
           </AnimatedSection>
 
           {/* Main CTA Card */}
           <AnimatedSection animation="fade-up" delay={200}>
-            <div className="bg-white rounded-2xl p-8 sm:p-10 mb-8 hover:shadow-2xl transition-shadow duration-300">
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">
+            <div className="bg-white rounded-2xl p-5 sm:p-10 mb-6 sm:mb-8 hover:shadow-2xl transition-shadow duration-300">
+              <div className="text-center mb-4 sm:mb-8">
+                <h3 className="text-lg sm:text-2xl font-bold text-gray-900 mb-1 sm:mb-2">
                   Demandez votre devis gratuit
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-xs sm:text-base text-gray-600">
                   Réponse garantie sous 24h - Sans engagement
                 </p>
               </div>
 
               {/* Guarantees */}
-              <div className="grid grid-cols-2 gap-4 mb-8">
+              <div className="grid grid-cols-2 gap-2 sm:gap-4 mb-4 sm:mb-8">
                 {guarantees.map((item, index) => (
-                  <div key={index} className="flex items-center space-x-2 group">
-                    <FiCheck className="w-5 h-5 text-gray-900 flex-shrink-0 transition-transform group-hover:scale-110" />
-                    <span className="text-sm text-gray-600">{item}</span>
+                  <div key={index} className="flex items-center space-x-1.5 sm:space-x-2 group">
+                    <FiCheck className="w-4 h-4 sm:w-5 sm:h-5 text-gray-900 flex-shrink-0 transition-transform group-hover:scale-110" />
+                    <span className="text-xs sm:text-sm text-gray-600">{item}</span>
                   </div>
                 ))}
               </div>

@@ -117,15 +117,15 @@ export default function Projects() {
   };
 
   return (
-    <section id="portfolio" className="py-16 sm:py-24 bg-gray-50">
+    <section id="portfolio" className="py-10 sm:py-24 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6">
         {/* Header */}
-        <AnimatedSection animation="fade-right" className="text-right mb-12">
-          <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Portfolio</span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mt-2 mb-4">
+        <AnimatedSection animation="fade-right" className="text-right mb-6 sm:mb-12">
+          <span className="text-xs sm:text-sm font-semibold text-gray-500 uppercase tracking-wider">Portfolio</span>
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mt-1 sm:mt-2 mb-2 sm:mb-4">
             Mes réalisations
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl ml-auto">
+          <p className="text-sm sm:text-lg text-gray-600 max-w-2xl ml-auto">
             Découvrez quelques-uns de mes projets récents
           </p>
         </AnimatedSection>
@@ -149,14 +149,81 @@ export default function Projects() {
           </div>
         </div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+        {/* Projects - One at a time on Mobile with pagination */}
+        <div className="md:hidden -mx-4 px-4">
+          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide">
+            {filteredProjects.map((project) => (
+              <div
+                key={project.id}
+                className="flex-shrink-0 w-full px-2 snap-center"
+              >
+                <div className="bg-white rounded-2xl overflow-hidden border border-gray-200 active:scale-[0.98] transition-transform">
+                  {/* Image */}
+                  <div className="aspect-video bg-gray-100 relative overflow-hidden">
+                    {project.image && (
+                      <img
+                        src={project.image}
+                        alt={`Aperçu de ${project.title}`}
+                        className="w-full h-full object-cover object-top"
+                        loading="lazy"
+                      />
+                    )}
+                  </div>
+                  {/* Content */}
+                  <div className="p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs text-gray-500">{project.year}</span>
+                      {project.metrics && (
+                        <span className="text-xs text-green-600 font-medium">{project.metrics}</span>
+                      )}
+                    </div>
+                    <h3 className="text-base font-semibold text-gray-900 mb-2">{project.title}</h3>
+                    <p className="text-sm text-gray-600 mb-3 line-clamp-3">{project.description}</p>
+                    <div className="flex flex-wrap gap-1.5 mb-3">
+                      {project.tags.map((tag, idx) => (
+                        <span key={idx} className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    {project.link && (
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center w-full bg-gray-900 text-white py-3 rounded-xl text-sm font-medium active:bg-gray-800 transition-colors"
+                      >
+                        <span>Voir le projet</span>
+                        <FiExternalLink className="w-4 h-4 ml-2" />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* Mobile Pagination dots */}
+          <div className="flex justify-center items-center gap-2 mt-4">
+            {filteredProjects.map((_, index) => (
+              <div
+                key={index}
+                className="w-2 h-2 rounded-full bg-gray-300"
+              />
+            ))}
+          </div>
+          <div className="flex justify-center mt-2">
+            <span className="text-xs text-gray-400">Glissez pour voir plus</span>
+          </div>
+        </div>
+
+        {/* Desktop Grid */}
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {displayedProjects.map((project) => (
             <div
               key={project.id}
-              className="group bg-white rounded-2xl sm:rounded-xl overflow-hidden border border-gray-200 hover:border-gray-400 transition-all duration-300 hover-lift active:scale-[0.98]"
+              className="group bg-white rounded-xl overflow-hidden border border-gray-200 hover:border-gray-400 transition-all duration-300 hover-lift"
             >
-              {/* Image - Real Website Preview */}
+              {/* Image */}
               <div className="aspect-video bg-gray-100 relative overflow-hidden">
                 {project.image && (
                   <img
@@ -166,8 +233,7 @@ export default function Projects() {
                     loading="lazy"
                   />
                 )}
-                {/* Overlay - Hidden on mobile, shown on hover for desktop */}
-                <div className="hidden sm:flex absolute inset-0 bg-gray-900 opacity-0 group-hover:opacity-80 transition-opacity duration-300 items-center justify-center">
+                <div className="absolute inset-0 bg-gray-900 opacity-0 group-hover:opacity-80 transition-opacity duration-300 flex items-center justify-center">
                   {project.link ? (
                     <a
                       href={project.link}
@@ -185,7 +251,6 @@ export default function Projects() {
                   )}
                 </div>
               </div>
-
               {/* Content */}
               <div className="p-5">
                 <div className="flex items-center justify-between mb-2">
@@ -196,36 +261,21 @@ export default function Projects() {
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">{project.title}</h3>
                 <p className="text-sm text-gray-600 mb-4">{project.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4 sm:mb-0">
+                <div className="flex flex-wrap gap-2">
                   {project.tags.map((tag, idx) => (
-                    <span
-                      key={idx}
-                      className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded"
-                    >
+                    <span key={idx} className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
                       {tag}
                     </span>
                   ))}
                 </div>
-                {/* Mobile CTA Button */}
-                {project.link && (
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="sm:hidden flex items-center justify-center w-full mt-4 bg-gray-900 text-white py-3 rounded-xl font-medium active:bg-gray-800 transition-colors"
-                  >
-                    <span>Voir le projet</span>
-                    <FiExternalLink className="w-4 h-4 ml-2" />
-                  </a>
-                )}
               </div>
             </div>
           ))}
         </div>
 
-        {/* Pagination */}
+        {/* Pagination - Desktop only */}
         {totalPages > 1 && (
-          <div className="flex justify-center items-center gap-4 mt-8">
+          <div className="hidden md:flex justify-center items-center gap-4 mt-8">
             <button
               onClick={prevPage}
               disabled={currentPage === 0}

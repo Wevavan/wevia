@@ -99,17 +99,16 @@ export default function Pricing() {
   ];
 
   return (
-    <section id="tarifs" className="py-16 sm:py-24 bg-white">
+    <section id="tarifs" className="py-10 sm:py-24 bg-white">
       <div className="container mx-auto px-4 sm:px-6">
         {/* Header */}
-        <AnimatedSection animation="fade-right" className="text-right mb-12 sm:mb-16">
-          <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Tarifs</span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mt-2 mb-4">
+        <AnimatedSection animation="fade-right" className="text-right mb-6 sm:mb-16">
+          <span className="text-xs sm:text-sm font-semibold text-gray-500 uppercase tracking-wider">Tarifs</span>
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mt-1 sm:mt-2 mb-2 sm:mb-4">
             Des prix transparents
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl ml-auto">
-            Des tarifs clairs et sans surprise. Chaque projet est unique,
-            n'hésitez pas à demander un devis personnalisé gratuit.
+          <p className="text-sm sm:text-lg text-gray-600 max-w-2xl ml-auto">
+            Des tarifs clairs et sans surprise. Demandez un devis personnalisé gratuit.
           </p>
         </AnimatedSection>
 
@@ -236,11 +235,32 @@ export default function Pricing() {
         </div>
 
         {/* Additional Services */}
-        <AnimatedSection animation="fade-up" className="bg-gray-50 rounded-2xl p-6 sm:p-8">
-          <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 text-center">
+        <AnimatedSection animation="fade-up" className="bg-gray-50 rounded-2xl p-4 sm:p-8">
+          <h3 className="text-lg sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 text-center">
             Services complémentaires
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+          {/* Mobile - Horizontal scroll 2 at a time */}
+          <div className="sm:hidden -mx-2">
+            <div className="flex overflow-x-auto gap-3 pb-3 px-2 snap-x snap-mandatory scrollbar-hide">
+              {additionalServices.map((service, index) => (
+                <div
+                  key={index}
+                  className="flex-shrink-0 w-[calc(50%-6px)] snap-start bg-white p-4 rounded-xl border border-gray-200 active:scale-[0.98] transition-transform"
+                >
+                  <h4 className="font-semibold text-gray-900 mb-1 text-sm">{service.name}</h4>
+                  <p className="text-base font-bold text-gray-900 mb-1">{service.price}</p>
+                  <p className="text-xs text-gray-500 line-clamp-2">{service.description}</p>
+                </div>
+              ))}
+            </div>
+            <div className="flex justify-center mt-1">
+              <span className="text-[10px] text-gray-400">Glissez pour voir plus</span>
+            </div>
+          </div>
+
+          {/* Desktop grid */}
+          <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {additionalServices.map((service, index) => (
               <div
                 key={index}

@@ -3,7 +3,7 @@ import AnimatedSection, { AnimatedCard } from './AnimatedSection';
 
 export default function ResponsiveShowcase() {
   return (
-    <section className="relative py-20 sm:py-28 bg-gray-900 overflow-hidden">
+    <section className="relative py-10 sm:py-28 bg-gray-900 overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0">
         {/* Gradient overlay */}
@@ -20,11 +20,11 @@ export default function ResponsiveShowcase() {
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* Header */}
-        <AnimatedSection animation="fade-up" className="text-center mb-12 sm:mb-16">
-          <p className="text-gray-400 italic text-lg sm:text-xl mb-2">
+        <AnimatedSection animation="fade-up" className="text-center mb-6 sm:mb-16">
+          <p className="text-gray-400 italic text-sm sm:text-xl mb-1 sm:mb-2">
             Compatible Mobile, Tablettes & PC
           </p>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+          <h2 className="text-xl sm:text-4xl lg:text-5xl font-bold text-white">
             Développement Web Responsive
           </h2>
         </AnimatedSection>
@@ -99,33 +99,33 @@ export default function ResponsiveShowcase() {
           </div>
 
           {/* Tablet - positioned to the right */}
-          <div className="absolute right-0 sm:right-4 lg:right-12 bottom-0 z-20 transform translate-y-4 hidden sm:block animate-float-delayed">
-            <div className="bg-gray-800 rounded-2xl p-2 border border-gray-700 shadow-2xl transition-transform duration-300 hover:scale-105" style={{ width: '160px' }}>
+          <div className="absolute right-8 sm:right-4 lg:right-12 bottom-0 z-20 transform translate-y-4 animate-float-delayed">
+            <div className="bg-gray-800 rounded-2xl p-1 sm:p-2 border border-gray-700 shadow-2xl transition-transform duration-300 hover:scale-105 w-[80px] sm:w-[160px]">
               <div className="bg-white rounded-xl overflow-hidden aspect-[3/4]">
                 {/* Tablet Website Mockup */}
-                <div className="h-full flex flex-col p-2">
+                <div className="h-full flex flex-col p-1 sm:p-2">
                   {/* Header */}
-                  <div className="flex justify-between items-center mb-2">
-                    <div className="w-8 h-2 bg-gray-900 rounded"></div>
-                    <div className="w-4 h-2 bg-gray-400 rounded"></div>
+                  <div className="flex justify-between items-center mb-1 sm:mb-2">
+                    <div className="w-4 sm:w-8 h-1 sm:h-2 bg-gray-900 rounded"></div>
+                    <div className="w-2 sm:w-4 h-1 sm:h-2 bg-gray-400 rounded"></div>
                   </div>
                   {/* Hero */}
-                  <div className="mb-2">
-                    <div className="w-3/4 h-2 bg-gray-900 rounded mb-1"></div>
-                    <div className="w-full h-1 bg-gray-300 rounded mb-1"></div>
-                    <div className="w-10 h-2 bg-gray-900 rounded"></div>
+                  <div className="mb-1 sm:mb-2">
+                    <div className="w-3/4 h-1 sm:h-2 bg-gray-900 rounded mb-0.5 sm:mb-1"></div>
+                    <div className="w-full h-0.5 sm:h-1 bg-gray-300 rounded mb-0.5 sm:mb-1"></div>
+                    <div className="w-5 sm:w-10 h-1 sm:h-2 bg-gray-900 rounded"></div>
                   </div>
                   {/* Image placeholder */}
-                  <div className="w-full h-12 bg-gradient-to-br from-gray-100 to-gray-200 rounded mb-2"></div>
+                  <div className="w-full h-6 sm:h-12 bg-gradient-to-br from-gray-100 to-gray-200 rounded mb-1 sm:mb-2"></div>
                   {/* Cards */}
-                  <div className="grid grid-cols-2 gap-1">
-                    <div className="bg-gray-50 p-1 rounded">
-                      <div className="w-4 h-4 bg-gray-200 rounded mb-1"></div>
-                      <div className="w-full h-1 bg-gray-300 rounded"></div>
+                  <div className="grid grid-cols-2 gap-0.5 sm:gap-1">
+                    <div className="bg-gray-50 p-0.5 sm:p-1 rounded">
+                      <div className="w-2 sm:w-4 h-2 sm:h-4 bg-gray-200 rounded mb-0.5 sm:mb-1"></div>
+                      <div className="w-full h-0.5 sm:h-1 bg-gray-300 rounded"></div>
                     </div>
-                    <div className="bg-gray-50 p-1 rounded">
-                      <div className="w-4 h-4 bg-gray-200 rounded mb-1"></div>
-                      <div className="w-full h-1 bg-gray-300 rounded"></div>
+                    <div className="bg-gray-50 p-0.5 sm:p-1 rounded">
+                      <div className="w-2 sm:w-4 h-2 sm:h-4 bg-gray-200 rounded mb-0.5 sm:mb-1"></div>
+                      <div className="w-full h-0.5 sm:h-1 bg-gray-300 rounded"></div>
                     </div>
                   </div>
                 </div>
@@ -134,41 +134,41 @@ export default function ResponsiveShowcase() {
           </div>
 
           {/* Phone - positioned to the far right */}
-          <div className="absolute right-0 sm:-right-4 lg:right-0 bottom-0 z-30 transform translate-y-8 hidden sm:block animate-float">
-            <div className="bg-gray-800 rounded-2xl p-1.5 border border-gray-700 shadow-2xl transition-transform duration-300 hover:scale-105" style={{ width: '80px' }}>
+          <div className="absolute -right-2 sm:-right-4 lg:right-0 bottom-0 z-30 transform translate-y-8 animate-float">
+            <div className="bg-gray-800 rounded-2xl p-1 sm:p-1.5 border border-gray-700 shadow-2xl transition-transform duration-300 hover:scale-105 w-[45px] sm:w-[80px]">
               <div className="bg-white rounded-xl overflow-hidden aspect-[9/16]">
                 {/* Phone Website Mockup */}
-                <div className="h-full flex flex-col p-1.5">
+                <div className="h-full flex flex-col p-0.5 sm:p-1.5">
                   {/* Status bar */}
-                  <div className="flex justify-between items-center mb-1">
-                    <div className="w-4 h-0.5 bg-gray-400 rounded"></div>
-                    <div className="w-6 h-1 bg-gray-900 rounded-full"></div>
-                    <div className="w-4 h-0.5 bg-gray-400 rounded"></div>
+                  <div className="flex justify-between items-center mb-0.5 sm:mb-1">
+                    <div className="w-2 sm:w-4 h-px sm:h-0.5 bg-gray-400 rounded"></div>
+                    <div className="w-3 sm:w-6 h-0.5 sm:h-1 bg-gray-900 rounded-full"></div>
+                    <div className="w-2 sm:w-4 h-px sm:h-0.5 bg-gray-400 rounded"></div>
                   </div>
                   {/* Header */}
-                  <div className="flex justify-between items-center mb-1.5">
-                    <div className="w-6 h-1.5 bg-gray-900 rounded"></div>
-                    <div className="w-3 h-3 flex flex-col justify-center space-y-0.5">
-                      <div className="w-full h-0.5 bg-gray-600 rounded"></div>
-                      <div className="w-full h-0.5 bg-gray-600 rounded"></div>
-                      <div className="w-full h-0.5 bg-gray-600 rounded"></div>
+                  <div className="flex justify-between items-center mb-0.5 sm:mb-1.5">
+                    <div className="w-3 sm:w-6 h-0.5 sm:h-1.5 bg-gray-900 rounded"></div>
+                    <div className="w-1.5 sm:w-3 h-1.5 sm:h-3 flex flex-col justify-center space-y-px sm:space-y-0.5">
+                      <div className="w-full h-px sm:h-0.5 bg-gray-600 rounded"></div>
+                      <div className="w-full h-px sm:h-0.5 bg-gray-600 rounded"></div>
+                      <div className="w-full h-px sm:h-0.5 bg-gray-600 rounded"></div>
                     </div>
                   </div>
                   {/* Hero */}
-                  <div className="mb-1.5">
-                    <div className="w-full h-1.5 bg-gray-900 rounded mb-0.5"></div>
-                    <div className="w-3/4 h-1 bg-gray-300 rounded mb-1"></div>
-                    <div className="w-8 h-1.5 bg-gray-900 rounded"></div>
+                  <div className="mb-0.5 sm:mb-1.5">
+                    <div className="w-full h-0.5 sm:h-1.5 bg-gray-900 rounded mb-px sm:mb-0.5"></div>
+                    <div className="w-3/4 h-0.5 sm:h-1 bg-gray-300 rounded mb-0.5 sm:mb-1"></div>
+                    <div className="w-4 sm:w-8 h-0.5 sm:h-1.5 bg-gray-900 rounded"></div>
                   </div>
                   {/* Image */}
-                  <div className="w-full h-8 bg-gradient-to-br from-gray-100 to-gray-200 rounded mb-1.5"></div>
+                  <div className="w-full h-4 sm:h-8 bg-gradient-to-br from-gray-100 to-gray-200 rounded mb-0.5 sm:mb-1.5"></div>
                   {/* Content blocks */}
-                  <div className="space-y-1">
-                    <div className="bg-gray-50 p-1 rounded">
-                      <div className="w-full h-1 bg-gray-300 rounded"></div>
+                  <div className="space-y-0.5 sm:space-y-1">
+                    <div className="bg-gray-50 p-0.5 sm:p-1 rounded">
+                      <div className="w-full h-0.5 sm:h-1 bg-gray-300 rounded"></div>
                     </div>
-                    <div className="bg-gray-50 p-1 rounded">
-                      <div className="w-full h-1 bg-gray-300 rounded"></div>
+                    <div className="bg-gray-50 p-0.5 sm:p-1 rounded">
+                      <div className="w-full h-0.5 sm:h-1 bg-gray-300 rounded"></div>
                     </div>
                   </div>
                 </div>
@@ -177,12 +177,12 @@ export default function ResponsiveShowcase() {
           </div>
         </AnimatedSection>
 
-        {/* Features */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-16 max-w-3xl mx-auto">
+        {/* Features - Always on same line */}
+        <div className="grid grid-cols-3 gap-2 sm:gap-6 mt-6 sm:mt-16 max-w-3xl mx-auto">
           {[
-            { icon: FiMonitor, title: 'Desktop', desc: 'Expérience optimale sur grand écran' },
-            { icon: FiTablet, title: 'Tablette', desc: 'Navigation tactile fluide' },
-            { icon: FiSmartphone, title: 'Mobile', desc: 'Design mobile-first' }
+            { icon: FiMonitor, title: 'Desktop', desc: 'Grand écran' },
+            { icon: FiTablet, title: 'Tablette', desc: 'Tactile fluide' },
+            { icon: FiSmartphone, title: 'Mobile', desc: 'Mobile-first' }
           ].map((feature, index) => (
             <AnimatedCard
               key={index}
@@ -190,11 +190,11 @@ export default function ResponsiveShowcase() {
               hoverEffect="lift"
               className="text-center"
             >
-              <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mx-auto mb-3 transition-transform hover:scale-110 hover:bg-white/20">
-                <feature.icon className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-3 transition-transform hover:scale-110 hover:bg-white/20">
+                <feature.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
-              <h3 className="text-white font-semibold mb-1">{feature.title}</h3>
-              <p className="text-gray-400 text-sm">{feature.desc}</p>
+              <h3 className="text-white font-semibold mb-0.5 sm:mb-1 text-xs sm:text-base">{feature.title}</h3>
+              <p className="text-gray-400 text-[10px] sm:text-sm">{feature.desc}</p>
             </AnimatedCard>
           ))}
         </div>

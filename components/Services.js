@@ -46,15 +46,15 @@ export default function Services() {
   ];
 
   return (
-    <section id="services" className="py-16 sm:py-24 bg-gray-50">
+    <section id="services" className="py-12 sm:py-24 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6">
         {/* Header */}
-        <AnimatedSection animation="fade-up" className="text-left mb-12 sm:mb-16">
-          <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Services</span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mt-2 mb-4">
+        <AnimatedSection animation="fade-up" className="text-left mb-6 sm:mb-16">
+          <span className="text-xs sm:text-sm font-semibold text-gray-500 uppercase tracking-wider">Services</span>
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mt-1 sm:mt-2 mb-2 sm:mb-4">
             Ce que je propose
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl">
+          <p className="text-sm sm:text-lg text-gray-600 max-w-2xl">
             Des solutions digitales complètes pour développer votre présence en ligne
             et automatiser votre activité.
           </p>
@@ -62,24 +62,24 @@ export default function Services() {
 
         {/* Services - Horizontal Scroll on Mobile, Grid on Desktop */}
         <div className="sm:hidden -mx-4 px-4">
-          <div className="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory scrollbar-hide">
+          <div className="flex overflow-x-auto gap-3 pb-3 snap-x snap-mandatory scrollbar-hide">
             {services.map((service, index) => (
               <div
                 key={index}
-                className="flex-shrink-0 w-[280px] snap-start bg-white p-5 rounded-2xl border border-gray-200 active:scale-[0.98] transition-transform"
+                className="flex-shrink-0 w-[200px] snap-start bg-white p-4 rounded-2xl border border-gray-200 active:scale-[0.98] transition-transform"
               >
-                <div className="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center mb-4">
-                  <service.icon className="w-7 h-7 text-gray-900" />
+                <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mb-3">
+                  <service.icon className="w-5 h-5 text-gray-900" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{service.title}</h3>
-                <p className="text-sm text-gray-600 leading-relaxed">{service.description}</p>
+                <h3 className="text-sm font-semibold text-gray-900 mb-1">{service.title}</h3>
+                <p className="text-xs text-gray-600 leading-relaxed line-clamp-3">{service.description}</p>
               </div>
             ))}
           </div>
           {/* Scroll indicator */}
-          <div className="flex justify-center gap-1 mt-2">
-            <span className="text-xs text-gray-400">Glissez pour voir plus</span>
-            <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="flex justify-center gap-1 mt-1">
+            <span className="text-[10px] text-gray-400">Glissez pour voir plus</span>
+            <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </div>

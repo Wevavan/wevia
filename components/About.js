@@ -12,52 +12,70 @@ export default function About() {
   ];
 
   return (
-    <section id="apropos" className="py-16 sm:py-24 bg-white">
+    <section id="apropos" className="py-10 sm:py-24 bg-white">
       <div className="container mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left - Content */}
           <AnimatedSection animation="fade-left">
-            <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider block text-left">À propos</span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mt-2 mb-6 text-left">
+            <span className="text-xs sm:text-sm font-semibold text-gray-500 uppercase tracking-wider block text-left">À propos</span>
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mt-1 sm:mt-2 mb-3 sm:mb-6 text-left">
               Développeur passionné
             </h2>
 
-            <div className="space-y-4 text-gray-600">
+            <div className="space-y-3 sm:space-y-4 text-gray-600 text-sm sm:text-base">
               <p>
                 Passionné par le développement web et les nouvelles technologies,
-                je mets mon expertise au service de votre projet pour créer des
-                solutions digitales performantes et adaptées à vos besoins.
+                je mets mon expertise au service de votre projet.
               </p>
-              <p>
+              <p className="hidden sm:block">
                 Mon approche : comprendre vos objectifs, proposer des solutions
-                concrètes et vous accompagner tout au long du projet pour garantir
-                votre satisfaction.
+                concrètes et vous accompagner tout au long du projet.
               </p>
               <p>
                 Spécialisé dans l'intégration de l'intelligence artificielle,
-                je vous aide à automatiser vos processus et à gagner en productivité.
+                je vous aide à automatiser vos processus.
               </p>
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 mt-8 pt-8 border-t border-gray-200">
+            <div className="grid grid-cols-3 gap-3 sm:gap-4 mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-200">
               <div className="group">
-                <div className="text-3xl font-bold text-gray-900 transition-transform group-hover:scale-110">1</div>
-                <div className="text-sm text-gray-500">Projet livré</div>
+                <div className="text-2xl sm:text-3xl font-bold text-gray-900 transition-transform group-hover:scale-110">1</div>
+                <div className="text-[10px] sm:text-sm text-gray-500">Projet livré</div>
               </div>
               <div className="group">
-                <div className="text-3xl font-bold text-gray-900 transition-transform group-hover:scale-110">100%</div>
-                <div className="text-sm text-gray-500">Satisfaction</div>
+                <div className="text-2xl sm:text-3xl font-bold text-gray-900 transition-transform group-hover:scale-110">100%</div>
+                <div className="text-[10px] sm:text-sm text-gray-500">Satisfaction</div>
               </div>
               <div className="group">
-                <div className="text-3xl font-bold text-gray-900 transition-transform group-hover:scale-110">3+</div>
-                <div className="text-sm text-gray-500">Ans d'expérience</div>
+                <div className="text-2xl sm:text-3xl font-bold text-gray-900 transition-transform group-hover:scale-110">3+</div>
+                <div className="text-[10px] sm:text-sm text-gray-500">Ans d'expérience</div>
               </div>
             </div>
           </AnimatedSection>
 
-          {/* Right - Skills */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          {/* Right - Skills - Horizontal scroll on mobile */}
+          <div className="sm:hidden -mx-4 px-4">
+            <div className="flex overflow-x-auto gap-3 pb-3 snap-x snap-mandatory scrollbar-hide">
+              {skills.map((skill, index) => (
+                <div
+                  key={index}
+                  className="flex-shrink-0 w-[140px] snap-start bg-gray-50 p-3 rounded-xl border border-gray-200 active:scale-[0.98] transition-transform"
+                >
+                  <skill.icon className="w-6 h-6 text-gray-900 mb-2" />
+                  <h3 className="font-semibold text-gray-900 mb-1 text-xs">{skill.name}</h3>
+                  <ul className="space-y-0.5">
+                    {skill.items.slice(0, 2).map((item, idx) => (
+                      <li key={idx} className="text-[10px] text-gray-500">{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Desktop Grid */}
+          <div className="hidden sm:grid sm:grid-cols-3 gap-4">
             {skills.map((skill, index) => (
               <AnimatedCard
                 key={index}

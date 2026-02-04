@@ -128,34 +128,34 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-b from-gray-900/80 via-gray-900/70 to-gray-900/90" />
 
         {/* Content */}
-        <div className="container mx-auto px-4 sm:px-6 pt-28 sm:pt-32 pb-16 sm:pb-20 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 pt-20 sm:pt-32 pb-12 sm:pb-20 relative z-10">
           <div className="max-w-5xl mx-auto">
             {/* Main Content */}
             <div className={`text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
               {/* Service Carousel Card - Main Title */}
-              <div className="relative max-w-2xl mx-auto mb-10">
-                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 sm:p-10 border border-white/20">
+              <div className="relative max-w-2xl mx-auto mb-6 sm:mb-10">
+                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-5 sm:p-10 border border-white/20">
                   {/* Current Service */}
                   <div className={`transition-all duration-500 ${isAnimating ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
-                    <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6">
-                      <CurrentIcon className="w-10 h-10 text-gray-900" />
+                    <div className="w-14 h-14 sm:w-20 sm:h-20 bg-white rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                      <CurrentIcon className="w-7 h-7 sm:w-10 sm:h-10 text-gray-900" />
                     </div>
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">{currentService.title}</h1>
-                    <p className="text-lg text-gray-300 max-w-lg mx-auto">{currentService.description}</p>
+                    <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-2 sm:mb-4">{currentService.title}</h1>
+                    <p className="text-sm sm:text-lg text-gray-300 max-w-lg mx-auto">{currentService.description}</p>
                   </div>
 
                   {/* Navigation Arrows */}
-                  <div className="flex justify-between items-center mt-8 pt-6 border-t border-white/10">
+                  <div className="flex justify-between items-center mt-4 sm:mt-8 pt-4 sm:pt-6 border-t border-white/10">
                     <button
                       onClick={prevSlide}
-                      className="w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-all duration-300"
+                      className="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-all duration-300"
                       aria-label="Service précédent"
                     >
-                      <FiChevronLeft className="w-6 h-6" />
+                      <FiChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
                     </button>
 
                     {/* Dots */}
-                    <div className="flex gap-2">
+                    <div className="flex gap-1.5 sm:gap-2">
                       {services.map((_, index) => (
                         <button
                           key={index}
@@ -166,10 +166,10 @@ export default function Hero() {
                               setTimeout(() => setIsAnimating(false), 500);
                             }
                           }}
-                          className={`h-2 rounded-full transition-all duration-300 ${
+                          className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 ${
                             index === currentSlide
-                              ? 'w-8 bg-white'
-                              : 'w-2 bg-white/40 hover:bg-white/60'
+                              ? 'w-5 sm:w-8 bg-white'
+                              : 'w-1.5 sm:w-2 bg-white/40 hover:bg-white/60'
                           }`}
                           aria-label={`Aller au service ${index + 1}`}
                         />
@@ -178,45 +178,45 @@ export default function Hero() {
 
                     <button
                       onClick={nextSlide}
-                      className="w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-all duration-300"
+                      className="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-all duration-300"
                       aria-label="Service suivant"
                     >
-                      <FiChevronRight className="w-6 h-6" />
+                      <FiChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
                     </button>
                   </div>
                 </div>
               </div>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12 px-4">
+              <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-8 sm:mb-12 px-4">
                 <button
                   onClick={() => handleCTAClick('hero_devis')}
-                  className="group bg-white hover:bg-gray-100 text-gray-900 font-semibold py-4 px-8 rounded-lg transition-all duration-300 flex items-center justify-center space-x-2"
+                  className="group bg-white hover:bg-gray-100 text-gray-900 font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-xl sm:rounded-lg transition-all duration-300 flex items-center justify-center space-x-2 text-sm sm:text-base active:scale-[0.98]"
                 >
                   <span>Demander un devis gratuit</span>
-                  <FiArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <FiArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
                 <a
                   href="#services"
-                  className="bg-transparent hover:bg-white/10 text-white font-semibold py-4 px-8 rounded-lg border-2 border-white transition-all duration-300"
+                  className="bg-transparent hover:bg-white/10 text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-xl sm:rounded-lg border-2 border-white transition-all duration-300 text-sm sm:text-base text-center active:bg-white/10"
                 >
                   Voir mes services
                 </a>
               </div>
 
               {/* Stats */}
-              <div className={`grid grid-cols-3 gap-4 sm:gap-8 max-w-xl mx-auto pt-8 border-t border-white/20 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+              <div className={`grid grid-cols-3 gap-3 sm:gap-8 max-w-xl mx-auto pt-6 sm:pt-8 border-t border-white/20 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                 <div className="text-center">
-                  <div className="text-2xl sm:text-3xl font-bold text-white">1</div>
-                  <div className="text-xs sm:text-sm text-gray-400">Projet livré</div>
+                  <div className="text-xl sm:text-3xl font-bold text-white">1</div>
+                  <div className="text-[10px] sm:text-sm text-gray-400">Projet livré</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl sm:text-3xl font-bold text-white">100%</div>
-                  <div className="text-xs sm:text-sm text-gray-400">Clients satisfaits</div>
+                  <div className="text-xl sm:text-3xl font-bold text-white">100%</div>
+                  <div className="text-[10px] sm:text-sm text-gray-400">Clients satisfaits</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl sm:text-3xl font-bold text-white">&lt;48h</div>
-                  <div className="text-xs sm:text-sm text-gray-400">Délai réponse</div>
+                  <div className="text-xl sm:text-3xl font-bold text-white">&lt;48h</div>
+                  <div className="text-[10px] sm:text-sm text-gray-400">Délai réponse</div>
                 </div>
               </div>
             </div>
