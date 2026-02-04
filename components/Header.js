@@ -108,7 +108,7 @@ export default function Header() {
               <img
                 src="/logo_wev_ia.png"
                 alt="WevIA Consulting"
-                className="h-12 sm:h-16 lg:h-20 w-auto"
+                className="h-14 sm:h-16 lg:h-20 w-auto"
               />
             </a>
 
