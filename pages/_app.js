@@ -2,5 +2,9 @@
 import '../styles/globals.css'
 
 export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <div className="overflow-x-hidden w-full max-w-full">
+      <Component {...pageProps} />
+    </div>
+  )
 }

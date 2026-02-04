@@ -3,7 +3,7 @@ import AnimatedSection, { AnimatedCard } from './AnimatedSection';
 
 export default function ResponsiveShowcase() {
   return (
-    <section className="relative py-10 sm:py-28 bg-gray-900 overflow-hidden">
+    <section className="relative py-10 sm:py-28 bg-gray-900 overflow-x-hidden overflow-y-visible">
       {/* Background elements */}
       <div className="absolute inset-0">
         {/* Gradient overlay */}
@@ -134,7 +134,7 @@ export default function ResponsiveShowcase() {
           </div>
 
           {/* Phone - positioned to the far right */}
-          <div className="absolute -right-2 sm:-right-4 lg:right-0 bottom-0 z-30 transform translate-y-8 animate-float">
+          <div className="absolute right-2 sm:-right-4 lg:right-0 bottom-0 z-30 transform translate-y-8 animate-float">
             <div className="bg-gray-800 rounded-2xl p-1 sm:p-1.5 border border-gray-700 shadow-2xl transition-transform duration-300 hover:scale-105 w-[45px] sm:w-[80px]">
               <div className="bg-white rounded-xl overflow-hidden aspect-[9/16]">
                 {/* Phone Website Mockup */}
