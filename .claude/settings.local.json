@@ -7,7 +7,12 @@
       "Bash(if exist .next rmdir /s /q .next)",
       "Bash(npm run build:*)",
       "Bash(npx next lint:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(npx eslint:*)",
+      "Bash(npm run lint)",
+      "WebFetch(domain:www.mathieu-crevoulin.com)",
+      "WebFetch(domain:weviaconsulting.com)",
+      "Bash(dir \"s:\\\\WORKSPACE\\\\DEVIA\\\\public\"\")"
     ],
     "deny": [],
     "ask": []

@@ -4,11 +4,13 @@ import Head from 'next/head';
 import Hero from '../components/Hero';
 import Projects from '../components/Projects';
 import Services from '../components/Services';
+import ResponsiveShowcase from '../components/ResponsiveShowcase';
 import About from '../components/About';
 import Pricing from '../components/Pricing';
 import ContactForm from '../components/ContactForm';
 import Footer from '../components/Footer';
 import PremiumHeaderHero from '@/components/Header';
+import ScrollToTop from '../components/ScrollToTop';
 
 export default function Home() {
   useEffect(() => {
@@ -233,12 +235,15 @@ export default function Home() {
       <main className="min-h-screen bg-gray-50">
         <Hero />
         <Services />
+        <ResponsiveShowcase />
         <Projects />
         <About />
         <Pricing />
         <ContactForm />
         <Footer />
       </main>
+
+      <ScrollToTop />
     </>
   );
 }

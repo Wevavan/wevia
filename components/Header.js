@@ -1,444 +1,235 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/router';
-import { FiMenu, FiX, FiPhone, FiMail, FiMapPin, FiArrowRight } from 'react-icons/fi';
-import { HiOutlineCpuChip } from 'react-icons/hi2';
-
+import { FiMenu, FiX, FiPhone, FiMail, FiHome, FiGrid, FiBriefcase, FiDollarSign, FiUser, FiEdit3, FiMessageCircle } from 'react-icons/fi';
 import ConsultationModal from './ConsultationModal';
 
-export default function PremiumHeaderHero() {
-  const router = useRouter();
+export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
   const [isConsultationModalOpen, setIsConsultationModalOpen] = useState(false);
-  const [modalSource, setModalSource] = useState('header');
-  const [activeSection, setActiveSection] = useState('/');
-
-  // Détecter les changements de route et extraire l'ancre de l'URL
-  useEffect(() => {
-    const handleRouteChange = () => {
-      // Utiliser router.asPath pour obtenir le chemin complet avec hash
-      const fullPath = router.asPath;
-      const hashIndex = fullPath.indexOf('#');
-
-      if (hashIndex !== -1) {
-        const hash = fullPath.substring(hashIndex);
-        setActiveSection(hash);
-      } else if (router.pathname === '/blog') {
-        setActiveSection('/blog');
-      } else {
-        setActiveSection('/');
-      }
-    };
-
-    // Vérifier au montage
-    handleRouteChange();
-
-    // Écouter les changements de route
-    router.events?.on('routeChangeComplete', handleRouteChange);
-
-    return () => {
-      router.events?.off('routeChangeComplete', handleRouteChange);
-    };
-  }, [router]);
 
   const handleScroll = useCallback(() => {
-    const scrolled = window.scrollY > 20;
-    if (scrolled !== isScrolled) {
-      setIsScrolled(scrolled);
-    }
-  }, [isScrolled]);
+    setIsScrolled(window.scrollY > 20);
+  }, []);
 
   useEffect(() => {
-    setIsVisible(true);
-    
-    let ticking = false;
-    const scrollHandler = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', scrollHandler, { passive: true });
-    
-    return () => {
-      window.removeEventListener('scroll', scrollHandler);
-    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape' && isMenuOpen) {
-        setIsMenuOpen(false);
-      }
-    };
-
     if (isMenuOpen) {
-      document.addEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
-
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'unset';
     };
   }, [isMenuOpen]);
 
-  const handleCTAClick = (ctaType) => {
-    console.log('CTA clicked:', ctaType);
-
-    // Analytics
+  const handleCTAClick = () => {
     fetch('/api/analytics', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         type: 'cta_click',
-        ctaType: ctaType,
+        ctaType: 'header_cta',
         page: 'home',
         section: 'header'
       })
     });
-
-    // Ouvrir la modal de consultation
-    setModalSource(ctaType);
     setIsConsultationModalOpen(true);
+    setIsMenuOpen(false);
   };
 
   const handleNavigationClick = (e, href) => {
-    const currentPath = router.pathname;
-
-    // Si le lien est vers /blog
-    if (href === '/blog') {
-      // Si on est déjà sur /blog, empêcher la navigation
-      if (currentPath === '/blog') {
-        e.preventDefault();
-        return;
-      }
-      // Sinon, navigation normale vers /blog (Next.js gère)
-      setActiveSection('/blog');
-      return;
-    }
-
-    // Si c'est un lien vers la home
-    if (href === '/') {
-      setActiveSection('/');
-      return;
-    }
-
-    // Si c'est un lien avec ancre (#)
     if (href.startsWith('#')) {
-      // Mettre à jour la section active
-      setActiveSection(href);
+      e.preventDefault();
 
-      // Si on est sur /blog, rediriger vers la home avec l'ancre
-      if (currentPath === '/blog') {
-        e.preventDefault();
-        // Utiliser router.push avec un callback pour maintenir la section active
-        router.push(`/${href}`).then(() => {
-          // La section active est déjà définie ci-dessus
-          setIsMenuOpen(false);
-        });
+      // Check if we're on the home page
+      const isHomePage = window.location.pathname === '/';
+
+      if (!isHomePage) {
+        // Redirect to home page with anchor
+        window.location.href = href === '#' ? '/' : '/' + href;
         return;
       }
-      // Si on est sur la home, scroll normal
-      // Le comportement par défaut des ancres fonctionnera
+
+      if (href === '#') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        const element = document.querySelector(href);
+        if (element) {
+          const headerHeight = 80;
+          const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({
+            top: elementPosition - headerHeight,
+            behavior: 'smooth'
+          });
+        }
+      }
       setIsMenuOpen(false);
     }
   };
 
-  // Déterminer quel item est actif
-  const isItemActive = (href) => {
-    const currentPath = router.pathname;
-
-    // Si on est sur une page différente de la home
-    if (currentPath === '/blog') {
-      return href === '/blog';
-    }
-
-    // Sur la home, comparer avec activeSection
-    return activeSection === href;
-  };
-
   const navigationItems = [
-    { name: 'Accueil', href: '/' },
-    { name: 'Services', href: '#services' },
-    { name: 'Projets', href: '#projects' },
-    { name: 'À propos', href: '#about' },
-    { name: 'Tarifs', href: '#pricing' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Contact', href: '#contact'}
+    { name: 'Accueil', href: '#', icon: FiHome },
+    { name: 'Services', href: '#services', icon: FiGrid },
+    { name: 'Portfolio', href: '#portfolio', icon: FiBriefcase },
+    { name: 'Tarifs', href: '#tarifs', icon: FiDollarSign },
+    { name: 'À propos', href: '#apropos', icon: FiUser },
+    { name: 'Blog', href: '/blog', icon: FiEdit3 },
+    { name: 'Contact', href: '#contact', icon: FiMessageCircle }
+  ];
+
+  // Bottom nav items for mobile (limited selection)
+  const bottomNavItems = [
+    { name: 'Accueil', href: '#', icon: FiHome },
+    { name: 'Services', href: '#services', icon: FiGrid },
+    { name: 'Portfolio', href: '#portfolio', icon: FiBriefcase },
+    { name: 'Tarifs', href: '#tarifs', icon: FiDollarSign },
+    { name: 'Contact', href: '#contact', icon: FiMessageCircle }
   ];
 
   return (
     <>
-      {/* HEADER PREMIUM CLEAN */}
-      <header 
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled 
-            ? 'bg-white/95 backdrop-blur-xl shadow-xl border-b border-gray-100' 
-            : 'bg-transparent'
-        } ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}
-        role="banner"
+      {/* Main Header */}
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled
+            ? 'bg-[#111827] shadow-md'
+            : 'bg-[#111827]'
+        }`}
       >
-        {/* Top Bar Premium */}
-        <div className={`border-b transition-all duration-500 ${
-          isScrolled ? 'border-gray-100 bg-gradient-to-r from-blue-50 to-purple-50' : 'border-white/20 bg-white/10 backdrop-blur-sm'
-        }`}>
-          <div className="container mx-auto px-4 sm:px-6">
-            <div className="flex items-center justify-between h-10 sm:h-10">
-              {/* Left - Status Disponible */}
-              <div className={`flex items-center space-x-2 text-xs sm:text-sm ${
-                isScrolled ? 'text-gray-700' : 'text-white'
-              }`}>
-                <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/50" />
-                <span className="font-semibold">Disponible</span>
-                <span className="hidden sm:inline font-medium">maintenant</span>
-              </div>
-
-              {/* Right - Phone Number */}
-              <a
-                href="tel:+33667483923"
-                className={`flex items-center space-x-2 text-xs sm:text-sm font-semibold transition-colors ${
-                  isScrolled
-                    ? 'text-blue-600 hover:text-blue-700'
-                    : 'text-white hover:text-cyan-300'
-                }`}
-              >
-                <FiPhone className="w-4 h-4" />
-                <span>+33 6 67 48 39 23</span>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* Main Navigation */}
-        <nav className="container mx-auto px-6" role="navigation">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-20">
-            {/* Logo Premium */}
-            <a 
-              href="/" 
-              className="flex items-center group -ml-6"
-              aria-label="WEV-IA - Accueil"
-            >
-              <img src="/logo_wev_ia.png" alt="WEV-IA Logo" className="h-32" />
+            {/* Logo */}
+            <a href="/" className="flex items-center">
+              <img
+                src="/logo_wev_ia.png"
+                alt="WevIA Consulting"
+                className="h-40 w-auto"
+              />
             </a>
 
-            {/* Desktop Navigation Clean */}
-            <div className="hidden lg:flex items-center space-x-8">
-              {navigationItems.map((item) => {
-                const active = isItemActive(item.href);
-                return (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    onClick={(e) => handleNavigationClick(e, item.href)}
-                    className={`relative py-3 px-2 font-medium transition-all duration-300 ${
-                      isScrolled
-                        ? active
-                          ? 'text-blue-600'
-                          : 'text-gray-700 hover:text-blue-600'
-                        : active
-                          ? 'text-cyan-400'
-                          : 'text-white/90 hover:text-white'
-                    }`}
-                  >
-                    {item.name}
-                    <span className={`absolute bottom-0 left-0 right-0 h-0.5 transition-all duration-300 ${
-                      active
-                        ? isScrolled
-                          ? 'bg-blue-600 scale-x-100'
-                          : 'bg-cyan-400 scale-x-100'
-                        : 'bg-current scale-x-0 hover:scale-x-100'
-                    }`} />
-                  </a>
-                );
-              })}
-            </div>
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center space-x-8">
+              {navigationItems.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={(e) => handleNavigationClick(e, item.href)}
+                  className="text-gray-300 hover:text-white font-medium transition-all px-3 py-2 rounded-lg hover:bg-white/10"
+                >
+                  {item.name}
+                </a>
+              ))}
+            </nav>
 
-            {/* CTA Clean */}
-            <div className="hidden lg:flex items-center">
+            {/* Desktop CTA */}
+            <div className="hidden lg:block">
               <button
-                onClick={() => handleCTAClick('header_consultation')}
-                className={`group relative overflow-hidden px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 ${
-                  isScrolled
-                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg'
-                    : 'bg-white/10 backdrop-blur-sm border border-white/30 text-white hover:bg-white/20'
-                }`}
+                onClick={handleCTAClick}
+                className="bg-white hover:bg-gray-100 text-gray-900 font-semibold py-2.5 px-6 rounded-lg transition-colors"
               >
-                <span className="relative z-10 flex items-center space-x-2">
-                  <span>Consultation Gratuite</span>
-                  <FiArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </span>
+                Devis gratuit
               </button>
             </div>
 
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className={`lg:hidden p-2 rounded-xl transition-all duration-300 ${
-                isScrolled
-                  ? 'text-gray-700 hover:bg-gray-100'
-                  : 'text-white hover:bg-white/10'
-              }`}
+              className="lg:hidden p-2 text-white"
               aria-label={isMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
             >
-              <div className="relative w-6 h-6">
-                <span className={`absolute inset-0 transition-all duration-300 ${
-                  isMenuOpen ? 'rotate-45 opacity-0' : 'rotate-0 opacity-100'
-                }`}>
-                  <FiMenu className="w-6 h-6" />
-                </span>
-                <span className={`absolute inset-0 transition-all duration-300 ${
-                  isMenuOpen ? 'rotate-0 opacity-100' : '-rotate-45 opacity-0'
-                }`}>
-                  <FiX className="w-6 h-6" />
-                </span>
-              </div>
+              {isMenuOpen ? <FiX className="w-6 h-6" /> : <FiMenu className="w-6 h-6" />}
             </button>
-          </div>
-        </nav>
-      </header>
-
-      {/* Mobile Menu Premium Full Screen - OUTSIDE header for proper z-index */}
-      <div
-        className={`lg:hidden fixed inset-0 z-[9999] transition-all duration-500 ${
-          isMenuOpen ? 'visible' : 'invisible pointer-events-none'
-        }`}
-      >
-        {/* Backdrop - Solid opaque background */}
-        <div
-          className={`absolute inset-0 transition-opacity duration-500 ${
-            isMenuOpen ? 'opacity-100' : 'opacity-0'
-          }`}
-          style={{
-            background: '#0f172a'
-          }}
-          onClick={() => setIsMenuOpen(false)}
-        />
-
-        {/* Gradient overlay */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: 'linear-gradient(135deg, rgba(15,23,42,1) 0%, rgba(30,58,95,1) 50%, rgba(49,46,129,1) 100%)'
-          }}
-        />
-
-        {/* Content */}
-        <div className={`relative h-full flex flex-col transition-all duration-500 ${
-          isMenuOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-        }`}>
-          {/* Close Button */}
-          <div className="flex justify-end p-4">
-            <button
-              onClick={() => setIsMenuOpen(false)}
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
-              aria-label="Fermer le menu"
-            >
-              <FiX className="w-5 h-5" />
-            </button>
-          </div>
-
-          {/* Navigation Links */}
-          <nav className="flex-1 flex flex-col justify-center px-6 -mt-4">
-            <div className="space-y-0.5">
-              {navigationItems.map((item, index) => {
-                const active = isItemActive(item.href);
-                return (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    onClick={(e) => {
-                      handleNavigationClick(e, item.href);
-                      setIsMenuOpen(false);
-                    }}
-                    className={`block py-2.5 transition-all duration-500 ${
-                      isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'
-                    }`}
-                    style={{
-                      transitionDelay: isMenuOpen ? `${100 + index * 40}ms` : '0ms'
-                    }}
-                  >
-                    <div className="flex items-center space-x-3">
-                      <span className={`text-xl font-bold transition-colors ${
-                        active ? 'text-cyan-400' : 'text-white hover:text-cyan-300'
-                      }`}>
-                        {item.name}
-                      </span>
-                      {active && (
-                        <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse" />
-                      )}
-                    </div>
-                  </a>
-                );
-              })}
-            </div>
-
-            {/* Mobile CTA - Plus visible */}
-            <div className={`mt-6 transition-all duration-500 ${
-              isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-            }`} style={{ transitionDelay: isMenuOpen ? `${100 + navigationItems.length * 40}ms` : '0ms' }}>
-              <button
-                onClick={() => {
-                  handleCTAClick('mobile_consultation');
-                  setIsMenuOpen(false);
-                }}
-                className="w-full bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-white font-bold py-4 px-6 rounded-xl shadow-2xl shadow-cyan-500/25 hover:shadow-cyan-500/40 transition-all duration-300"
-              >
-                <div className="flex items-center justify-center space-x-2">
-                  <span className="text-base">Consultation Gratuite</span>
-                  <FiArrowRight className="w-4 h-4" />
-                </div>
-              </button>
-            </div>
-          </nav>
-
-          {/* Bottom Contact Info - Compact */}
-          <div className={`px-6 py-4 border-t border-white/10 transition-all duration-500 ${
-            isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-          }`} style={{ transitionDelay: isMenuOpen ? `${200 + navigationItems.length * 40}ms` : '0ms' }}>
-            <div className="flex items-center justify-between">
-              <a
-                href="tel:+33667483923"
-                className="flex items-center space-x-2 text-white/80 hover:text-cyan-400 transition-colors"
-              >
-                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                  <FiPhone className="w-4 h-4" />
-                </div>
-                <span className="text-sm font-medium">+33 6 67 48 39 23</span>
-              </a>
-              <a
-                href="mailto:wev.ia.org@gmail.com"
-                className="flex items-center space-x-2 text-white/80 hover:text-cyan-400 transition-colors"
-              >
-                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                  <FiMail className="w-4 h-4" />
-                </div>
-                <span className="text-sm font-medium">Email</span>
-              </a>
-            </div>
-
-            {/* Status indicator */}
-            <div className="flex items-center justify-center space-x-2 mt-3 text-white/60">
-              <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
-              <span className="text-xs">Disponible pour nouveaux projets</span>
-            </div>
           </div>
         </div>
-      </div>
 
-      {/* Modal de Consultation */}
-      <ConsultationModal 
+        {/* Mobile Menu - Full Screen App-like */}
+        {isMenuOpen && (
+          <div className="lg:hidden fixed inset-0 top-20 bg-gray-50 z-40 overflow-y-auto">
+            <div className="container mx-auto px-4 py-6 pb-32">
+              {/* Navigation Grid - App Style */}
+              <nav className="grid grid-cols-2 gap-3 mb-6">
+                {navigationItems.map((item) => {
+                  const IconComponent = item.icon;
+                  return (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      onClick={(e) => handleNavigationClick(e, item.href)}
+                      className="flex flex-col items-center justify-center p-6 bg-white rounded-2xl border border-gray-200 active:scale-95 transition-transform"
+                    >
+                      <IconComponent className="w-7 h-7 text-gray-900 mb-2" />
+                      <span className="text-sm font-medium text-gray-900">{item.name}</span>
+                    </a>
+                  );
+                })}
+              </nav>
+
+              {/* CTA Button */}
+              <button
+                onClick={handleCTAClick}
+                className="w-full bg-gray-900 active:bg-gray-800 text-white font-semibold py-4 px-6 rounded-2xl transition-all active:scale-[0.98] mb-6"
+              >
+                Demander un devis gratuit
+              </button>
+
+              {/* Contact Cards */}
+              <div className="grid grid-cols-2 gap-3">
+                <a
+                  href="tel:+33667483923"
+                  className="flex flex-col items-center p-4 bg-white rounded-2xl border border-gray-200 active:scale-95 transition-transform"
+                >
+                  <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-2">
+                    <FiPhone className="w-5 h-5 text-gray-900" />
+                  </div>
+                  <span className="text-xs text-gray-500">Téléphone</span>
+                  <span className="text-sm font-medium text-gray-900">Appeler</span>
+                </a>
+                <a
+                  href="mailto:wev.ia.org@gmail.com"
+                  className="flex flex-col items-center p-4 bg-white rounded-2xl border border-gray-200 active:scale-95 transition-transform"
+                >
+                  <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-2">
+                    <FiMail className="w-5 h-5 text-gray-900" />
+                  </div>
+                  <span className="text-xs text-gray-500">Email</span>
+                  <span className="text-sm font-medium text-gray-900">Écrire</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
+      </header>
+
+      {/* Bottom Navigation Bar - Mobile Only */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 safe-area-bottom">
+        <div className="flex justify-around items-center h-16">
+          {bottomNavItems.map((item) => {
+            const IconComponent = item.icon;
+            return (
+              <a
+                key={item.name}
+                href={item.href}
+                onClick={(e) => handleNavigationClick(e, item.href)}
+                className="flex flex-col items-center justify-center flex-1 h-full active:bg-gray-100 transition-colors"
+              >
+                <IconComponent className="w-5 h-5 text-gray-600 mb-1" />
+                <span className="text-[10px] text-gray-600 font-medium">{item.name}</span>
+              </a>
+            );
+          })}
+        </div>
+      </nav>
+
+      <ConsultationModal
         isOpen={isConsultationModalOpen}
         onClose={() => setIsConsultationModalOpen(false)}
         source="website"
-        sourceSection={modalSource}
+        sourceSection="header"
       />
     </>
   );

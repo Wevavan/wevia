@@ -1,463 +1,139 @@
-import { useState, useEffect, useRef } from 'react';
-import {
-  FiAward,
-  FiZap,
-  FiShield,
-  FiTrendingUp,
-  FiCheckCircle,
-  FiArrowRight,
-  FiCalendar,
-  FiStar,
-  FiMessageSquare,
-  FiHeart,
-  FiClock
-} from 'react-icons/fi';
-import { MdRocket, MdSupportAgent } from 'react-icons/md';
+import { useState } from 'react';
+import { FiMail, FiPhone, FiMapPin, FiArrowRight, FiCheck } from 'react-icons/fi';
+import ConsultationModal from './ConsultationModal';
+import AnimatedSection, { AnimatedCard } from './AnimatedSection';
 
 export default function ContactForm() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [visibleElements, setVisibleElements] = useState([]);
-  const sectionRef = useRef(null);
+  const [isConsultationModalOpen, setIsConsultationModalOpen] = useState(false);
 
-  // Mouse tracking pour les effets premium
-  const handleMouseMove = (e) => {
-    const rect = sectionRef.current?.getBoundingClientRect();
-    if (rect) {
-      setMousePosition({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top
-      });
-    }
+  const handleCTAClick = () => {
+    fetch('/api/analytics', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'cta_click',
+        ctaType: 'contact_section',
+        page: 'home',
+        section: 'contact'
+      })
+    });
+    setIsConsultationModalOpen(true);
   };
 
-  // Intersection Observer pour les animations
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = parseInt(entry.target.dataset.index);
-            setTimeout(() => {
-              setVisibleElements(prev => [...prev, index]);
-            }, index * 200);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = sectionRef.current?.querySelectorAll('[data-index]');
-    elements?.forEach(el => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, []);
-
-  const handleCTAClick = (ctaType) => {
-    console.log('CTA clicked:', ctaType);
-    // Analytics tracking
-    setIsModalOpen(true);
-  };
-
-  const contactOptions = [
-    {
-      icon: FiCalendar,
-      title: "Consultation gratuite",
-      subtitle: "45 min · Gratuit · Exclusif",
-      description: "Analyse complète de votre projet avec recommandations personnalisées et roadmap détaillée",
-      features: ["Audit gratuit", "Stratégie sur-mesure", "Devis précis"],
-      cta: "Réserver Maintenant",
-      color: "from-blue-500 via-cyan-500 to-teal-500",
-      bgColor: "from-blue-500/20 to-cyan-500/20",
-      priority: "high"
-    }
+  const contactInfo = [
+    { icon: FiMail, label: "Email", value: "wev.ia.org@gmail.com", href: "mailto:wev.ia.org@gmail.com" },
+    { icon: FiPhone, label: "Téléphone", value: "+33 6 67 48 39 23", href: "tel:+33667483923" },
+    { icon: FiMapPin, label: "Localisation", value: "Paris, France", href: null }
   ];
 
   const guarantees = [
-    {
-      icon: FiAward,
-      title: "Expertise Reconnue",
-      description: "3+ ans d'expérience, plusieurs projets réussis",
-      color: "text-yellow-400"
-    },
-    {
-      icon: FiZap,
-      title: "Livraison Express",
-      description: "Développement agile, mise en ligne rapide",
-      color: "text-cyan-400"
-    },
-    {
-      icon: FiShield,
-      title: "Garantie Résultats",
-      description: "Satisfaction client ou remboursement",
-      color: "text-green-400"
-    },
-    {
-      icon: FiTrendingUp,
-      title: "Support Premium 24/7",
-      description: "Maintenance et évolutions incluses",
-      color: "text-orange-400"
-    }
-  ];
-
-  const stats = [
-    { number: "98%", label: "Clients Satisfaits", icon: FiHeart, color: "text-pink-400" },
-    { number: "< 2h", label: "Temps de Réponse", icon: FiClock, color: "text-cyan-400" },
-    { number: "50+", label: "Projets Livrés", icon: MdRocket, color: "text-purple-400" },
-    { number: "24/7", label: "Support Premium", icon: MdSupportAgent, color: "text-green-400" }
+    "Devis gratuit sous 24h",
+    "Accompagnement personnalisé",
+    "Satisfaction garantie",
+    "Support après livraison"
   ];
 
   return (
-    <>
-      <section
-        ref={sectionRef}
-        className="relative overflow-hidden"
-        onMouseMove={handleMouseMove}
-      >
-        {/* Background Ultra Premium - Desktop only */}
-        <div className="hidden sm:block absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
-          {/* Animated Grid */}
-          <div
-            className="absolute inset-0 opacity-20"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-            }}
-          />
-
-          {/* Mouse Glow Effect */}
-          <div
-            className="absolute w-96 h-96 pointer-events-none"
-            style={{
-              background: `radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.15), transparent 70%)`,
-              left: mousePosition.x - 192,
-              top: mousePosition.y - 192,
-              transition: 'all 0.1s ease-out'
-            }}
-          />
-
-          {/* Floating Orbs */}
-          <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-pink-500/10 to-orange-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
-        </div>
-
-        {/* ========== MOBILE APP VERSION ========== */}
-        <div className="sm:hidden bg-gradient-to-b from-gray-900 via-blue-900 to-purple-900 py-8 px-4 relative z-10">
-          {/* App Header */}
-          <div className="text-center mb-5">
-            <div className="inline-flex items-center space-x-2 bg-white/10 rounded-full px-3 py-1.5 mb-3">
-              <FiMessageSquare className="w-3.5 h-3.5 text-cyan-400" />
-              <span className="text-[10px] font-bold text-cyan-300 uppercase tracking-wider">Contact</span>
-            </div>
-            <h2 className="text-2xl font-black text-white leading-tight">
-              Transformons Votre <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Vision</span>
+    <section id="contact" className="py-16 sm:py-24 bg-gray-900">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="max-w-4xl mx-auto">
+          {/* Header */}
+          <AnimatedSection animation="fade-up" className="text-center mb-12">
+            <span className="text-sm font-semibold text-gray-400 uppercase tracking-wider">Contact</span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mt-2 mb-4">
+              Parlons de votre projet
             </h2>
-            <p className="text-xs text-gray-400 mt-2">
-              Consultation gratuite, <span className="text-cyan-400 font-medium">résultats garantis</span>
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+              Vous avez une idée, un projet ? Contactez-moi pour en discuter.
+              Je vous répondrai dans les 24 heures.
             </p>
-          </div>
+          </AnimatedSection>
 
-          {/* Mobile Stats Row */}
-          <div className="grid grid-cols-4 gap-2 mb-5">
-            {stats.map((stat, index) => (
-              <div key={index} className="bg-white/5 rounded-xl p-2 text-center border border-white/10">
-                <stat.icon className={`w-4 h-4 ${stat.color} mx-auto mb-1`} />
-                <div className="text-sm font-black text-white">{stat.number}</div>
-                <div className="text-[8px] text-gray-500 leading-tight">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* Mobile Contact Card */}
-          <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-4 border border-white/20 mb-5">
-            <div className="flex items-center space-x-3 mb-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 via-cyan-500 to-teal-500 rounded-xl flex items-center justify-center">
-                <FiCalendar className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h3 className="text-sm font-bold text-white">Consultation Gratuite</h3>
-                <p className="text-[10px] text-cyan-400 font-medium">45 min · Gratuit · Exclusif</p>
-              </div>
-            </div>
-            <p className="text-xs text-gray-300 mb-3 leading-relaxed">
-              Analyse complète de votre projet avec recommandations personnalisées et roadmap détaillée.
-            </p>
-            <div className="space-y-1.5 mb-4">
-              {contactOptions[0].features.map((feature, idx) => (
-                <div key={idx} className="flex items-center space-x-2">
-                  <FiCheckCircle className="w-3.5 h-3.5 text-green-400 flex-shrink-0" />
-                  <span className="text-[11px] text-gray-300">{feature}</span>
-                </div>
-              ))}
-            </div>
-            <button
-              onClick={() => handleCTAClick('mobile_consultation')}
-              className="w-full bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 text-white font-bold py-3 rounded-xl active:scale-[0.98] transition-transform"
-            >
-              <span className="flex items-center justify-center space-x-2">
-                <span className="text-sm">Réserver Maintenant</span>
-                <FiArrowRight className="w-4 h-4" />
-              </span>
-            </button>
-          </div>
-
-          {/* Mobile Guarantees - Horizontal Scroll */}
-          <div className="mb-5">
-            <h4 className="text-xs font-bold text-white mb-3 flex items-center space-x-1">
-              <FiShield className="w-3 h-3 text-green-400" />
-              <span>Pourquoi Me Faire Confiance</span>
-            </h4>
-            <div className="flex overflow-x-auto gap-3 pb-2 -mx-4 px-4 scrollbar-hide snap-x snap-mandatory">
-              {guarantees.map((guarantee, index) => (
-                <div
-                  key={index}
-                  className="min-w-[65vw] snap-start flex-shrink-0 bg-white/5 rounded-xl p-3 border border-white/10 active:scale-[0.98] transition-transform"
-                >
-                  <div className="flex items-start space-x-3">
-                    <guarantee.icon className={`w-6 h-6 ${guarantee.color} flex-shrink-0`} />
-                    <div>
-                      <h5 className="text-xs font-bold text-white mb-0.5">{guarantee.title}</h5>
-                      <p className="text-[10px] text-gray-400 leading-relaxed">{guarantee.description}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <p className="text-center text-[10px] text-gray-500 mt-2">← Glissez →</p>
-          </div>
-
-          {/* Mobile CTA */}
-          <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-            <p className="text-xs text-gray-300 text-center mb-3">Prêt à démarrer votre projet ?</p>
-            <button
-              onClick={() => handleCTAClick('mobile_bottom_cta')}
-              className="w-full bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-white font-bold py-3.5 rounded-xl shadow-lg active:scale-[0.98] transition-transform"
-            >
-              <span className="flex items-center justify-center space-x-2">
-                <MdRocket className="w-4 h-4" />
-                <span className="text-sm">Lancer Mon Projet</span>
-                <FiArrowRight className="w-4 h-4" />
-              </span>
-            </button>
-          </div>
-        </div>
-
-        {/* ========== DESKTOP VERSION ========== */}
-        <div className="hidden sm:block py-32 relative z-10 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
-          <div className="container mx-auto px-6">
-          {/* Grid Layout: Left (Guarantees) + Right (Contact) */}
-          <div className="grid lg:grid-cols-2 gap-16 items-start mb-16">
-            {/* Left Side - Guarantees */}
-            <div
-              data-index="0"
-              className={`transition-all duration-700 ${
-                visibleElements.includes(0) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
-              }`}
-            >
-              <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:border-white/20 transition-all duration-500">
-                <div className="mb-8">
-                  <h3 className="text-3xl font-bold text-white mb-4">Pourquoi Me Faire Confiance ?</h3>
-                  <p className="text-gray-300 text-lg">Des garanties concrètes pour votre tranquillité d'esprit</p>
-                </div>
-
-                <div className="grid gap-6">
-                  {guarantees.map((guarantee, index) => (
-                    <div
-                      key={index}
-                      className="group p-6 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300"
-                    >
-                      <div className="flex items-start space-x-4">
-                        <div className="mb-4">
-                          <guarantee.icon className={`w-12 h-12 ${guarantee.color} group-hover:scale-110 transition-transform duration-300`} />
-                        </div>
-                        <div className="flex-1">
-                          <h4 className="font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">
-                            {guarantee.title}
-                          </h4>
-                          <p className="text-gray-400 text-sm leading-relaxed group-hover:text-gray-300 transition-colors">
-                            {guarantee.description}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-                        {/* Bottom CTA */}
-          <div 
-            data-index="4"
-            className={`text-center mt-16 transition-all duration-700 ${
-              visibleElements.includes(4) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-          >
-            <div className="inline-flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6 bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 hover:bg-white/15 transition-all duration-500">
-              <div className="text-center sm:text-left">
-                <h3 className="text-2xl font-bold text-white mb-2">Prêt à démarrer votre projet ?</h3>
-                <p className="text-gray-300">Discutons de vos objectifs dès aujourd'hui</p>
-              </div>
-              <button
-                onClick={() => handleCTAClick('bottom_cta')}
-                className="group bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 text-white font-bold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-cyan-500/25 whitespace-nowrap"
-              >
-                <span className="flex items-center space-x-2">
-                  <MdRocket className="w-5 h-5" />
-                  <span>Lancer le Projet</span>
-                  <FiArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                </span>
-              </button>
-            </div>
-          </div>
-            </div>
-
-            {/* Right Side - Header + Stats + Contact */}
-            <div
-              data-index="1"
-              className={`transition-all duration-700 ${
-                visibleElements.includes(1) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
-              }`}
-            >
-              {/* Badge + Title */}
-              <div className="mb-8">
-                <div className="inline-flex items-center space-x-3 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full px-6 py-3 mb-6">
-                  <FiMessageSquare className="w-5 h-5 text-cyan-400" />
-                  <span className="text-sm font-bold text-cyan-300">CONTACT</span>
-                </div>
-
-                <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-tight">
-                  Transformons Votre Vision
-                  <span className="block bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-                    En Succès Digital
-                  </span>
-                </h2>
-
-                <p className="text-xl text-gray-300 leading-relaxed mb-8">
-                  Vous avez un projet ambitieux ? Je suis là pour le concrétiser.
-                  <span className="text-cyan-400 font-semibold"> Consultation gratuite, résultats garantis</span>.
+          {/* Main CTA Card */}
+          <AnimatedSection animation="fade-up" delay={200}>
+            <div className="bg-white rounded-2xl p-8 sm:p-10 mb-8 hover:shadow-2xl transition-shadow duration-300">
+              <div className="text-center mb-8">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                  Demandez votre devis gratuit
+                </h3>
+                <p className="text-gray-600">
+                  Réponse garantie sous 24h - Sans engagement
                 </p>
               </div>
 
-              {/* Stats */}
+              {/* Guarantees */}
               <div className="grid grid-cols-2 gap-4 mb-8">
-                {stats.map((stat, index) => (
-                  <div
-                    key={index}
-                    className="group p-4 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300"
-                  >
-                    <div className="flex items-center space-x-3">
-                      <stat.icon className={`w-8 h-8 ${stat.color} group-hover:scale-110 transition-transform flex-shrink-0`} />
-                      <div className="flex-1">
-                        <div className="text-2xl font-black text-white group-hover:text-cyan-400 transition-colors">
-                          {stat.number}
-                        </div>
-                        <div className="text-xs text-gray-400 font-medium">{stat.label}</div>
-                      </div>
-                    </div>
+                {guarantees.map((item, index) => (
+                  <div key={index} className="flex items-center space-x-2 group">
+                    <FiCheck className="w-5 h-5 text-gray-900 flex-shrink-0 transition-transform group-hover:scale-110" />
+                    <span className="text-sm text-gray-600">{item}</span>
                   </div>
                 ))}
               </div>
 
-              {/* Contact Card */}
-              {contactOptions.map((option, index) => (
-                <div
+              {/* CTA Button */}
+              <button
+                onClick={handleCTAClick}
+                className="w-full bg-gray-900 hover:bg-gray-800 text-white font-semibold py-4 px-8 rounded-xl sm:rounded-lg transition-all duration-300 flex items-center justify-center space-x-2 hover:scale-[1.02] active:scale-[0.98] active:bg-gray-800"
+              >
+                <span>Demander un devis gratuit</span>
+                <FiArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+              </button>
+            </div>
+          </AnimatedSection>
+
+          {/* Contact Info - Horizontal scroll on mobile */}
+          <div className="sm:hidden -mx-4 px-4">
+            <div className="flex overflow-x-auto gap-3 pb-4 snap-x snap-mandatory scrollbar-hide">
+              {contactInfo.map((info, index) => (
+                <a
                   key={index}
-                  className="group relative"
+                  href={info.href || '#'}
+                  className="flex-shrink-0 w-[140px] snap-start bg-gray-800 rounded-2xl p-4 text-center active:scale-95 transition-transform"
                 >
-                  {/* Priority Badge */}
-                  {option.priority === 'high' && (
-                    <div className="absolute -top-4 -right-4 z-20 bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-4 py-2 rounded-full text-xs font-black shadow-xl">
-                      <div className="flex items-center space-x-1">
-                        <FiStar className="w-3 h-3 fill-current" />
-                        <span>RECOMMANDÉ</span>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Card */}
-                  <div className="relative h-full bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 hover:border-white/40 transition-all duration-500 overflow-hidden group-hover:bg-white/15">
-                    {/* Background Gradient on Hover */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${option.bgColor} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl`} />
-
-                    {/* Glow Effect */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${option.color} opacity-0 group-hover:opacity-20 blur-xl transition-all duration-500`} />
-
-                    {/* Content */}
-                    <div className="relative z-10">
-                      {/* Icon */}
-                      <div className="mb-6">
-                        <div className={`w-16 h-16 bg-gradient-to-br ${option.color} rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
-                          <option.icon className="w-8 h-8 text-white" />
-                        </div>
-                      </div>
-
-                      {/* Title & Subtitle */}
-                      <div className="mb-4">
-                        <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">
-                          {option.title}
-                        </h3>
-                        <p className={`text-sm font-semibold bg-gradient-to-r ${option.color} bg-clip-text text-transparent`}>
-                          {option.subtitle}
-                        </p>
-                      </div>
-
-                      {/* Description */}
-                      <p className="text-gray-300 mb-6 leading-relaxed group-hover:text-white transition-colors">
-                        {option.description}
-                      </p>
-
-                      {/* Features */}
-                      <div className="space-y-3 mb-8">
-                        {option.features.map((feature, idx) => (
-                          <div key={idx} className="flex items-center space-x-3">
-                            <FiCheckCircle className="w-5 h-5 text-green-400" />
-                            <span className="text-gray-300 group-hover:text-white transition-colors font-medium">
-                              {feature}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* CTA Button */}
-                      <button
-                        onClick={() => handleCTAClick(option.title)}
-                        className={`group/btn w-full relative overflow-hidden bg-gradient-to-r ${option.color} hover:shadow-2xl text-white font-bold py-4 px-8 rounded-2xl transition-all duration-500 transform hover:scale-105`}
-                      >
-                        <span className="relative z-10 flex items-center justify-center space-x-3">
-                          <span className="text-lg">{option.cta}</span>
-                          <FiArrowRight className="w-5 h-5 transition-transform group-hover/btn:translate-x-2" />
-                        </span>
-
-                        {/* Animated background */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-white/20 via-transparent to-white/20 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000" />
-                      </button>
-                    </div>
-
-                    {/* Floating Elements */}
-                    <div className={`absolute top-4 right-4 w-8 h-8 bg-gradient-to-r ${option.color} rounded-full opacity-20 group-hover:opacity-40 transition-opacity duration-500`} />
-                    <div className={`absolute bottom-4 left-4 w-6 h-6 bg-gradient-to-r ${option.color} rounded-full opacity-10 group-hover:opacity-30 transition-opacity duration-500`} />
+                  <div className="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <info.icon className="w-5 h-5 text-white" />
                   </div>
-                </div>
+                  <div className="text-xs text-gray-400 mb-1">{info.label}</div>
+                  <div className="text-white font-medium text-xs truncate">{info.value}</div>
+                </a>
               ))}
             </div>
           </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Modal Component */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Consultation Gratuite</h3>
-            <p className="text-gray-600 mb-6">Merci pour votre intérêt ! Je vous contacte dans les plus brefs délais.</p>
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all duration-300"
-            >
-              Fermer
-            </button>
+          {/* Desktop Grid */}
+          <div className="hidden sm:grid sm:grid-cols-3 gap-4">
+            {contactInfo.map((info, index) => (
+              <AnimatedCard
+                key={index}
+                delay={300 + index * 100}
+                hoverEffect="lift"
+                className="bg-gray-800 rounded-xl p-5 text-center"
+              >
+                <info.icon className="w-6 h-6 text-white mx-auto mb-3 transition-transform hover:scale-110" />
+                <div className="text-sm text-gray-400 mb-1">{info.label}</div>
+                {info.href ? (
+                  <a
+                    href={info.href}
+                    className="text-white font-medium hover:underline text-sm"
+                  >
+                    {info.value}
+                  </a>
+                ) : (
+                  <span className="text-white font-medium text-sm">{info.value}</span>
+                )}
+              </AnimatedCard>
+            ))}
           </div>
         </div>
-      )}
-    </>
+      </div>
+
+      <ConsultationModal
+        isOpen={isConsultationModalOpen}
+        onClose={() => setIsConsultationModalOpen(false)}
+        source="website"
+        sourceSection="contact"
+      />
+    </section>
   );
 }

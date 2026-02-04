@@ -1,432 +1,153 @@
-import { useState, useEffect, useRef } from 'react';
-import { HiOutlineCpuChip } from 'react-icons/hi2';
-import { FiMail, FiPhone, FiMapPin, FiCode, FiArrowRight, FiZap, FiStar, FiClock, FiShield, FiTrendingUp, FiSmartphone } from 'react-icons/fi';
-import { RiRobot2Fill } from 'react-icons/ri';
+import { FiMail, FiPhone, FiMapPin } from 'react-icons/fi';
 
 export default function Footer() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [visibleElements, setVisibleElements] = useState([]);
-  const footerRef = useRef(null);
+  const quickLinks = [
+    { name: 'Accueil', href: '#' },
+    { name: 'Services', href: '#services' },
+    { name: 'Portfolio', href: '#portfolio' },
+    { name: 'Tarifs', href: '#tarifs' },
+    { name: 'À propos', href: '#apropos' },
+    { name: 'Blog', href: '/blog' },
+    { name: 'Contact', href: '#contact' }
+  ];
 
-  // Mouse tracking pour les effets premium
-  const handleMouseMove = (e) => {
-    const rect = footerRef.current?.getBoundingClientRect();
-    if (rect) {
-      setMousePosition({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top
-      });
+  const services = [
+    'Site Vitrine',
+    'E-commerce',
+    'Application Web',
+    'Intégration IA',
+    'Référencement SEO',
+    'Maintenance'
+  ];
+
+  const handleLinkClick = (e, href) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+
+      // Check if we're on the home page
+      const isHomePage = window.location.pathname === '/';
+
+      if (!isHomePage) {
+        // Redirect to home page with anchor
+        window.location.href = href === '#' ? '/' : '/' + href;
+        return;
+      }
+
+      if (href === '#') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        const element = document.querySelector(href);
+        if (element) {
+          const headerHeight = 80;
+          const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({
+            top: elementPosition - headerHeight,
+            behavior: 'smooth'
+          });
+        }
+      }
     }
   };
 
-  // Intersection Observer pour les animations
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = parseInt(entry.target.dataset.index);
-            setTimeout(() => {
-              setVisibleElements(prev => [...prev, index]);
-            }, index * 150);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = footerRef.current?.querySelectorAll('[data-index]');
-    elements?.forEach(el => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, []);
-
-  const services = [
-    {
-      name: "Développement Web",
-      icon: FiCode,
-      href: "#services",
-      description: "Sites & applications"
-    },
-    {
-      name: "Applications Mobile",
-      icon: FiSmartphone,
-      href: "#services",
-      description: "iOS & Android"
-    },
-    {
-      name: "SEO & Référencement",
-      icon: FiTrendingUp,
-      href: "#services",
-      description: "Visibilité Google"
-    },
-    {
-      name: "Intelligence Artificielle",
-      icon: RiRobot2Fill,
-      href: "#services",
-      description: "Solutions IA"
-    },
-    {
-      name: "Consultation",
-      icon: FiZap,
-      href: "#services",
-      description: "Audit & stratégie"
-    }
-  ];
-
-  const quickLinks = [
-    { name: "Services", href: "#services" },
-    { name: "Projets", href: "#projects" },
-    { name: "À Propos", href: "#about" },
-    { name: "Tarifs", href: "#pricing" },
-    { name: "Blog", href: "/blog" },
-    { name: "Contact", href: "#contact" },
-    { name: "Conditions", href: "#terms" }
-  ];
-
-  const contactInfo = [
-    {
-      icon: FiMail,
-      label: "Email",
-      value: "wev.ia.org@gmail.com",
-      href: "mailto:wev.ia.org@gmail.com",
-      color: "text-cyan-400"
-    },
-    {
-      icon: FiPhone,
-      label: "Téléphone",
-      value: "+33 6 67 48 39 23",
-      href: "tel:+33 6 67 48 39 23",
-      color: "text-purple-400"
-    },
-    {
-      icon: FiMapPin,
-      label: "Localisation",
-      value: "Paris, France",
-      href: "#",
-      color: "text-pink-400"
-    }
-  ];
-
-  const guarantees = [
-    { icon: FiZap, text: "Réponse rapide", color: "text-yellow-400" },
-    { icon: FiShield, text: "100% Satisfait", color: "text-green-400" },
-    { icon: FiClock, text: "Disponible 7j/7", color: "text-blue-400" },
-    { icon: FiStar, text: "Qualité garantie", color: "text-orange-400" }
-  ];
-
-  const socialLinks = [
-    {
-      name: "LinkedIn",
-      href: "#",
-      color: "from-blue-500 to-blue-600",
-      hoverColor: "hover:from-blue-400 hover:to-blue-500",
-      icon: (
-        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-        </svg>
-      )
-    },
-    {
-      name: "GitHub",
-      href: "#",
-      color: "from-gray-700 to-gray-800",
-      hoverColor: "hover:from-gray-600 hover:to-gray-700",
-      icon: (
-        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-        </svg>
-      )
-    },
-    {
-      name: "Twitter",
-      href: "#",
-      color: "from-sky-500 to-sky-600",
-      hoverColor: "hover:from-sky-400 hover:to-sky-500",
-      icon: (
-        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-        </svg>
-      )
-    }
-  ];
-
   return (
-    <footer
-      ref={footerRef}
-      className="relative overflow-hidden"
-      onMouseMove={handleMouseMove}
-      id="contact"
-    >
-      {/* Background Professional - Desktop */}
-      <div className="hidden sm:block absolute inset-0 bg-gradient-to-br from-slate-800 via-gray-900 to-slate-900">
-        {/* Animated Grid */}
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-          }}
-        />
-
-        {/* Mouse Glow Effect */}
-        <div
-          className="absolute w-96 h-96 pointer-events-none"
-          style={{
-            background: `radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08), transparent 70%)`,
-            left: mousePosition.x - 192,
-            top: mousePosition.y - 192,
-            transition: 'all 0.1s ease-out'
-          }}
-        />
-
-        {/* Floating Orbs */}
-        <div className="absolute top-20 left-10 w-64 h-64 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-      </div>
-
-      {/* ========== MOBILE APP VERSION ========== */}
-      <div className="sm:hidden bg-gradient-to-b from-slate-900 to-gray-900 py-8 px-4 relative z-10">
-        {/* App Logo Header */}
-        <div className="text-center mb-6">
-          <img src="/logo_wev_ia.png" alt="WEV-IA Logo" className="h-24 mx-auto mb-3" />
-          <p className="text-xs text-gray-400 leading-relaxed">
-            Solutions <span className="text-blue-400">web</span> & <span className="text-purple-400">IA</span> sur-mesure
-          </p>
-        </div>
-
-        {/* Quick Contact Cards */}
-        <div className="space-y-2 mb-6">
-          {contactInfo.map((contact, index) => (
-            <a
-              key={index}
-              href={contact.href}
-              className="flex items-center space-x-3 p-3 bg-white/5 rounded-xl border border-white/10 active:scale-[0.98] transition-transform"
-            >
-              <div className="w-9 h-9 rounded-lg bg-gradient-to-r from-gray-700 to-gray-800 flex items-center justify-center">
-                <contact.icon className={`w-4 h-4 ${contact.color}`} />
-              </div>
-              <div className="flex-1">
-                <div className="text-[10px] text-gray-500">{contact.label}</div>
-                <div className="text-sm text-white font-medium">{contact.value}</div>
-              </div>
-              <FiArrowRight className="w-4 h-4 text-gray-500" />
+    <footer className="bg-gray-900 text-white">
+      {/* Main Footer */}
+      <div className="container mx-auto px-4 sm:px-6 py-12 sm:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+          {/* Brand */}
+          <div className="sm:col-span-2 lg:col-span-1">
+            <a href="/" className="inline-block mb-4">
+              <img
+                src="/logo_wev_ia.png"
+                alt="WevIA Consulting"
+                className="h-24 w-auto"
+              />
             </a>
-          ))}
-        </div>
-
-        {/* Guarantees Grid - Compact */}
-        <div className="grid grid-cols-4 gap-2 mb-6">
-          {guarantees.map((guarantee, index) => (
-            <div key={index} className="text-center p-2 bg-white/5 rounded-xl border border-white/10">
-              <guarantee.icon className={`w-4 h-4 ${guarantee.color} mx-auto mb-1`} />
-              <div className="text-[9px] text-white font-medium leading-tight">{guarantee.text}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Quick Services - Horizontal Scroll */}
-        <div className="mb-6">
-          <h4 className="text-xs font-bold text-white mb-3 flex items-center space-x-1">
-            <FiZap className="w-3 h-3 text-blue-400" />
-            <span>Services</span>
-          </h4>
-          <div className="flex overflow-x-auto gap-2 pb-2 scrollbar-hide">
-            {services.map((service, index) => (
-              <a
-                key={index}
-                href={service.href}
-                className="flex-shrink-0 flex items-center space-x-2 px-3 py-2 bg-white/5 rounded-lg border border-white/10"
-              >
-                <service.icon className="w-3.5 h-3.5 text-blue-400" />
-                <span className="text-[11px] text-white whitespace-nowrap">{service.name}</span>
-              </a>
-            ))}
-          </div>
-        </div>
-
-        {/* Quick Links - 2 columns */}
-        <div className="grid grid-cols-2 gap-x-4 gap-y-2 mb-6">
-          {quickLinks.map((link, index) => (
-            <a
-              key={index}
-              href={link.href}
-              className="text-xs text-gray-400 py-1.5 active:text-white transition-colors"
-            >
-              {link.name}
-            </a>
-          ))}
-        </div>
-
-        {/* Bottom Bar */}
-        <div className="border-t border-white/10 pt-4">
-          <p className="text-[10px] text-gray-500 text-center mb-3">
-            &copy; 2025 <span className="text-blue-400">wevavan</span>. Tous droits réservés.
-          </p>
-          <div className="flex justify-center space-x-4 text-[10px] text-gray-500">
-            <a href="/mentions-legales" className="active:text-white">Mentions légales</a>
-            <a href="/politique-confidentialite" className="active:text-white">Confidentialité</a>
-            <a href="/cgv" className="active:text-white">CGV</a>
-          </div>
-        </div>
-      </div>
-
-      {/* ========== DESKTOP VERSION ========== */}
-      <div className="hidden sm:block relative z-10 py-20">
-        <div className="container mx-auto px-6">
-          {/* Header Section */}
-          <div
-            data-index="0"
-            className={`text-center mb-16 transition-all duration-700 ${
-              visibleElements.includes(0) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-          >
-            <div className="flex items-center justify-center mb-6">
-              <img src="/logo_wev_ia.png" alt="WEV-IA Logo" className="h-60 lg:h-80" />
-            </div>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-              Développeur spécialisé dans les <span className="text-blue-400 font-semibold">solutions web sur-mesure</span> et
-              <span className="text-purple-400 font-semibold"> l'intelligence artificielle</span>.
-              Je transforme vos idées en succès digitaux.
+            <p className="text-gray-400 text-sm mb-6">
+              Développeur Web & Expert IA. Je crée des solutions digitales
+              performantes pour votre business.
             </p>
-          </div>
-
-          {/* Main Content Grid */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-            {/* Services Premium */}
-            <div
-              data-index="1"
-              className={`col-span-2 transition-all duration-700 ${
-                visibleElements.includes(1) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`}
-            >
-              <h4 className="text-2xl font-bold text-white mb-8 flex items-center space-x-2">
-                <FiZap className="w-6 h-6 text-blue-400" />
-                <span>Services</span>
-              </h4>
-              <div className="grid grid-cols-2 gap-4">
-                {services.map((service, index) => (
-                  <a
-                    key={index}
-                    href={service.href}
-                    className="group p-4 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300"
-                  >
-                    <div className="flex items-start space-x-3">
-                      <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                        <service.icon className="w-5 h-5 text-white" />
-                      </div>
-                      <div className="flex-1">
-                        <h5 className="font-bold text-white group-hover:text-blue-400 transition-colors mb-1">
-                          {service.name}
-                        </h5>
-                        <p className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">
-                          {service.description}
-                        </p>
-                      </div>
-                    </div>
-                  </a>
-                ))}
+            <div className="space-y-3">
+              <a href="mailto:wev.ia.org@gmail.com" className="flex items-center space-x-3 text-gray-400 hover:text-white transition-colors text-sm">
+                <FiMail className="w-4 h-4" />
+                <span>wev.ia.org@gmail.com</span>
+              </a>
+              <a href="tel:+33667483923" className="flex items-center space-x-3 text-gray-400 hover:text-white transition-colors text-sm">
+                <FiPhone className="w-4 h-4" />
+                <span>+33 6 67 48 39 23</span>
+              </a>
+              <div className="flex items-center space-x-3 text-gray-400 text-sm">
+                <FiMapPin className="w-4 h-4" />
+                <span>Paris, France</span>
               </div>
             </div>
+          </div>
 
-            {/* Quick Links */}
-            <div
-              data-index="2"
-              className={`transition-all duration-700 ${
-                visibleElements.includes(2) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`}
-            >
-              <h4 className="text-2xl font-bold text-white mb-8">Navigation</h4>
-              <div className="space-y-3">
-                {quickLinks.map((link, index) => (
+          {/* Quick Links */}
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">Navigation</h3>
+            <ul className="space-y-2">
+              {quickLinks.map((link) => (
+                <li key={link.name}>
                   <a
-                    key={index}
                     href={link.href}
-                    className="group flex items-center space-x-2 text-gray-400 hover:text-white transition-all duration-300"
+                    onClick={(e) => handleLinkClick(e, link.href)}
+                    className="text-gray-400 hover:text-white transition-colors text-sm"
                   >
-                    <FiArrowRight className="w-4 h-4 text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <span className="group-hover:translate-x-2 transition-transform duration-300">
-                      {link.name}
-                    </span>
+                    {link.name}
                   </a>
-                ))}
-              </div>
-            </div>
-
-            {/* Contact Premium */}
-            <div
-              data-index="3"
-              className={`transition-all duration-700 ${
-                visibleElements.includes(3) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`}
-            >
-              <h4 className="text-2xl font-bold text-white mb-8">CONTACT</h4>
-              <div className="space-y-4">
-                {contactInfo.map((contact, index) => (
-                  <a
-                    key={index}
-                    href={contact.href}
-                    className="group flex items-start space-x-3 p-3 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300"
-                  >
-                    <div className="w-8 h-8 rounded-lg bg-gradient-to-r from-gray-700 to-gray-800 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                      <contact.icon className={`w-4 h-4 ${contact.color}`} />
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-400">{contact.label}</div>
-                      <div className="text-white font-medium group-hover:text-blue-400 transition-colors">
-                        {contact.value}
-                      </div>
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </div>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {/* Guarantees Bar */}
-          <div
-            data-index="4"
-            className={`transition-all duration-700 mb-16 ${
-              visibleElements.includes(4) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-          >
-            <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10">
-              <div className="grid grid-cols-4 gap-6">
-                {guarantees.map((guarantee, index) => (
-                  <div
-                    key={index}
-                    className="group text-center p-4 bg-white/5 rounded-2xl border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300"
-                  >
-                    <guarantee.icon className={`w-8 h-8 ${guarantee.color} mx-auto mb-2 group-hover:scale-110 transition-transform duration-300`} />
-                    <div className="text-white font-bold text-sm group-hover:text-blue-400 transition-colors">
-                      {guarantee.text}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+          {/* Services */}
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">Services</h3>
+            <ul className="space-y-2">
+              {services.map((service) => (
+                <li key={service}>
+                  <span className="text-gray-400 text-sm">{service}</span>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {/* Bottom Bar */}
-          <div
-            data-index="6"
-            className={`border-t border-white/10 pt-8 transition-all duration-700 ${
-              visibleElements.includes(6) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-          >
-            <div className="flex flex-row justify-between items-center">
-              <div className="text-gray-400 text-sm">
-                <p>&copy; 2025 <span className="text-blue-400 font-semibold">wevavan</span>. Tous droits réservés.</p>
-              </div>
-
-              <div className="flex items-center gap-6 text-sm text-gray-400">
-                <a href="/mentions-legales" className="hover:text-white transition-colors">Mentions légales</a>
-                <span>•</span>
-                <a href="/politique-confidentialite" className="hover:text-white transition-colors">Confidentialité</a>
-                <span>•</span>
-                <a href="/cgv" className="hover:text-white transition-colors">CGV</a>
-              </div>
+          {/* Legal */}
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">Informations</h3>
+            <ul className="space-y-2">
+              <li>
+                <a href="/mentions-legales" className="text-gray-400 hover:text-white transition-colors text-sm">
+                  Mentions légales
+                </a>
+              </li>
+              <li>
+                <a href="/politique-confidentialite" className="text-gray-400 hover:text-white transition-colors text-sm">
+                  Politique de confidentialité
+                </a>
+              </li>
+              <li>
+                <a href="/cgv" className="text-gray-400 hover:text-white transition-colors text-sm">
+                  CGV
+                </a>
+              </li>
+            </ul>
+            <div className="mt-6 pt-4 border-t border-gray-800">
+              <p className="text-gray-500 text-xs">
+                SIRET: 94975847800026
+              </p>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Bottom Bar */}
+      <div className="border-t border-gray-800">
+        <div className="container mx-auto px-4 sm:px-6 py-6">
+          <p className="text-gray-500 text-sm text-center">
+            © 2026 weviaconsulting. Tous droits réservés.
+          </p>
         </div>
       </div>
     </footer>
