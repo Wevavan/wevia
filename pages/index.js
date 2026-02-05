@@ -41,7 +41,7 @@ export default function Home() {
         <meta property="og:url" content="https://weviaconsulting.com/" />
         <meta property="og:title" content="WevIA - Je crée des sites web qui rapportent | Développeur Web & IA" />
         <meta property="og:description" content="Besoin d'un site qui génère des clients ? Je crée des sites optimisés Google et automatisés avec l'IA. Résultats concrets : +280% ROI, 5K+ utilisateurs." />
-        <meta property="og:image" content="https://weviaconsulting.com/logo_wev_ia.png" />
+        <meta property="og:image" content="https://weviaconsulting.com/api/og" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:locale" content="fr_FR" />
@@ -52,7 +52,7 @@ export default function Home() {
         <meta name="twitter:url" content="https://weviaconsulting.com/" />
         <meta name="twitter:title" content="WevIA - Sites web qui rapportent" />
         <meta name="twitter:description" content="Je crée des sites optimisés Google et automatisés avec l'IA. Résultats réels : +280% ROI, 5K+ utilisateurs." />
-        <meta name="twitter:image" content="https://weviaconsulting.com/logo_wev_ia.png" />
+        <meta name="twitter:image" content="https://weviaconsulting.com/api/og" />
         <meta name="twitter:creator" content="@wevia_dev" />
 
         {/* Additional SEO */}
