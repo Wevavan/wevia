@@ -4,6 +4,10 @@ export default function Document() {
   return (
     <Html lang="fr">
       <Head>
+        {/* Favicon - appliqué à toutes les pages */}
+        <link rel="icon" type="image/png" href="/logo_wev_ia.png" />
+        <link rel="shortcut icon" href="/logo_wev_ia.png" />
+
         {/* Google Analytics */}
         <script
           async

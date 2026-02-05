@@ -1,5 +1,5 @@
 // pages/index.js
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import Head from 'next/head';
 import Hero from '../components/Hero';
 import Projects from '../components/Projects';
@@ -38,10 +38,10 @@ export default function Home() {
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://wevia.com/" />
+        <meta property="og:url" content="https://weviaconsulting.com/" />
         <meta property="og:title" content="WevIA - Je crée des sites web qui rapportent | Développeur Web & IA" />
         <meta property="og:description" content="Besoin d'un site qui génère des clients ? Je crée des sites optimisés Google et automatisés avec l'IA. Résultats concrets : +280% ROI, 5K+ utilisateurs." />
-        <meta property="og:image" content="https://wevia.com/og-image.jpg" />
+        <meta property="og:image" content="https://weviaconsulting.com/logo_wev_ia.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:locale" content="fr_FR" />
@@ -49,19 +49,22 @@ export default function Home() {
 
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://wevia.com/" />
+        <meta name="twitter:url" content="https://weviaconsulting.com/" />
         <meta name="twitter:title" content="WevIA - Sites web qui rapportent" />
         <meta name="twitter:description" content="Je crée des sites optimisés Google et automatisés avec l'IA. Résultats réels : +280% ROI, 5K+ utilisateurs." />
-        <meta name="twitter:image" content="https://wevia.com/twitter-image.jpg" />
+        <meta name="twitter:image" content="https://weviaconsulting.com/logo_wev_ia.png" />
         <meta name="twitter:creator" content="@wevia_dev" />
 
         {/* Additional SEO */}
-        <link rel="canonical" href="https://wevia.com/" />
-        <link rel="alternate" hrefLang="fr" href="https://wevia.com/" />
+        <link rel="canonical" href="https://weviaconsulting.com/" />
+        <link rel="alternate" hrefLang="fr" href="https://weviaconsulting.com/" />
 
         {/* Favicon */}
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" href="/logo_wev_ia.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/logo_wev_ia.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/logo_wev_ia.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/logo_wev_ia.png" />
+        <link rel="shortcut icon" href="/logo_wev_ia.png" />
 
         {/* Geo Tags */}
         <meta name="geo.region" content="FR" />
@@ -80,9 +83,9 @@ export default function Home() {
               "@type": "ProfessionalService",
               "name": "WevIA",
               "description": "Je crée des sites web qui génèrent des clients. Optimisation Google, automatisation IA, résultats concrets pour votre business.",
-              "url": "https://wevia.com",
-              "logo": "https://wevia.com/logo.png",
-              "image": "https://wevia.com/og-image.jpg",
+              "url": "https://weviaconsulting.com",
+              "logo": "https://weviaconsulting.com/logo_wev_ia.png",
+              "image": "https://weviaconsulting.com/logo_wev_ia.png",
               "priceRange": "€€€",
               "telephone": "+33-X-XX-XX-XX-XX",
               "email": "contact@wevia.com",
@@ -148,7 +151,7 @@ export default function Home() {
                 "@type": "Person",
                 "name": "WevIA",
                 "jobTitle": "Développeur Web & IA Full-Stack",
-                "url": "https://wevia.com"
+                "url": "https://weviaconsulting.com"
               }
             })
           }}
@@ -162,8 +165,8 @@ export default function Home() {
               "@context": "https://schema.org",
               "@type": "Organization",
               "name": "WevIA",
-              "url": "https://wevia.com",
-              "logo": "https://wevia.com/logo.png",
+              "url": "https://weviaconsulting.com",
+              "logo": "https://weviaconsulting.com/logo_wev_ia.png",
               "description": "Développeur Web & IA Full-Stack spécialisé en Next.js, React et Intelligence Artificielle",
               "contactPoint": {
                 "@type": "ContactPoint",
@@ -184,12 +187,12 @@ export default function Home() {
               "@context": "https://schema.org",
               "@type": "WebSite",
               "name": "WevIA Portfolio",
-              "url": "https://wevia.com",
+              "url": "https://weviaconsulting.com",
               "description": "Portfolio professionnel de développement web et IA",
               "inLanguage": "fr-FR",
               "potentialAction": {
                 "@type": "SearchAction",
-                "target": "https://wevia.com/search?q={search_term_string}",
+                "target": "https://weviaconsulting.com/search?q={search_term_string}",
                 "query-input": "required name=search_term_string"
               }
             })
@@ -205,8 +208,8 @@ export default function Home() {
               "@type": "Person",
               "name": "WevIA",
               "jobTitle": "Développeur Web & IA Full-Stack",
-              "url": "https://wevia.com",
-              "image": "https://wevia.com/profile.jpg",
+              "url": "https://weviaconsulting.com",
+              "image": "https://weviaconsulting.com/logo_wev_ia.png",
               "sameAs": [
                 "https://github.com/wevia",
                 "https://linkedin.com/in/wevia",
